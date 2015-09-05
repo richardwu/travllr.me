@@ -28,8 +28,19 @@ var scripts = {
       $scope.getCarrier = function(code){
         return $scope.flightData.trips.data.carrierNames[code].name;
       }
+      $scope.toggleActivity = function(idx){
+        if($scope.selectedActivites.indexOf(idx) != -1){
+          $scope.selectedActivites.splice($scope.selectedActivites.indexOf(idx), 1);
+        }else{
+          $scope.selectedActivites.push(idx);
+        }
+      }
+      $scope.activitySelected = function(idx){
+        return $scope.selectedActivites.indexOf(idx) != -1;
+      }
       $scope.selectedFlight = -1;
-      $scope.flightData = {}, $scope.flights = [];
+      $scope.flightData = {}, $scope.flights = [], $scope.selectedHotel = -1;
+      $scope.hotels = [], $scope.selectedActivites = [];
       $scope.page = 0;
       $scope.loadFlights = function(){
         $scope.page = 2;
@@ -50,6 +61,38 @@ var scripts = {
           $scope.$apply();
         });
       };
+      $scope.loadHotels = function(){
+        $scope.page = 3;
+        $scope.loaded = false;
+        $.get('hotels', {
+          origin: $scope.data.location.start,
+          destination: $scope.data.location.end,
+          startDate: $scope.data.date.start,
+          endDate: $scope.data.date.end
+        }, function(data){
+          $scope.hotels = data.HotelInfoList.HotelInfo;
+          $scope.loaded = true;
+          $scope.$apply();
+        });
+      };
+
+
+      $scope.loadActivities = function(){
+        $scope.page = 4;
+        $scope.loaded = false;
+        $.get('activities', {
+          origin: $scope.data.location.start,
+          destination: $scope.data.location.end,
+          startDate: $scope.data.date.start,
+          endDate: $scope.data.date.end
+        }, function(data){
+          $scope.activities = data.businesses;
+          $scope.loaded = true;
+          $scope.$apply();
+        });
+      };
+
+
       window.scope = $scope;
       $('.location-input').each(function(){
         var input = $(this).get(0);
@@ -154,10 +197,11 @@ var scripts = {
 
       // });
 
-
     }]);
   }
 };
+
+
 var loaded = false;
 function autoload() {
   if (!loaded) {
@@ -167,4 +211,5 @@ function autoload() {
 }
 $(function () {
   autoload();
+  $.material.init();
 });

@@ -22,7 +22,7 @@ class PagesController < ApplicationController
 		# originCoord = Geocoder.coordinates(params[:origin])
 		destinationCoord = Geocoder.coordinates(params[:destination])
 
-		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+destinationCoord[0].to_s+','+destinationCoord[1].to_s+'&radius=10km&dates='+params[:startDate]+','+params[:endDate]+'&maxhotels=10&sort=guestrating&order=desc&apikey='+EXPEDIA_API_KEY)
+		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+destinationCoord[0].to_s+','+destinationCoord[1].to_s+'&radius=10km&dates='+params[:startDate]+','+params[:endDate]+'&maxhotels=10&apikey='+EXPEDIA_API_KEY)
 		req = Net::HTTP::Get.new(url.to_s)
 		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
 		hotels = JSON.parse(res.body)
@@ -75,37 +75,58 @@ class PagesController < ApplicationController
 
 	end
 
-	def choose
 
-		params[:origin] = "Toronto, ON, Canada"
-		params[:destination] = "Boston, MA, United States"
-		params[:startDate] = "2015-09-20"
-		params[:endDate] = "2015-09-25"
+	def activities
 
-
-		origin = params[:origin].split(', ').join(',')
 		destination = params[:destination].split(', ').join(',')
+		client = Yelp::Client.new({ consumer_key: YELP_CONSUMER_KEY,
+                            consumer_secret: YELP_CONSUMER_SECRET,
+                            token: YELP_TOKEN,
+                            token_secret: YELP_TOKEN_SECRET
+                          })
 
-		gon.originCode = findCode(origin)
-		gon.destinationCode = findCode(destination)
+		params = {
+			term: 'landmarks',
+			limit: 20
+		}
 
-		gon.originCoord = Geocoder.coordinates(params[:origin])
-		gon.destinationCoord = Geocoder.coordinates(params[:destination])
+		results = client.search(destination, params)
 
-		gon.origin = params[:origin]
-		gon.destination = params[:destination]
-		gon.startDate = params[:startDate]
-		gon.endDate = params[:endDate]
-
-
-		# Retrieve hotels
-
-		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+gon.destinationCoord[0].to_s+','+gon.destinationCoord[1].to_s+'&radius=5km&dates='+gon.startDate+','+gon.endDate+'&apikey='+EXPEDIA_API_KEY)
-		req = Net::HTTP::Get.new(url.to_s)
-		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
-		gon.hotels = JSON.parse(res.body)
-
+		render :json => results
 	end
+
+
+	# def choose
+
+	# 	params[:origin] = "Toronto, ON, Canada"
+	# 	params[:destination] = "Boston, MA, United States"
+	# 	params[:startDate] = "2015-09-20"
+	# 	params[:endDate] = "2015-09-25"
+
+
+	# 	origin = params[:origin].split(', ').join(',')
+	# 	destination = params[:destination].split(', ').join(',')
+
+	# 	gon.originCode = findCode(origin)
+	# 	gon.destinationCode = findCode(destination)
+
+	# 	gon.originCoord = Geocoder.coordinates(params[:origin])
+	# 	gon.destinationCoord = Geocoder.coordinates(params[:destination])
+
+	# 	gon.origin = params[:origin]
+	# 	gon.destination = params[:destination]
+	# 	gon.startDate = params[:startDate]
+	# 	gon.endDate = params[:endDate]
+
+
+	# 	# Retrieve hotels
+
+	# 	url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+gon.destinationCoord[0].to_s+','+gon.destinationCoord[1].to_s+'&radius=5km&dates='+gon.startDate+','+gon.endDate+'&apikey='+EXPEDIA_API_KEY)
+	# 	req = Net::HTTP::Get.new(url.to_s)
+	# 	res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
+	# 	gon.hotels = JSON.parse(res.body)
+
+	# end
 
 
 	def routes
