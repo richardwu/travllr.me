@@ -1,7 +1,7 @@
 
 	<body id="home">
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc3jbHCRxEaq_SDfbkwpWIjOMNjWVjnk4&libraries=places"></script>
-
+		<script type="text/javascript">autoload();</script>
 		<div id="nav">
 			<a id="home" href="#">Home</a>
 			<a id="about" href="#aboutpage">About</a>
@@ -14,7 +14,6 @@
 		Travllr
 	</div>
 
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<%= form_tag("/choose", method: "get") do %>
 	<%= text_field_tag(:origin, nil, class: 'location-input') %>
 	<%= text_field_tag(:destination, nil, class: 'location-input') %>
