@@ -131,21 +131,21 @@ class PagesController < ApplicationController
 
 
 	def routes
-		hotel = {lat: 12.076721, long: 50.877044}
-		points = [{lat: 10, long: 20, id: 1}, {lat: 20, long: 10, id: 2}]
+		hotel = params[:hotel]
+		points = params[:pois]
 
 		data = {
 			"vehicles" => [{
 				"vehicle_id" => "vehicle1",
 				"start_address" => {
-						"location_id" => "v1_gera",
+						"location_id" => "start",
 						"lon"=> hotel[:lat],
-						"lat"=> hotel[:long]
+						"lat"=> hotel[:lon]
 				},
 				"end_address" => {
-					"location_id" => "v1_muenchen",
+					"location_id" => "end",
 					"lon"=> hotel[:lat],
-					"lat"=> hotel[:long]
+					"lat"=> hotel[:lon]
 				},
 				"type_id" => "vehicle_type_1",
 				"return_to_depot" => true
@@ -164,7 +164,7 @@ class PagesController < ApplicationController
 					"address"=> {
 						"location_id"=> "loc",
 						"lon"=> point[:lat],
-						"lat"=> point[:long]
+						"lat"=> point[:lon]
 					}
 				})
 		end
@@ -200,7 +200,7 @@ class PagesController < ApplicationController
 		# Store the order of point ids in `order`
 		order = []
 		res["solution"]["routes"]["activities"].each do |poi|
-			order.push(poi["id"].to_i)
+			order.push(poi["id"])
 		end
 
 	end
