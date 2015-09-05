@@ -9,9 +9,7 @@ var scripts = {
         var autocomplete = new google.maps.places.Autocomplete(input, options);
       });
   },
-  'datepick' : function(){
-
-  },
+ 
   'choose' : function(){
 
     var chooseApp = angular.module('choosePage',[]);
