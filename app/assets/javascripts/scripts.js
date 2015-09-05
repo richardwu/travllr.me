@@ -166,7 +166,7 @@ var scripts = {
       //     }
       //   });
 
-      $('#testroutes').click(function(){
+      $('#routes').click(function(){
         $.ajax({
           url: '/routes',
           method: 'GET',
