@@ -15,21 +15,6 @@ var scripts = {
     var chooseApp = angular.module('choosePage',[]);
 
     chooseApp.controller('mainController', ['$scope', function($scope) {
-
-          // HOTELS
-          // Geocoding
-          // Apikey: AIzaSyA7MqyVfVftqD3ICLgFw1RJva350N38mcQ
-          /*
-          $.ajax({
-            url: 'https://maps.googleapis.com/maps/api/geocode/json?address='+gon.origin+'&key=AIzaSyA7MqyVfVftqD3ICLgFw1RJva350N38mcQ',
-            method: 'GET',
-            dataType: 'json',
-            success: function(resp){
-
-            }
-          });
-*/
-
           var latitude = gon.destination[0], longitude = gon.destination[1];
           $.ajax({
             url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates='+gon.startdate+','+gon.enddate+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
