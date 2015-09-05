@@ -4,7 +4,7 @@ var scripts = {
     homeApp.controller('mainController', ['$scope', function ($scope) {
       $scope.data = {
         location: {
-          start: 'test',
+          start: '',
           end: ''
         },
         date: {
@@ -37,7 +37,6 @@ var scripts = {
       $( "#end-calendar" ).datepicker({
         minDate: "+1d",
         onSelect: function( selectedDate ) {
-          $( "#end-calendar" ).datepicker( "option", "minDate", selectedDate );
           updateDate();
         }
       });
