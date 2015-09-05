@@ -1,14 +1,85 @@
 class PagesController < ApplicationController
 
+	QPX_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
+	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
+
 	def home
 	end
+
+
+	def hotels
+		# params[:origin] = "Toronto, ON, Canada"
+		# params[:destination] = "Boston, MA, United States"
+		# params[:startDate] = "2015-09-20"
+		# params[:endDate] = "2015-09-25"
+
+		# originCoord = Geocoder.coordinates(params[:origin])
+		destinationCoord = Geocoder.coordinates(params[:destination])
+
+		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+destinationCoord[0].to_s+','+destinationCoord[1].to_s+'&radius=5km&dates='+params[:startDate]+','+params[:endDate]+'&apikey='+EXPEDIA_API_KEY)
+		req = Net::HTTP::Get.new(url.to_s)
+		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
+		hotels = JSON.parse(res.body)
+
+		render :json => hotels
+	end
+
+	def flights
+
+		# params[:origin] = "Toronto, ON, Canada"
+		# params[:destination] = "Boston, MA, United States"
+		# params[:startDate] = "2015-09-20"
+		# params[:endDate] = "2015-09-25"
+
+		originCode = findCode(params[:origin])
+		destinationCode = findCode(params[:destination])
+
+		flightData = {
+			"request": {
+				"passengers": {
+					"adultCount": 1
+				},
+				"slice": [
+					{
+						"origin": originCode,
+						"destination": destinationCode,
+						"date": params[:startDate]
+					},
+					{
+						"origin": destinationCode,
+						"destination": originCode,
+						"date": params[:endDate]
+					}
+				],
+				"solutions": 10
+			}
+		}
+
+		# This API does not support form-encoded parsing input
+		# res = HTTParty.post('https://www.googleapis.com/qpxExpress/v1/trips/search?key='+QPX_API_KEY, 
+		# 	body: flightData
+		# )
+
+		url = URI.parse('https://www.googleapis.com/qpxExpress/v1/trips/search?key='+QPX_API_KEY)
+
+		req = Net::HTTP::Post.new(url, initheader = {'Content-Type' =>'application/json'})
+		req.body = '{"request":{"passengers":{"adultCount":1},"slice":[{"origin":"YYZ","destination":"BOS","date":"2015-09-10"},{"origin":"BOS","destination":"YYZ","date":"2015-09-16"}],"solutions":10}}'
+		res = Net::HTTP.start(url.host, url.port) do |http|
+			http.request(req)
+		end
+
+		Rails.logger.debug (res.body)
+
+		render :json => res.body
+
+	end 
 
 	def choose
 
 		params[:origin] = "Toronto, ON, Canada"
 		params[:destination] = "Boston, MA, United States"
-		params[:startdate] = "2015-09-20"
-		params[:enddate] = "2015-09-25"
+		params[:startDate] = "2015-09-20"
+		params[:endDate] = "2015-09-25"
 
 
 		origin = params[:origin].split(', ').join(',')
@@ -22,13 +93,13 @@ class PagesController < ApplicationController
 
 		gon.origin = params[:origin]
 		gon.destination = params[:destination]
-		gon.startdate = params[:startdate]
-		gon.enddate = params[:enddate]
+		gon.startDate = params[:startDate]
+		gon.endDate = params[:endDate]
 
 
 		# Retrieve hotels
 
-		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+gon.destinationCoord[0].to_s+','+gon.destinationCoord[1].to_s+'&radius=5km&dates='+gon.startdate+','+gon.enddate+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7')
+		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+gon.destinationCoord[0].to_s+','+gon.destinationCoord[1].to_s+'&radius=5km&dates='+gon.startDate+','+gon.endDate+'&apikey='+EXPEDIA_API_KEY)
 		req = Net::HTTP::Get.new(url.to_s)
 		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
 		gon.hotels = JSON.parse(res.body)
@@ -39,7 +110,7 @@ class PagesController < ApplicationController
 	def findCode(place)
 		place = place.split(', ').join(',')
 
-		url = URI.parse('http://terminal2.expedia.com/x/suggestions/regions?query='+place+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7')
+		url = URI.parse('http://terminal2.expedia.com/x/suggestions/regions?query='+place+'&apikey='+EXPEDIA_API_KEY)
 		req = Net::HTTP::Get.new(url.to_s)
 		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
 
