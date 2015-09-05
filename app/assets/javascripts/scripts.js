@@ -18,20 +18,51 @@ var scripts = {
 
     chooseApp.controller('mainController', ['$scope', function($scope) {
 
-          var latitude = 47.6063889, longitude = -122.3308333;
+          // HOTELS
+          var latitude = $('#origin').val(), longitude = $('#destination').val(),
+          startDate = $('#start').val(), endDate = $('#end').val();
+          $.ajax({
+            url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates='+startDate+','+endDate+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
+            method: 'GET',
+            dataType: 'json',
+            success: function(resp){
+              var domFragment = $(document.createDocumentFragment());
+              console.log(resp.HotelInfoList.HotelInfo);
+              $scope.hotels = resp.HotelInfoList.HotelInfo;
+              $scope.$apply();
+            },
+            error: function(resp){
 
+            }
+          });
+
+          // FLIGHTS
+          // API-KEY: AIzaSyA-kkfsczhpvjAP4IcjVQQ-LwSm8GQ8neo
           $.ajax({
             url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates=2015-09-19,2015-09-22&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
             method: 'GET',
             dataType: 'json',
             success: function(resp){
-
               var domFragment = $(document.createDocumentFragment());
               console.log(resp.HotelInfoList.HotelInfo);
               $scope.hotels = resp.HotelInfoList.HotelInfo;
               $scope.$apply();
+            },
+            error: function(resp){
 
+            }
+          });
 
+          // POINTS OF INTEREST
+          $.ajax({
+            url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates=2015-09-19,2015-09-22&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
+            method: 'GET',
+            dataType: 'json',
+            success: function(resp){
+              var domFragment = $(document.createDocumentFragment());
+              console.log(resp.HotelInfoList.HotelInfo);
+              $scope.hotels = resp.HotelInfoList.HotelInfo;
+              $scope.$apply();
             },
             error: function(resp){
 

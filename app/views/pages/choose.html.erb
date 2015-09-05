@@ -12,15 +12,12 @@
 			<div id="flight-result">
 				dyvtvt
 			</div>
-			<div id="hotel-result">
-				dyvtvt
+			<div ng-repeat="hotel in hotels">
+				<h1>{{hotel.Name}}</h1>
+				<img src="{{hotel.ThumbnailUrl}}"></img>
+				<p>{{hotel.Description}}</p>
+				<p>{{hotel.StarRating}}</p>
 			</div>
-			<ul>
-					<li ng-repeat="hotel in hotels">
-						<h1>{{hotel.Name}}</h1>
-						<p>{{hotel.Description}}</p>
-					</li>
-			</ul>
 			<div id="attraction-result">
 				dyvtvt
 			</div>

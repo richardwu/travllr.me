@@ -1,5 +1,7 @@
 
 	<body id="home">
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc3jbHCRxEaq_SDfbkwpWIjOMNjWVjnk4&libraries=places"></script>
+
 		<div id="nav">
 			<a id="home" href="#">Home</a>
 			<a id="about" href="#aboutpage">About</a>
@@ -16,7 +18,20 @@
 		<div id="search">
 			<input type="text" class="location-input" id="origin" placeholder="Origin">
 			<input type="text" class="location-input" id="destination" placeholder="Destination">
-			<a href="date.html"> <input type="submit" value="Go!" id="submit_button">  </a>
+			<%= link_to 'Go!',
 		</div>
+
+
+		<div id="date">
+			<div class="column">
+				<strong>Start Date</strong>
+				<div id="start"></div>
+			</div><!--
+			--><div class="column">
+			<strong>End Date</strong>
+			<div id="end"></div>
+
+		</div>
+	</div>
 
 	</body>
