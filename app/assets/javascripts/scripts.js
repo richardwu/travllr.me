@@ -74,6 +74,15 @@ return useless;
         });
       };
 
+      // Returns the estimated length of time, in minutes, needed for the given activity
+      calculateCost = function(act){
+
+      }
+      // Returns the "cost" for including an activity based on how long it takes to get there and how long it takes to participate in it
+      calculateCost = function(act1, act2){
+        return distance(act1, act2) + calculateCost(act2);
+      }
+
       $scope.groupActivities = function(){
         var startDate = moment(new Date ($scope.data.date.start));
         var endDate = moment(new Date ($scope.data.date.end));
@@ -93,15 +102,37 @@ return useless;
 
           currentDate.add(1, 'days');
 
-          var nodes = [];
+          // GROUP ACTIVITIES INTO DAYS
+          // set up constants
+          var MAX_LIMIT = 14; // starttime - endtime
+          // initialize vars
+          var currentAct = 0, totalCost = calculateCost(currentAct);
+          var includedActivities = [currentAct];
+
           for (i in selectedActivities){
-            // Create cost array
+            // Update cost array
             cost = [];
             for (j in selectedActivities) {
-
+              if (typeof cost[j] == undefined || calculateCost(currentAct, j) < cost[j])
+                cost[j] = calculateCost(currentAct, j);
             }
+            // Choose minimum activity
+            var minAct = 0;
+            for (j in selectedActivities){
+              if (includedActivities.indexOf(j) == -1 && cost[j] < cost[minAct]){
+                minAct = j;
+              }
+            }
+            // Set minimum activity to current activity
+            includedActivities.push(minAct);
+            currentAct = minAct;
+            // Check if maximum limit reached
+            if(totalCost >= MAX_LIMIT) {
+              // Finished grouping a set of activities into one day!
 
-            // Choose minimum
+
+
+            } // end if
           } // end for loop
         }
 
