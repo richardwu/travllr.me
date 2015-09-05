@@ -31,6 +31,8 @@ gem 'angularjs-rails'
 
 gem 'jquery-ui-rails', '~> 5.0.5'
 
+gem 'geocoder'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
