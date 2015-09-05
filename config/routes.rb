@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
 
   root 'pages#home'
-  get 'choose' => 'pages#choose'
-  
+  get 'choose', to: 'pages#choose'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

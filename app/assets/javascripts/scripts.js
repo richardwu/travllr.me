@@ -53,7 +53,6 @@ var scripts = {
         method: 'GET',
         dataType: 'json',
         success: function(resp){
-          var domFragment = $(document.createDocumentFragment());
           console.log(resp.HotelInfoList.HotelInfo);
           $scope.hotels = resp.HotelInfoList.HotelInfo;
           $scope.$apply();
@@ -61,6 +60,7 @@ var scripts = {
         error: function(resp){
         }
       });
+      window.scope = $scope;
       gon.origin = "Toronto, ON, Canada";
       gon.destination = "Boston, MA, United States";
 
@@ -76,16 +76,6 @@ var scripts = {
 
       var originCode, destinationCode;
 
-
-      // Exceptions list
-      if (originCity == 'Boston' && originCountry == 'United States'){
-        originCode = 'BOS';
-        originFound = true;
-      }
-      if (destinationCity == 'Boston' && destinationCountry == 'United States'){
-        destinationCode = 'BOS';
-        destinationFound = true;
-      }
 
 
       // Note: Some cities with only 2 airports (e.g. Boston) dont have a code for 'All Airports',
@@ -107,8 +97,6 @@ var scripts = {
         if (originFound && destinationFound)
         break;
       }
-
-      console.log(originCode + ' ' + destinationCode);
 
       var flightData = {
         "request": {
@@ -138,7 +126,7 @@ var scripts = {
         contentType: 'application/json',
         dataType: 'json',
         success: function(resp){
-          console.log(resp);
+
         },
 
         error: function(resp){
@@ -146,38 +134,6 @@ var scripts = {
         }
       });
 
-      // // FLIGHTS
-      // // API-KEY: AIzaSyA-kkfsczhpvjAP4IcjVQQ-LwSm8GQ8neo
-      // $.ajax({
-      //   url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates=2015-09-19,2015-09-22&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
-      //   method: 'GET',
-      //   dataType: 'json',
-      //   success: function(resp){
-      //     var domFragment = $(document.createDocumentFragment());
-      //     console.log(resp.HotelInfoList.HotelInfo);
-      //     $scope.hotels = resp.HotelInfoList.HotelInfo;
-      //     $scope.$apply();
-      //   },
-      //   error: function(resp){
-
-      //   }
-      // });
-
-      // // POINTS OF INTEREST
-      // $.ajax({
-      //   url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates=2015-09-19,2015-09-22&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
-      //   method: 'GET',
-      //   dataType: 'json',
-      //   success: function(resp){
-      //     var domFragment = $(document.createDocumentFragment());
-      //     console.log(resp.HotelInfoList.HotelInfo);
-      //     $scope.hotels = resp.HotelInfoList.HotelInfo;
-      //     $scope.$apply();
-      //   },
-      //   error: function(resp){
-
-      //   }
-      // });
     }]);
   }
 };
