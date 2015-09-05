@@ -1,5 +1,9 @@
 class PagesController < ApplicationController
 
 	def home
-	end 
+	end
+	def date
+	end
+	def choose
+	end
 end
