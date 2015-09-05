@@ -70,22 +70,23 @@ input {
 	background-color: white;
 }
 
-#destination, #origin {
+#destination, #origin, #submit_button {
 	font-size: large;
 	text-align: center;
 	width: 20%;
 	height: 30%;
-	padding: 0;
+	padding: 0%;
+	margin: auto 0;
 	color: black;
 	background-color: white;
 	opacity: 1;
 }
 
 #submit_button {
-	margin: 0;
-	width: 20%;
-	height: 30%;
-	padding: 0;
+	background-color: orange;
+	border-radius:.5em;
+	width: 10%;
+	opacity: 1;
 }
 
 #date {
