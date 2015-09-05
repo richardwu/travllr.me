@@ -22,7 +22,7 @@ class PagesController < ApplicationController
 		# originCoord = Geocoder.coordinates(params[:origin])
 		destinationCoord = Geocoder.coordinates(params[:destination])
 
-		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+destinationCoord[0].to_s+','+destinationCoord[1].to_s+'&radius=10km&dates='+params[:startDate]+','+params[:endDate]+'&maxhotels=10&apikey='+EXPEDIA_API_KEY)
+		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+destinationCoord[0].to_s+','+destinationCoord[1].to_s+'&radius=10km&dates='+params[:startDate]+','+params[:endDate]+'&maxhotels=10&sort=price&order=asc&apikey='+EXPEDIA_API_KEY)
 		req = Net::HTTP::Get.new(url.to_s)
 		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
 		hotels = JSON.parse(res.body)

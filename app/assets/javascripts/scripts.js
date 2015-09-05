@@ -197,6 +197,15 @@ var scripts = {
 
       // });
 
+
+      // Function to generate itin
+      $('#generate-itin').on('click', function(){
+        var hotel;
+        var flight;
+        // Sorted
+        var activities;
+      });
+
     }]);
   }
 };
