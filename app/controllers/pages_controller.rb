@@ -131,89 +131,88 @@ class PagesController < ApplicationController
 
 
 	def routes
-		hotel = params[:hotel]
-		points = params[:pois]
-
-		# hotel = {'lat'=> 50.877044, 'lon'=> 12.076721}
-
-		# points = [{'lat'=> 51.508742, 'lon'=> 7.500916, 'id'=> 'asdbfdbndvb'}, {'lat'=> 49.0047222, 'lon'=> 8.3858333, 'id'=> 'sfdfds'}]
-
-		data = {
-			"vehicles" => [{
-				"vehicle_id" => "vehicle1",
-				"start_address" => {
-						"location_id" => "start",
-						"lat"=> hotel["lat"],
-						"lon"=> hotel["lon"]
-				},
-				"end_address" => {
-					"location_id" => "end",
-					"lat"=> hotel["lat"],
-					"lon"=> hotel["lon"]
-				},
-				"type_id" => "vehicle_type_1",
-				"return_to_depot" => true
-			}],
-			"vehicle_types" => [{
-				"type_id" => "vehicle_type_1",
-				"profile" => "car"
-			}],
-			"services" => []
-		}
-
-		points.each do |point|
-			data["services"].push({
-					"id"=> point[1]['id'].to_s,
-					"name"=> "point_of_interest",
-					"address"=> {
-						"location_id"=> "loc",
-						"lat"=> point[1]["lat"],
-						"lon"=> point[1]["lon"]
-					}
-				})
-		end
-
-
-		job_id = HTTParty.post('https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e', {body: JSON.dump(data), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :verify => false })
-
-		job_id = job_id['job_id']
-
-		Rails.logger.debug job_id
-
-		# sleep(2)
-
-		res = HTTParty.get("https://graphhopper.com/api/1/vrp/solution/#{job_id}?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e", :verify => false)
-
-		# `curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e" --data @../vrp.json`
-
-		# sleep(2)
-
-		# res = `curl -X GET "https://graphhopper.com/api/1/vrp/solution/#{job_id}?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e"`
-
-		Rails.logger.debug res
-
-		# res = HTTParty.post('https://graphhopper.com/api/1/'+request+'&key='+GRAPHHOPPER_API_KEY)
-
-		# url = URI.parse('https://graphhopper.com/api/1/'+request+'&key='+GRAPHHOPPER_API_KEY)
-		# req = Net::HTTP::Post.new(url.to_s)
-		# res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
-
-
-
-		# Store the order of point ids in `order`
-		order = []
-		res["solution"]["routes"][0]["activities"].each do |poi|
-			order.push(poi["id"])
-		end
-
-
-		# Remove placeholders for hotel coords (start and end coord)
-		# Remove first element
-		order.shift
-		# Remove last element
-		order.pop
-
-		render :json => order
+		# hotel = params[:hotel]
+		# points = params[:pois]
+		#
+		# # hotel = {'lat'=> 50.877044, 'lon'=> 12.076721}
+		# # points = [{'lat'=> 51.508742, 'lon'=> 7.500916, 'id'=> 'asdbfdbndvb'}, {'lat'=> 49.0047222, 'lon'=> 8.3858333, 'id'=> 'sfdfds'}]
+		#
+		# data = {
+		# 	"vehicles" => [{
+		# 		"vehicle_id" => "vehicle1",
+		# 		"start_address" => {
+		# 				"location_id" => "start",
+		# 				"lat"=> hotel["lat"],
+		# 				"lon"=> hotel["lon"]
+		# 		},
+		# 		"end_address" => {
+		# 			"location_id" => "end",
+		# 			"lat"=> hotel["lat"],
+		# 			"lon"=> hotel["lon"]
+		# 		},
+		# 		"type_id" => "vehicle_type_1",
+		# 		"return_to_depot" => true
+		# 	}],
+		# 	"vehicle_types" => [{
+		# 		"type_id" => "vehicle_type_1",
+		# 		"profile" => "car"
+		# 	}],
+		# 	"services" => []
+		# }
+		#
+		# points.each do |point|
+		# 	data["services"].push({
+		# 			"id"=> point[1]['id'].to_s,
+		# 			"name"=> "point_of_interest",
+		# 			"address"=> {
+		# 				"location_id"=> "loc",
+		# 				"lat"=> point[1]["lat"],
+		# 				"lon"=> point[1]["lon"]
+		# 			}
+		# 		})
+		# end
+		#
+		#
+		# job_id = HTTParty.post('https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e', {body: JSON.dump(data), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :verify => false })
+		#
+		# job_id = job_id['job_id']
+		#
+		# Rails.logger.debug job_id
+		#
+		# # sleep(2)
+		#
+		# res = HTTParty.get("https://graphhopper.com/api/1/vrp/solution/#{job_id}?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e", :verify => false)
+		#
+		# # `curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e" --data @../vrp.json`
+		#
+		# # sleep(2)
+		#
+		# # res = `curl -X GET "https://graphhopper.com/api/1/vrp/solution/#{job_id}?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e"`
+		#
+		# Rails.logger.debug res
+		#
+		# # res = HTTParty.post('https://graphhopper.com/api/1/'+request+'&key='+GRAPHHOPPER_API_KEY)
+		#
+		# # url = URI.parse('https://graphhopper.com/api/1/'+request+'&key='+GRAPHHOPPER_API_KEY)
+		# # req = Net::HTTP::Post.new(url.to_s)
+		# # res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
+		#
+		#
+		#
+		# # Store the order of point ids in `order`
+		# order = []
+		# res["solution"]["routes"][0]["activities"].each do |poi|
+		# 	order.push(poi["id"])
+		# end
+		#
+		#
+		# # Remove placeholders for hotel coords (start and end coord)
+		# # Remove first element
+		# order.shift
+		# # Remove last element
+		# order.pop
+		#
+		# render :json => order
 
 	end
 
