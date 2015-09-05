@@ -1,0 +1,103 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: Helvetica;
+	background: url('../images/background.jpg') no-repeat center center fixed;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	background-position: 0 0px;
+	text-align: center;
+}
+
+#nav {
+	text-align: center;
+	width: 100%;
+	position: fixed;
+	color: white;
+	opacity: .95;
+}
+
+#home, #about, #profile, #contact {
+	float: left;
+	width: 22.5%;
+	padding: 1.25%;
+	padding-bottom: .75%;
+	padding-top: .75%;
+}
+
+a:link {
+	color: white;
+	text-decoration: none;
+}
+
+a:visited {
+	color: white;
+	text-decoration: none;
+}
+
+#home:hover, #about:hover, #profile:hover, #contact:hover {
+	color: black;
+}
+
+
+#heading {
+	text-align: center;
+	font-family: monospace;
+	font-size: xx-large;
+	color: white;
+	width: 100%;
+	height: auto;
+}
+
+#search {
+	height: 140px;
+	width: 100%;
+	margin: 0;
+	background-color: black;
+	opacity: .7;
+	padding-top: 5%;
+	padding-bottom: 0;
+}
+
+input {
+	background-color: white;
+}
+
+#destination, #origin, #submit_button {
+	font-size: large;
+	text-align: center;
+	width: 20%;
+	height: 30%;
+	padding: 0%;
+	margin: auto 0;
+	color: black;
+	background-color: white;
+	opacity: 1;
+}
+
+#submit_button {
+	background-color: orange;
+	border-radius:.5em;
+	width: 10%;
+	opacity: 1;
+}
+
+#date {
+	background-color: white;
+	width: 100%;
+	height: 160px;
+	padding-top: 5%;
+	text-align: center;
+}
+
+#submit_date {
+	width: 10%;
+	height: 15%;
+}

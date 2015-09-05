@@ -1,0 +1,34 @@
+body {
+	background: url('../images/header.jpg') no-repeat center center fixed;
+	background-size: cover;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+}
+
+#nav {
+	font-family: Circular,"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.43;
+	color: white;
+}
+
+#logo, #about {
+	margin: auto 5%;
+}
+
+#logo {
+	float: left;
+	margin-top: 0;
+	margin-left: 1%;
+}
+
+#about {
+	float: right;
+	background-color: orange;
+	padding: .5% 1%;
+	border-radius: 0.5em;
+}
