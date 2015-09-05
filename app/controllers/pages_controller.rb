@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
 
-	QPX_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
+	GOOGLE_BROWSER_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
+	GOOGLE_SERVER_API_KEY = 'AIzaSyB22uhA_dJ3p07nbFXcgOOO6YNQqJnCkYI'
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
 	GRAPHHOPPER_API_KEY = 'cc4609d7-eee0-42ae-b36d-1eb5cb726c2e'
 
@@ -61,9 +62,9 @@ class PagesController < ApplicationController
 			}
 		}
 
-		res = HTTParty.post('https://www.googleapis.com/qpxExpress/v1/trips/search?key='+QPX_API_KEY, {body: JSON.dump(flightData), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'} })
+		res = HTTParty.post('https://www.googleapis.com/qpxExpress/v1/trips/search?key='+GOOGLE_BROWSER_API_KEY, {body: JSON.dump(flightData), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'} })
 
-		# url = URI.parse('https://www.googleapis.com/qpxExpress/v1/trips/search?key='+QPX_API_KEY)
+		# url = URI.parse('https://www.googleapis.com/qpxExpress/v1/trips/search?key='+GOOGLE_BROWSER_API_KEY)
 
 		# req = Net::HTTP::Post.new(url, initheader = {'Content-Type' =>'application/json'})
 		# req.body = '{"request":{"passengers":{"adultCount":1},"slice":[{"origin":"YYZ","destination":"BOS","date":"2015-09-10"},{"origin":"BOS","destination":"YYZ","date":"2015-09-16"}],"solutions":10}}'
