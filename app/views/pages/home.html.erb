@@ -1,26 +1,46 @@
 
-	<body id="home">
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc3jbHCRxEaq_SDfbkwpWIjOMNjWVjnk4&libraries=places"></script>
-
-		<div id="nav">
-			<a id="home" href="#">Home</a>
-			<a id="about" href="#aboutpage">About</a>
-			<a id="profile" href="#profilepage">Profile</a>
-			<a id="contact" href="#contactpage">Contact</a>
-		</div>
+<body id="home" ng-app="homePage">
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc3jbHCRxEaq_SDfbkwpWIjOMNjWVjnk4&libraries=places"></script>
+	<script type="text/javascript">autoload();</script>
+	<div id="nav">
+		<a class="links" href="#">Home</a>
+		<a class="links" href="#aboutpage">About</a>
+		<a class="links" href="#profilepage">Profile</a>
+		<a class="links" href="#contactpage">Contact</a>
+	</div>
 
 	<br><br><br><br><br>
 	<div id="heading">
 		Travllr
+	</div><br/><br/>
+	<div ng-controller="mainController" class="container">
+		<div class="contents" ng-show="page==0">
+			<div class="row">
+				<div class="hidden-md col-md-3"></div>
+				<div class="col-sm-6 col-md-3">
+					<%= text_field_tag :origin, nil, class: 'location-input', 'ng-value': 'data.location.start' %>
+				</div>
+				<div class="col-sm-6 col-md-3">
+					<%= text_field_tag :origin, nil, class: 'location-input', 'ng-value': 'data.location.end' %>
+				</div>
+				<div class="hidden-md col-md-3"></div>
+			</div><br/><br/>
+			<button ng-click="page=1" ng-show="data.location.start!=''&&data.location.end!=''">Next</button>
+		</div>
+		<div class="contents" ng-show="page==1">
+			<div class="row">
+				<div class="hidden-md col-md-2"></div>
+				<div class="col-md-6 col-md-4">
+					<h3>Start Date</h3>
+					<div id="start-calendar"></div>
+				</div>
+				<div class="col-md-6 col-md-4">
+					<h3>End Date</h3>
+					<div id="end-calendar"></div>
+				</div>
+					<div class="hidden-md col-md-2"></div>
+			</div>
+		</div>
 	</div>
-
-	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-	<%= form_tag("/choose", method: "get") do %>
-	<%= text_field_tag(:origin, nil, class: 'location-input') %>
-	<%= text_field_tag(:destination, nil, class: 'location-input') %>
-	<%= text_field_tag(:startdate) %>
-	<%= text_field_tag(:enddate) %>
-	<%= submit_tag 'Go!', id: 'submit-button' %>
-	<% end %>
 
 </body>
