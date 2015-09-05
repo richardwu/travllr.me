@@ -139,13 +139,13 @@ class PagesController < ApplicationController
 				"vehicle_id" => "vehicle1",
 				"start_address" => {
 						"location_id" => "start",
-						"lon"=> hotel[:lat],
-						"lat"=> hotel[:lon]
+						"lon"=> hotel["lat"],
+						"lat"=> hotel["lon"]
 				},
 				"end_address" => {
 					"location_id" => "end",
-					"lon"=> hotel[:lat],
-					"lat"=> hotel[:lon]
+					"lon"=> hotel["lat"],
+					"lat"=> hotel["lon"]
 				},
 				"type_id" => "vehicle_type_1",
 				"return_to_depot" => true
@@ -159,12 +159,12 @@ class PagesController < ApplicationController
 
 		points.each do |point|
 			data["services"].push({
-					"id"=> point[:id].to_s,
+					"id"=> point['id'].to_s,
 					"name"=> "point_of_interest",
 					"address"=> {
 						"location_id"=> "loc",
-						"lon"=> point[:lat],
-						"lat"=> point[:lon]
+						"lon"=> point["lat"],
+						"lat"=> point["lon"]
 					}
 				})
 		end
