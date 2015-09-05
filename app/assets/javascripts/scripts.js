@@ -41,10 +41,10 @@ var scripts = {
         }
       });
     }]);
-  },
-  'choose': function() {
-    var chooseApp = angular.module('choosePage',[]);
-    chooseApp.controller('mainController', ['$scope', function($scope) {
+},
+'choose': function() {
+  var chooseApp = angular.module('choosePage',[]);
+  chooseApp.controller('mainController', ['$scope', function($scope) {
 
       // HOTELS
       var latitude = gon.destination[0], longitude = gon.destination[1];
@@ -62,14 +62,54 @@ var scripts = {
         }
       });
 
+      gon.origin = "Toronto, ON, Canada";
+      gon.destination = "Boston, MA, United States";
+
       var originArr = gon.origin.split(', ');
       var originCity = originArr[0];
       var originCountry = originArr[originArr.length - 1];
 
+      var destinationArr = gon.destination.split(', ');
+      var destinationCity = destinationArr[0];
+      var destinationCountry = destinationArr[destinationArr.length - 1];
 
-      var originCode = "BOS", destinationCode = "LAX";
+      var originFound = false, destinationFound = false;
 
-      var startDate = "2015-09-20";
+      var originCode, destinationCode;
+
+
+      // Exceptions list
+      if (originCity == 'Boston' && originCountry == 'United States'){
+        originCode = 'BOS';
+        originFound = true;
+      }
+      if (destinationCity == 'Boston' && destinationCountry == 'United States'){
+        destinationCode = 'BOS';
+        destinationFound = true;
+      }
+
+
+      // Note: Some cities with only 2 airports (e.g. Boston) dont have a code for 'All Airports',
+      // hence they sometimes return the less busy airport
+
+      for (i in gon.airports){
+        if (originFound == false && gon.airports[i].city == originCity && gon.airports[i].country == originCountry){
+          originCode = gon.airports[i].iata;
+          if (gon.airports[i].name == "All Airports")
+            originFound = true;
+        }
+        // TODO: Consider using elseif if origin/destination cannot be the same
+        if (destinationFound == false && gon.airports[i].city == destinationCity && gon.airports[i].country == destinationCountry){
+          destinationCode = gon.airports[i].iata;
+          if (gon.airports[i].name == "All Airports")
+            destinationFound = true;
+        }
+
+        if (originFound && destinationFound)
+          break;
+      }
+
+      console.log(originCode + ' ' + destinationCode);
 
       var flightData = {
         "request": {
@@ -78,16 +118,17 @@ var scripts = {
           },
           "slice": [
           {
-            "origin": "YYZ",
-            "destination": "LAX",
-            "date": "2015-09-20"
+            "origin": originCode,
+            "destination": destinationCode,
+            "date": gon.startdate
           },
           {
-            "origin": "LAX",
-            "destination": "BOS",
-            "date": "2015-09-21"
+            "origin": destinationCode,
+            "destination": originCode,
+            "date": gon.enddate
           }
-          ]
+          ],
+          "solutions": 10
         }
       };
 
@@ -138,11 +179,11 @@ var scripts = {
 
       //   }
       // });
-    }]);
-  },
-  'lalal': function () {
+}]);
+},
+'lalal': function () {
 
-  }
+}
 };
 var loaded = false;
 function autoload() {
