@@ -5,13 +5,23 @@ var scripts = {
       $scope.data = {
         location: {
           start: 'Toronto, Canada',
-          end: 'Dallas, United States'
+          end: 'Paris, France'
         },
         date: {
           start: '2015-09-15',
           end: '2015-09-25'
         }
       };
+      $scope.totalPrice = function(){
+        var total = 0;
+        if($scope.selectedFlight != -1){
+            total += Number($scope.flights[$scope.selectedFlight].saleTotal.substring(3))
+        }
+        return total;
+      }
+      $scope.setPage = function(num){
+        $scope.page = num;
+      }
       $scope.convertDate = function(date){
         return moment(date).format("MMM D @ h:mm A")
       }
@@ -24,7 +34,7 @@ var scripts = {
       $scope.loadFlights = function(){
         $scope.page = 2;
         $scope.loaded = false;
-        $.get('flights', {
+        $.get('flights.json', {
           origin: $scope.data.location.start,
           destination: $scope.data.location.end,
           startDate: $scope.data.date.start,
@@ -35,13 +45,11 @@ var scripts = {
             data.trips.data.carrierNames[data.trips.data.carrier[i].code] = data.trips.data.carrier[i];
           }
           $scope.flightData = data;
-          console.log(data);
           $scope.flights = data.trips.tripOption;
           $scope.loaded = true;
           $scope.$apply();
         });
       };
-      $scope.loadFlights();
       window.scope = $scope;
       $('.location-input').each(function(){
         var input = $(this).get(0);

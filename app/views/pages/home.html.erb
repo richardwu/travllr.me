@@ -91,9 +91,11 @@
 			</table>
 		</div>
 	</div>
-	<div id="footer">
+	<div style="height:100px;"></div>
+	<div id="footer" ng-if="page>1">
 		<div class="container">
-			<span class="text-success">Total: {{totalPrice()}}</span>
+			<span>Total: ${{totalPrice()}} </span>
+			<button ng-show="page==2" ng-click="setPage(3)" ng-disabled="selectedFlight==-1" class="btn btn-default pull-right">Next</button>
 		</div>
 	</div>
 </div>

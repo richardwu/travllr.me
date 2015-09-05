@@ -57,7 +57,7 @@ class PagesController < ApplicationController
 					}
 				],
 				"solutions": 10,
-				"saleCountry": "United States"
+				"saleCountry": "US"
 			}
 		}
 
@@ -73,7 +73,8 @@ class PagesController < ApplicationController
 
 		render :json => res.body
 
-	end 
+	end
+<<<<<<< Updated upstream
 
 	def activities
 
@@ -93,6 +94,8 @@ class PagesController < ApplicationController
 
 		render :json => results
 	end
+=======
+>>>>>>> Stashed changes
 
 	def choose
 
@@ -126,7 +129,34 @@ class PagesController < ApplicationController
 
 	end
 
-	private 
+<<<<<<< Updated upstream
+=======
+
+	def routes
+		input = [{lat: 10, long: 20}, {lat: 20, long: 10}]
+		request = "route?"
+
+		input.each do |pair|
+			lat = pair[:lat]
+			long = pair[:long]
+			request = request + "point=" + lat + "," + long + "&"
+		end
+
+		request = request + "vehicle=foot&locale=en&instructions=true&debug=true&optimize=true&points_encoded=false";
+
+				url = URI.parse('https://graphhopper.com/api/1/'+request+'&key='+GRAPHHOPPER_API_KEY)
+				req = Net::HTTP::Post.new(url.to_s)
+				res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
+
+				Rails.logger.debug res.body
+				
+				render :json => res.body
+
+
+	end
+
+>>>>>>> Stashed changes
+	private
 	def findCode(place)
 		place = place.split(', ').join(',')
 
@@ -150,5 +180,4 @@ class PagesController < ApplicationController
 
 		return code
 	end
-
 end
