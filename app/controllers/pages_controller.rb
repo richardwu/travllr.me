@@ -2,7 +2,7 @@ class PagesController < ApplicationController
 
 	QPX_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
-	GRAPHHOPPER_API_KEY = 'e1a70071-04e8-436b-9859-3b5ffbfed09f'
+	GRAPHHOPPER_API_KEY = 'cc4609d7-eee0-42ae-b36d-1eb5cb726c2e'
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
 	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
@@ -113,20 +113,40 @@ class PagesController < ApplicationController
 		request = "route?"
 
 		input.each do |pair|
-			lat = pair[:lat]
-			long = pair[:long]
+			lat = pair[:lat].to_s
+			long = pair[:long].to_s
 			request = request + "point=" + lat + "," + long + "&"
 		end
 
-		request = request + "vehicle=foot&locale=en&instructions=true&debug=true&optimize=true&points_encoded=false";
+		request = request + "vehicle=foot&locale=en&instructions=true&debug=true&optimize=true&points_encoded=false"
 
-				url = URI.parse('https://graphhopper.com/api/1/'+request+'&key='+GRAPHHOPPER_API_KEY)
-				req = Net::HTTP::Post.new(url.to_s)
-				res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
 
-				Rails.logger.debug res.body
+		job_id = HTTParty.post('https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e', {body: File.read("#{Rails.root}/vrp.json"), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :verify => false })
 
-				render :json => res.body
+		job_id = job_id['job_id']
+
+		Rails.logger.debug job_id
+
+		# sleep(2)
+
+		res = HTTParty.get("https://graphhopper.com/api/1/vrp/solution/#{job_id}?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e", :verify => false)
+
+		# `curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e" --data @../vrp.json`
+
+		# sleep(2)
+
+		# res = `curl -X GET "https://graphhopper.com/api/1/vrp/solution/#{job_id}?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e"`
+
+		Rails.logger.debug res
+
+		# res = HTTParty.post('https://graphhopper.com/api/1/'+request+'&key='+GRAPHHOPPER_API_KEY)
+
+		# url = URI.parse('https://graphhopper.com/api/1/'+request+'&key='+GRAPHHOPPER_API_KEY)
+		# req = Net::HTTP::Post.new(url.to_s)
+		# res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
+
+
+		render :json => res
 
 	end
 

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   get 'hotels', to: 'pages#hotels'
   get 'flights', to: 'pages#flights'
   get 'activities', to: 'pages#activities'
+  get 'routes', to: 'pages#routes'
   get 'choose', to: 'pages#choose'
 
   # The priority is based upon order of creation: first created -> highest priority.
