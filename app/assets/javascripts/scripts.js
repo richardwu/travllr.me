@@ -221,4 +221,5 @@ function autoload() {
 }
 $(function () {
   autoload();
+  $.material.init();
 });
