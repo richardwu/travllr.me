@@ -2,6 +2,7 @@ class PagesController < ApplicationController
 
 	QPX_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
+	GRAPHHOPPER_API_KEY = 'e1a70071-04e8-436b-9859-3b5ffbfed09f'
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
 	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
@@ -56,8 +57,7 @@ class PagesController < ApplicationController
 						"date": params[:endDate]
 					}
 				],
-				"solutions": 10,
-				"saleCountry": "US"
+				"solutions": 10
 			}
 		}
 
@@ -74,28 +74,6 @@ class PagesController < ApplicationController
 		render :json => res.body
 
 	end
-<<<<<<< Updated upstream
-
-	def activities
-
-		destination = params[:destination].split(', ').join(',')
-		client = Yelp::Client.new({ consumer_key: YELP_CONSUMER_KEY,
-                            consumer_secret: YELP_CONSUMER_SECRET,
-                            token: YELP_TOKEN,
-                            token_secret: YELP_TOKEN_SECRET
-                          })
-
-		params = {
-			term: 'landmarks',
-			limit: 20
-		}
-
-		results = client.search(destination, params)
-
-		render :json => results
-	end
-=======
->>>>>>> Stashed changes
 
 	def choose
 
@@ -129,8 +107,6 @@ class PagesController < ApplicationController
 
 	end
 
-<<<<<<< Updated upstream
-=======
 
 	def routes
 		input = [{lat: 10, long: 20}, {lat: 20, long: 10}]
@@ -149,13 +125,11 @@ class PagesController < ApplicationController
 				res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
 
 				Rails.logger.debug res.body
-				
-				render :json => res.body
 
+				render :json => res.body
 
 	end
 
->>>>>>> Stashed changes
 	private
 	def findCode(place)
 		place = place.split(', ').join(',')
