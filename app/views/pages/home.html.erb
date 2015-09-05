@@ -113,7 +113,7 @@
 						<td><img src="{{hotel.ThumbnailUrl}}" style="height:60px;"></td>
 						<td><div class="text-primary header">{{hotel.Name}}</div><div></div></td>
 						<td><div class="text-muted">{{hotel.Location.StreetAddress}}</div><p>{{hotel.Description}}</p></td>
-						<td><div class="text-success header" ng-if="hotel.Price">${{hotel.Price.TotalRate.Value}}</div><a href="{{hotel.DetailsUrl}}" class="text-success" style="text-align:center;" ng-if="!hotel.Price">See<br/>Price</a></td>
+						<td><div class="text-success header" ng-if="hotel.Price">${{hotel.Price.TotalRate.Value}}</div><a href="{{hotel.DetailsUrl}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotel.Price">See<br/>Price</a></td>
 					</tr>
 				</tbody>
 			</table>
