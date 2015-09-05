@@ -30,6 +30,7 @@ var scripts = {
       }
       $scope.selectedFlight = -1;
       $scope.flightData = {}, $scope.flights = [];
+      $scope.hotels = [];
       $scope.page = 0;
       $scope.loadFlights = function(){
         $scope.page = 2;
@@ -46,6 +47,20 @@ var scripts = {
           }
           $scope.flightData = data;
           $scope.flights = data.trips.tripOption;
+          $scope.loaded = true;
+          $scope.$apply();
+        });
+      };
+      $scope.loadHotels = function(){
+        $scope.page = 3;
+        $scope.loaded = false;
+        $.get('hotels', {
+          origin: $scope.data.location.start,
+          destination: $scope.data.location.end,
+          startDate: $scope.data.date.start,
+          endDate: $scope.data.date.end
+        }, function(data){
+          $scope.hotels = data.HotelInfoList.HotelInfo;
           $scope.loaded = true;
           $scope.$apply();
         });
