@@ -1,0 +1,39 @@
+body {
+	background: -webkit-linear-gradient(#55c3a0 0%, #ffffff 100%) no-repeat;
+
+}
+
+#date {
+	width: 100%;
+	height: 160px;
+	padding-top: 5%;
+	text-align: center;
+}
+.ui-datepicker{
+	margin:0 auto;
+}
+.column{
+	display:inline-block;
+	margin:0px;
+	padding:10px;
+	box-sizing:border-box;
+	width:50%;
+}
+@media(max-width:768px){
+	width:100%;
+	margin-bottom:10px;
+}
+#start_date, #end_date {
+	border-radius: 0.5em;
+	border-color: black;
+	margin: auto 5%;
+	height: 10%;
+}
+
+#submit_date {
+	width: 10%;
+	height: 15%;
+	background-color: orange;
+	border-radius: 0.5em;
+	border-color: black;
+}
