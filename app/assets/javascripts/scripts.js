@@ -17,6 +17,9 @@ var scripts = {
         if($scope.selectedFlight != -1){
             total += Number($scope.flights[$scope.selectedFlight].saleTotal.substring(3))
         }
+        if($scope.selectedHotel != -1){
+            total += Number($scope.hotels[$scope.selectedHotel].Price.TotalRate.Value);
+        }
         return total;
       }
       $scope.setPage = function(num){
@@ -194,7 +197,7 @@ var scripts = {
       //     }
       //   });
 
-      $('#testroutes').click(function(){
+      $('#routes').click(function(){
         $.ajax({
           url: '/routes',
           method: 'GET',
