@@ -11,16 +11,16 @@
 
 	<br><br><br><br><br>
 	<div id="heading">
-		TravelR
+		Travllr
 	</div>
 
 	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 	<%= form_tag("/choose", method: "get") do %>
-	<%= text_field_tag(:origin) %>
-	<%= text_field_tag(:destination) %>
+	<%= text_field_tag(:origin, nil, class: 'location-input') %>
+	<%= text_field_tag(:destination, nil, class: 'location-input') %>
 	<%= text_field_tag(:startdate) %>
 	<%= text_field_tag(:enddate) %>
-	<%= submit_tag("Go!") %>
+	<%= submit_tag 'Go!', id: 'submit-button' %>
 	<% end %>
 
 </body>
