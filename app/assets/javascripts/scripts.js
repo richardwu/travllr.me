@@ -33,6 +33,10 @@ var scripts = {
       }
       $scope.setPage = function(num){
         $scope.page = num;
+        if(num==0) {
+          $scope.data.location.start='';
+          $scope.data.location.end='';
+        }
       }
       $scope.convertDate = function(date){
         return moment(date).format("MMM D @ h:mm A")
