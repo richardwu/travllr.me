@@ -131,21 +131,25 @@ class PagesController < ApplicationController
 
 
 	def routes
-		hotel = params[:hotel]
-		points = params[:pois]
+		# hotel = params[:hotel]
+		# points = params[:pois]
+
+		hotel = {'lat'=> 50.877044, 'lon'=> 12.076721}
+
+		points = [{'lat'=> 51.508742, 'lon'=> 7.500916, 'id'=> 'asdbfdbndvb'}, {'lat'=> 49.0047222, 'lon'=> 8.3858333, 'id'=> 'sfdfds'}]
 
 		data = {
 			"vehicles" => [{
 				"vehicle_id" => "vehicle1",
 				"start_address" => {
 						"location_id" => "start",
-						"lon"=> hotel["lat"],
-						"lat"=> hotel["lon"]
+						"lat"=> hotel["lat"],
+						"lon"=> hotel["lon"]
 				},
 				"end_address" => {
 					"location_id" => "end",
-					"lon"=> hotel["lat"],
-					"lat"=> hotel["lon"]
+					"lat"=> hotel["lat"],
+					"lon"=> hotel["lon"]
 				},
 				"type_id" => "vehicle_type_1",
 				"return_to_depot" => true
@@ -163,8 +167,8 @@ class PagesController < ApplicationController
 					"name"=> "point_of_interest",
 					"address"=> {
 						"location_id"=> "loc",
-						"lon"=> point["lat"],
-						"lat"=> point["lon"]
+						"lat"=> point["lat"],
+						"lon"=> point["lon"]
 					}
 				})
 		end
@@ -195,13 +199,21 @@ class PagesController < ApplicationController
 		# res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
 
 
-		render :json => res
 
 		# Store the order of point ids in `order`
 		order = []
-		res["solution"]["routes"]["activities"].each do |poi|
+		res["solution"]["routes"][0]["activities"].each do |poi|
 			order.push(poi["id"])
 		end
+
+
+		# Remove placeholders for hotel coords (start and end coord)
+		# Remove first element
+		order.shift
+		# Remove last element
+		order.pop
+
+		render :json => order
 
 	end
 

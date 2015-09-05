@@ -32,18 +32,18 @@ var scripts = {
         return $scope.flightData.trips.data.carrierNames[code].name;
       }
       $scope.toggleActivity = function(idx){
-        if($scope.selectedActivites.indexOf(idx) != -1){
-          $scope.selectedActivites.splice($scope.selectedActivites.indexOf(idx), 1);
+        if($scope.selectedActivities.indexOf(idx) != -1){
+          $scope.selectedActivities.splice($scope.selectedActivities.indexOf(idx), 1);
         }else{
-          $scope.selectedActivites.push(idx);
+          $scope.selectedActivities.push(idx);
         }
       }
       $scope.activitySelected = function(idx){
-        return $scope.selectedActivites.indexOf(idx) != -1;
+        return $scope.selectedActivities.indexOf(idx) != -1;
       }
       $scope.selectedFlight = -1;
       $scope.flightData = {}, $scope.flights = [], $scope.selectedHotel = -1;
-      $scope.hotels = [], $scope.selectedActivites = [];
+      $scope.hotels = [], $scope.selectedActivities = [];
       $scope.page = 0;
       $scope.loadFlights = function(){
         $scope.page = 2;
