@@ -23,9 +23,10 @@ var scripts = {
       });
       function updateDate(){
         $scope.data.date = {
-          start: $('#start-calendar').datepicker('getDate'),
-          end: $('#end-calendar').datepicker('getDate')
+          start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
+          end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
         };
+        $scope.$apply();
       }
       $( "#start-calendar" ).datepicker({
         minDate: "+1d",
@@ -41,11 +42,10 @@ var scripts = {
         }
       });
     }]);
-},
-'choose': function() {
-  var chooseApp = angular.module('choosePage',[]);
-  chooseApp.controller('mainController', ['$scope', function($scope) {
-
+  },
+  'choose': function() {
+    var chooseApp = angular.module('choosePage',[]);
+    chooseApp.controller('mainController', ['$scope', function($scope) {
       // HOTELS
       var latitude = gon.destination[0], longitude = gon.destination[1];
       $.ajax({
@@ -61,7 +61,6 @@ var scripts = {
         error: function(resp){
         }
       });
-
       gon.origin = "Toronto, ON, Canada";
       gon.destination = "Boston, MA, United States";
 
@@ -96,17 +95,17 @@ var scripts = {
         if (originFound == false && gon.airports[i].city == originCity && gon.airports[i].country == originCountry){
           originCode = gon.airports[i].iata;
           if (gon.airports[i].name == "All Airports")
-            originFound = true;
+          originFound = true;
         }
         // TODO: Consider using elseif if origin/destination cannot be the same
         if (destinationFound == false && gon.airports[i].city == destinationCity && gon.airports[i].country == destinationCountry){
           destinationCode = gon.airports[i].iata;
           if (gon.airports[i].name == "All Airports")
-            destinationFound = true;
+          destinationFound = true;
         }
 
         if (originFound && destinationFound)
-          break;
+        break;
       }
 
       console.log(originCode + ' ' + destinationCode);
@@ -117,16 +116,16 @@ var scripts = {
             "adultCount": 1
           },
           "slice": [
-          {
-            "origin": originCode,
-            "destination": destinationCode,
-            "date": gon.startdate
-          },
-          {
-            "origin": destinationCode,
-            "destination": originCode,
-            "date": gon.enddate
-          }
+            {
+              "origin": originCode,
+              "destination": destinationCode,
+              "date": gon.startdate
+            },
+            {
+              "origin": destinationCode,
+              "destination": originCode,
+              "date": gon.enddate
+            }
           ],
           "solutions": 10
         }
@@ -142,7 +141,7 @@ var scripts = {
           console.log(resp);
         },
 
-        error: function(resp){  
+        error: function(resp){
           console.log('error loading flights');
         }
       });
@@ -179,11 +178,8 @@ var scripts = {
 
       //   }
       // });
-}]);
-},
-'lalal': function () {
-
-}
+    }]);
+  }
 };
 var loaded = false;
 function autoload() {
