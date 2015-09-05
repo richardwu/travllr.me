@@ -4,7 +4,7 @@ var scripts = {
     homeApp.controller('mainController', ['$scope', function ($scope) {
       $scope.data = {
         location: {
-          start: '',
+          start: 'test',
           end: ''
         },
         date: {
@@ -13,6 +13,7 @@ var scripts = {
         }
       };
       $scope.page = 0;
+      window.scope = $scope;
       $('.location-input').each(function(){
         var input = $(this).get(0);
         var options = {

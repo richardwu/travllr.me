@@ -18,14 +18,14 @@
 			<div class="row">
 				<div class="hidden-md col-md-3"></div>
 				<div class="col-sm-6 col-md-3">
-					<%= text_field_tag :origin, nil, class: 'location-input', 'ng-value': 'data.location.start' %>
+					<%= text_field_tag :origin, nil, class: 'location-input', 'ng-model': 'data.location.start' %>
 				</div>
 				<div class="col-sm-6 col-md-3">
-					<%= text_field_tag :origin, nil, class: 'location-input', 'ng-value': 'data.location.end' %>
+					<%= text_field_tag :origin, nil, class: 'location-input', 'ng-model': 'data.location.end' %>
 				</div>
 				<div class="hidden-md col-md-3"></div>
 			</div><br/><br/>
-			<button ng-click="page=1" ng-show="data.location.start!=''&&data.location.end!=''">Next</button>
+			<button ng-click="page=1" ng-disabled="!(data.location.start!=''&&data.location.end!='')">Next</button>
 		</div>
 		<div class="contents" ng-show="page==1">
 			<div class="row">
