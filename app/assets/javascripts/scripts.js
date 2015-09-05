@@ -47,6 +47,7 @@ var scripts = {
     var chooseApp = angular.module('choosePage',[]);
     chooseApp.controller('mainController', ['$scope', function($scope) {
         
+      window.scope = $scope;
 
       var originArr = gon.origin.split(', ');
       var originCity = originArr[0];
@@ -107,11 +108,6 @@ var scripts = {
       });
 
 
-
-
-
-      
-
       //***************************** POINTS OF INTEREST ***************************
 
 
@@ -126,11 +122,6 @@ var scripts = {
           console.log('error loading activities');
         }
       });
-
-
-
-
-
 
     }]);
   }
