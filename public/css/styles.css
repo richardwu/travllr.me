@@ -95,3 +95,8 @@ input {
 	padding-top: 5%;
 	text-align: center;
 }
+
+#submit_date {
+	width: 10%;
+	height: 15%;
+}
