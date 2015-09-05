@@ -56,7 +56,8 @@ class PagesController < ApplicationController
 						"date": params[:endDate]
 					}
 				],
-				"solutions": 10
+				"solutions": 10,
+				"saleCountry": "United States"
 			}
 		}
 
