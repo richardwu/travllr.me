@@ -1,6 +1,6 @@
 var scripts = {
   'home': function () {
-    var homeApp = angular.module('homePage', []);
+    var homeApp = angular.module('homePage', ['ui.bootstrap']);
     homeApp.controller('mainController', ['$scope', function ($scope) {
       $scope.data = {
         location: {
@@ -126,6 +126,9 @@ $scope.getNumber = function(num) {
         }, function(data){
           // Returns array of POI id's in order
           console.log(data);
+
+          $scope.loaded = true;
+          $scope.$apply();
         });
 
       };

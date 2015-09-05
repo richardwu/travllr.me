@@ -15,5 +15,6 @@
 //= require jquery-ui
 //= require turbolinks
 //= require angular
+//= require angular-ui-bootstrap
 //= require moment
 //= require_tree .

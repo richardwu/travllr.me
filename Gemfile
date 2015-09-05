@@ -41,6 +41,8 @@ gem 'httparty', '~> 0.13.5'
 
 gem 'yelp', '~> 2.0.6'
 
+gem 'angular-ui-bootstrap-rails'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
