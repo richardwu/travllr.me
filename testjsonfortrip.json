@@ -1,0 +1,1 @@
+flightData = {"request": {"passengers": {"adultCount": 1},"slice": [{"origin": originCode,"destination": destinationCode,"date": startDate},{"origin": destinationCode,"destination": originCode,"date": endDate}],"solutions": 10}}
