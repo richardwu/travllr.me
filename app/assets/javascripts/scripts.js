@@ -73,6 +73,40 @@ return useless;
           $scope.$apply();
         });
       };
+
+      $scope.groupActivities = function(){
+        var startDate = moment(new Date ($scope.data.date.start));
+        var endDate = moment(new Date ($scope.data.date.end));
+
+        var currentDate = startDate;
+        while (!currentDate.isAfter(endDate)){
+          // This can be modified to allow user input
+          var startTime = 9;
+          var endTime = 22;
+          // Special case for first date (start time == arriving flight)
+          if (currentDate == startDate){
+            var departingFlight = $scope.flights[scope.selectedFlight].slice[0];
+            var lastSegment = departingFlight.segment[departingFlight.segment.length-1];
+            startTime = moment(lastSegment.leg[0].arrivalTime);
+          }
+
+
+          currentDate.add(1, 'days');
+
+          var nodes = [];
+          for (i in selectedActivities){
+            // Create cost array
+            cost = [];
+            for (j in selectedActivities) {
+
+            }
+
+            // Choose minimum
+          } // end for loop
+        }
+
+      };
+
       $scope.loadHotels = function(){
         $scope.page = 3;
         $scope.loaded = false;
@@ -129,6 +163,13 @@ return useless;
           // Returns array of POI id's in order
           console.log(data);
 
+          var orderedActivities = [];
+
+          for(i in data){
+            orderedActivities.push($scope.activities[data[i]]);
+          }
+
+          $scope.orderedActivities = orderedActivities;
           $scope.loaded = true;
           $scope.$apply();
         });
