@@ -2,6 +2,7 @@ class PagesController < ApplicationController
 
 	QPX_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
+	GRAPHHOPPER_API_KEY = 'e1a70071-04e8-436b-9859-3b5ffbfed09f'
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
 	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
@@ -56,8 +57,7 @@ class PagesController < ApplicationController
 						"date": params[:endDate]
 					}
 				],
-				"solutions": 10,
-				"saleCountry": "US"
+				"solutions": 10
 			}
 		}
 
@@ -146,9 +146,8 @@ class PagesController < ApplicationController
 				res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
 
 				Rails.logger.debug res.body
-				
-				render :json => res.body
 
+				render :json => res.body
 
 	end
 
