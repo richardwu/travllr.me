@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
   root 'pages#home'
+  get 'hotels', to: 'pages#hotels'
+  get 'flights', to: 'pages#flights'
   get 'choose', to: 'pages#choose'
 
   # The priority is based upon order of creation: first created -> highest priority.

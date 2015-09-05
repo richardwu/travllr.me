@@ -21,7 +21,7 @@
 					<%= text_field_tag :origin, nil, class: 'location-input', 'ng-model': 'data.location.start', 'placeholder': 'Home city'%>
 				</div>
 				<div class="col-sm-6 col-md-3">
-					<%= text_field_tag :origin, nil, class: 'location-input', 'ng-model': 'data.location.end', 'placeholder': 'Destination city' %>
+					<%= text_field_tag :destination, nil, class: 'location-input', 'ng-model': 'data.location.end', 'placeholder': 'Destination city' %>
 				</div>
 				<div class="hidden-md col-md-3"></div>
 			</div><br/><br/>
@@ -41,7 +41,7 @@
 				<div class="hidden-md col-md-2"></div>
 			</div>
 			<br/><br/>
-			<button ng-click="page=2" ng-disabled="!(data.date.start!=''&&data.date.end!='')">Next</button>
+			<button id="submit-button" ng-click="page=2" ng-disabled="!(data.date.start!=''&&data.date.end!='')">Next</button>
 
 		</div>
 	</div>
