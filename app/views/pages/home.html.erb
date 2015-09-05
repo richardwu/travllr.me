@@ -8,7 +8,6 @@
 				<div class="cover-container">
 					<div class="masthead clearfix">
 						<div class="inner">
-							<h3 class="masthead-brand">Cover</h3>
 							<nav>
 								<ul class="nav masthead-nav">
 									<li class="active"><a href="#">Home</a></li>
@@ -29,7 +28,7 @@
 					</div>
 					<div class="mastfoot">
 						<div class="inner">
-							<p>Made with love by Richard, Fired, Aahan, Kevin</p>
+							<p>Made with <span class="text-danger mdi-action-favorite"></span> by Richard, Fired, Aahan, Kevin</p>
 						</div>
 					</div>
 				</div>
@@ -112,9 +111,9 @@
 									<tbody>
 										<tr ng-repeat="hotel in hotels" ng-class="{success:$index==$parent.selectedHotel}" ng-click="$parent.selectedHotel=$index">
 											<td><img src="{{hotel.ThumbnailUrl}}" style="height:60px;"></td>
-											<td><div class="text-primary header">{{hotel.Name}}</div><div><span class="mdi-action-grade" ng-repeat="rating in getNumber(hotel.GuestRating)"></span></div></td>
+											<td><div class="text-primary header">{{hotel.Name}}</div><div style="100px;"><span class="mdi-action-grade" style="font-size:14px;" ng-repeat="rating in getNumber(hotel.GuestRating)"></span></div></td>
 											<td><div class="text-muted">{{hotel.Location.StreetAddress}}</div><p>{{hotel.Description}}</p></td>
-											<td><div class="text-success header" ng-if="hotel.Price">${{hotel.Price.TotalRate.Value}}<br/>(${{divideDays(hotel.Price.TotalRate.Value) | number:2}} per day)</div><a href="{{hotel.DetailsUrl}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotel.Price">See<br/>Price</a></td>
+											<td><div class="text-success header" ng-if="hotel.Price"><span style="font-size:1.5em">${{hotel.Price.TotalRate.Value}}</span><br/>(${{divideDays(hotel.Price.TotalRate.Value) | number:2}} per day)</div><a href="{{hotel.DetailsUrl}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotel.Price">See<br/>Price</a></td>
 										</tr>
 									</tbody>
 								</table>

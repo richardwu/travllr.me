@@ -126,6 +126,9 @@ body {
 }
 .order-table{
 	max-width:800px;
+	td{
+		cursor:pointer;
+	}
 }
 @media (min-width: 768px) {
   .masthead-brand {

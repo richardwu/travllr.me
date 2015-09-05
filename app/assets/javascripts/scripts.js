@@ -14,7 +14,9 @@ var scripts = {
       };
 
 $scope.getNumber = function(num) {
-    return new Array(Number(num));
+var useless = [];
+for(var i = 0; i < Math.ceil(Number(num)); i++) useless.push(i);
+return useless;
 }
       $scope.divideDays = function(price){
         return Number(price) / moment($scope.data.date.end).diff(moment($scope.data.date.start), 'days');
@@ -109,8 +111,8 @@ $scope.getNumber = function(num) {
         var pois = [];
         for (i in $scope.selectedActivities){
           pois.push({
-            lat: $scope.activities[$scope.selectedActivities[i]].location.coordinate.latitude, 
-            lon: $scope.activities[$scope.selectedActivities[i]].location.coordinate.longitude, 
+            lat: $scope.activities[$scope.selectedActivities[i]].location.coordinate.latitude,
+            lon: $scope.activities[$scope.selectedActivities[i]].location.coordinate.longitude,
             id: $scope.activities[$scope.selectedActivities[i]].id
           });
         }
@@ -122,7 +124,7 @@ $scope.getNumber = function(num) {
 
         $.get('routes', {
           hotel: hotel,
-          pois: pois 
+          pois: pois
         }, function(data){
           // Returns array of POI id's in order
           console.log(data);
@@ -150,11 +152,14 @@ $scope.getNumber = function(num) {
         minDate: "+1d",
         onSelect: function( selectedDate ) {
           $( "#end-calendar" ).datepicker( "option", "minDate", moment(selectedDate).add(1, "days").toDate() );
-          updateDate();
+
+            $( "#end-calendar" ).datepicker( "option", "maxDate", moment(selectedDate).add(27, "days").toDate() );
+            updateDate();
         }
       });
       $( "#end-calendar" ).datepicker({
         minDate: "+2d",
+        maxDate: "+28d",
         onSelect: function( selectedDate ) {
           updateDate();
         }
