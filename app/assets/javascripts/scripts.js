@@ -12,6 +12,13 @@ var scripts = {
           end: '2015-09-25'
         }
       };
+
+$scope.getNumber = function(num) {
+    return new Array(Number(num));
+}
+      $scope.divideDays = function(price){
+        return Number(price) / moment($scope.data.date.end).diff(moment($scope.data.date.start), 'days');
+      };
       $scope.totalPrice = function(){
         var total = 0;
         if($scope.selectedFlight != -1){
@@ -142,12 +149,12 @@ var scripts = {
       $( "#start-calendar" ).datepicker({
         minDate: "+1d",
         onSelect: function( selectedDate ) {
-          $( "#end-calendar" ).datepicker( "option", "minDate", selectedDate );
+          $( "#end-calendar" ).datepicker( "option", "minDate", moment(selectedDate).add(1, "days").toDate() );
           updateDate();
         }
       });
       $( "#end-calendar" ).datepicker({
-        minDate: "+1d",
+        minDate: "+2d",
         onSelect: function( selectedDate ) {
           updateDate();
         }

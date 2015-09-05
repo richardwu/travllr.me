@@ -20,8 +20,6 @@
 					</div>
 					<div class="inner cover">
 						<h1 class="cover-heading">Travllr<sup>TM</sup></h1>
-						<button type="button" id="routes">routes</button>
-						
 						<p class="lead">Get started now.</p>
 						<p class="lead" style="text-align:center;">
 							<%= text_field_tag :origin, nil, class: 'location-input form-control', 'ng-model': 'data.location.start', 'placeholder': 'Home city'%>
@@ -40,7 +38,6 @@
 		<div id="form-container" ng-class="{active: page > 0}">
 			<div class="container">
 				<div class="contents" ng-show="page==1">
-
 					<h1>Select your getaway date</h1>
 					<div class="panel main-panel">
 						<div class="panel-body">
@@ -103,7 +100,6 @@
 									<div class="sk-cube sk-cube1"></div>
 									<div class="sk-cube sk-cube2"></div>
 									<div class="sk-cube sk-cube3"></div>
-									<div class="sk-cube sk-cube4"></div>
 									<div class="sk-cube sk-cube5"></div>
 									<div class="sk-cube sk-cube6"></div>
 									<div class="sk-cube sk-cube7"></div>
@@ -116,9 +112,9 @@
 									<tbody>
 										<tr ng-repeat="hotel in hotels" ng-class="{success:$index==$parent.selectedHotel}" ng-click="$parent.selectedHotel=$index">
 											<td><img src="{{hotel.ThumbnailUrl}}" style="height:60px;"></td>
-											<td><div class="text-primary header">{{hotel.Name}}</div><div></div></td>
+											<td><div class="text-primary header">{{hotel.Name}}</div><div><span class="mdi-action-grade" ng-repeat="rating in getNumber(hotel.GuestRating)"></span></div></td>
 											<td><div class="text-muted">{{hotel.Location.StreetAddress}}</div><p>{{hotel.Description}}</p></td>
-											<td><div class="text-success header" ng-if="hotel.Price">${{hotel.Price.TotalRate.Value}}</div><a href="{{hotel.DetailsUrl}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotel.Price">See<br/>Price</a></td>
+											<td><div class="text-success header" ng-if="hotel.Price">${{hotel.Price.TotalRate.Value}}<br/>(${{divideDays(hotel.Price.TotalRate.Value) | number:2}} per day)</div><a href="{{hotel.DetailsUrl}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotel.Price">See<br/>Price</a></td>
 										</tr>
 									</tbody>
 								</table>
@@ -163,7 +159,7 @@
 		</div>
 		<div id="footer" ng-if="page>0">
 			<div class="container">
-				<span>Total: ${{totalPrice()}} </span>
+				<span>Total: ${{totalPrice() | number:2}} </span>
 				<button ng-show="page==1" ng-click="loadFlights()" ng-disabled="!(data.date.start!=''&&data.date.end!='')" class="btn btn-white pull-right">Next</button>
 				<button ng-show="page==2" ng-click="loadHotels()" ng-disabled="selectedFlight==-1" class="btn btn-white pull-right">Next</button>
 				<button ng-show="page==3" ng-click="loadActivities()" ng-disabled="selectedHotel==-1" class="btn btn-white pull-right">Next</button>
