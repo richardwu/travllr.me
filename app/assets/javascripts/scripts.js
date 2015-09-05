@@ -122,7 +122,7 @@ return useless;
           lon: $scope.hotels[$scope.selectedHotel].Location.GeoLocation.Longitude
         };
 
-        $.get('routes', {
+        $.post('routes', {
           hotel: hotel,
           pois: pois
         }, function(data){
