@@ -23,7 +23,7 @@
 						<p class="lead" style="text-align:center;">
 							<%= text_field_tag :origin, nil, class: 'location-input form-control', 'ng-model': 'data.location.start', 'placeholder': 'Home city'%>
 							<%= text_field_tag :destination, nil, class: 'location-input form-control', 'ng-model': 'data.location.end', 'placeholder': 'Destination city' %>
-							<button ng-click="page=1;" class="btn btn-primary" ng-disabled="!(data.location.start!=''&&data.location.end!='')">Next</button>
+							<button ng-click="page=1;" class="btn btn-primary" ng-disabled="(!(data.location.start!=''&&data.location.end!=''))||(data.location.start==data.location.end)">Next</button>
 						</p>
 					</div>
 					<div class="mastfoot">
@@ -269,7 +269,7 @@
 				<button ng-show="page==3" ng-click="loadActivities()" ng-disabled="selectedHotel==-1" class="btn btn-white pull-right">Next</button>
 				<button ng-show="page==4" ng-click="loadItinerary()" ng-disabled="selectedActivities.length<1" class="btn btn-white pull-right">Next</button>
 				&nbsp;&nbsp;&nbsp;<button ng-click="setPage(page-1)" class="btn btn-black pull-right" style="position:relative;left:-15px;">Back</button>
-				&nbsp;&nbsp;&nbsp;<button ng-click="(setPage(0))" class="btn btn-danger pull-right" style="position:relative;left:-30px;">Reset</button>
+				&nbsp;&nbsp;&nbsp;<button ng-click="confirm('Are you sure?')?setPage(0):false" class="btn btn-danger pull-right" style="position:relative;left:-30px;">Reset</button>
 			</div>
 		</div>
 	</div>
