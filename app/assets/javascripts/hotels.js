@@ -1,6 +1,5 @@
 // Get hotels from hackathon.expedia.com
 
-
 var myApp = angular.module('choosePage',[]);
 
 myApp.controller('mainController', ['$scope', function($scope) {
