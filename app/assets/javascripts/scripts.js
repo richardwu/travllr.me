@@ -47,41 +47,6 @@ var scripts = {
     var chooseApp = angular.module('choosePage',[]);
     chooseApp.controller('mainController', ['$scope', function($scope) {
         
-        console.log(gon.originCode);
-        console.log(gon.destinationCode);
-        
-      gon.startdate = "2015-09-20";
-      gon.enddate = "2015-09-25";
-
-
-
-
-
-      // ****************************** HOTELS ******************************
-      var latitude = gon.destinationCoord[0], longitude = gon.destinationCoord[1];
-      $.ajax({
-        url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates='+gon.startdate+','+gon.enddate+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
-        method: 'GET',
-        dataType: 'json',
-        success: function(resp){
-          var domFragment = $(document.createDocumentFragment());
-          console.log(resp.HotelInfoList.HotelInfo);
-          $scope.hotels = resp.HotelInfoList.HotelInfo;
-          $scope.$apply();
-        },
-        error: function(resp){
-          console.log('error loading hotels');
-
-        }
-      });
-
-
-
-
-
-
-
-      // ***************************** FLIGHTS ********************************
 
       var originArr = gon.origin.split(', ');
       var originCity = originArr[0];
@@ -93,6 +58,15 @@ var scripts = {
 
 
 
+      // ****************************** HOTELS ******************************
+     
+      // Hotels are stored in JS object `gon.hotels`
+
+
+
+
+      // ***************************** FLIGHTS ********************************
+
       var flightData = {
         "request": {
           "passengers": {
@@ -100,19 +74,20 @@ var scripts = {
           },
           "slice": [
             {
-              "origin": originCode,
-              "destination": destinationCode,
+              "origin": gon.originCode,
+              "destination": gon.destinationCode,
               "date": gon.startdate
             },
             {
-              "origin": destinationCode,
-              "destination": originCode,
+              "origin": gon.destinationCode,
+              "destination": gon.originCode,
               "date": gon.enddate
             }
           ],
           "solutions": 10
         }
       };
+
 
       $.ajax({
         url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c',
@@ -121,6 +96,8 @@ var scripts = {
         contentType: 'application/json',
         dataType: 'json',
         success: function(resp){
+
+          // Flights are stored in JS object resp
           console.log(resp);
         },
 
