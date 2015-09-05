@@ -13,6 +13,7 @@ var scripts = {
         }
       };
       $scope.page = 0;
+      window.scope = $scope;
       $('.location-input').each(function(){
         var input = $(this).get(0);
         var options = {
@@ -36,7 +37,6 @@ var scripts = {
       $( "#end-calendar" ).datepicker({
         minDate: "+1d",
         onSelect: function( selectedDate ) {
-          $( "#end-calendar" ).datepicker( "option", "minDate", selectedDate );
           updateDate();
         }
       });
