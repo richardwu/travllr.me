@@ -4,14 +4,23 @@
 		<title>Date page</title>
 		
 		<link href="css/date.css" rel="stylesheet">
+		<link rel="stylesheet" href="css/jquery-ui.min.css">
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="js/date.js"></script>
 	</head>
 	<body>
 		
 		<div id="date">
-			<h3>When do you want to go?</h3><br><br>
-			Start Date:   <input type="date" id="start_date"><br><br>
-			End Date:     <input type="date" id="end_date"><br><br><br>
-			<input type="submit" id="submit_date" value="Submit">
+			<div class="column">
+				<strong>Start Date</strong>
+				<div id="start"></div>
+			</div><!--
+			--><div class="column">
+				<strong>End Date</strong>
+				<div id="end"></div>
+				
+			</div>
 		</div>
 
 		

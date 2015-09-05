@@ -9,7 +9,20 @@ body {
 	padding-top: 5%;
 	text-align: center;
 }
-
+.ui-datepicker{
+	margin:0 auto;
+}
+.column{
+	display:inline-block;
+	margin:0px;
+	padding:10px;
+	box-sizing:border-box;
+	width:50%;
+}
+@media(max-width:768px){
+	width:100%;
+	margin-bottom:10px;
+}
 #start_date, #end_date {
 	border-radius: 0.5em;
 	border-color: black;
