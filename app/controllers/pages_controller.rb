@@ -89,6 +89,7 @@ class PagesController < ApplicationController
 
 		params = {
 			term: 'landmarks',
+			sort: 2,
 			limit: 20
 		}
 

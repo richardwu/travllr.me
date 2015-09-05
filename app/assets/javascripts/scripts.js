@@ -81,22 +81,29 @@ return useless;
         var currentDate = startDate;
         while (!currentDate.isAfter(endDate)){
           // This can be modified to allow user input
-          var startTime = 9;
+          var startTime = 8;
           var endTime = 22;
           // Special case for first date (start time == arriving flight's arrival time)
           if (currentDate == startDate){
             var departingFlight = $scope.flights[$scope.selectedFlight].slice[0];
             var lastSegment = $(departingFlight.segment).last();
 
+            // Remove timezone to be able to parse hour 
             timeStr = lastSegment[0].leg[0].arrivalTime;
             timeStr = timeStr.substring(0, timeStr.length -6);
-            startTime = moment(lastSegment.leg[0].arrivalTime);
+            // One hour leeway
+            startTime = moment(timeStr).hours() + 1;
           }
           // Special case for last date (end time == departing flight's departure time)
-          if (currentDate == endDate){
+          else if (currentDate == endDate){
             var arrivingFlight = $($scope.flights[scope.selectedFlight].slice).last();
             var firstSegment = departingFlight.segment[0];
-            endTime = moment(firstSegment.leg[0].departureTime);
+
+            // Remove timezone to be able to parse hour 
+            timeStr = firstSegment.leg[0].departureTime;
+            timeStr = timeStr.substring(0, timeStr.length - 6);
+
+            endTime = moment(timeStr).hours();
           }
 
           // Increment currentDate by 1 day
@@ -260,20 +267,6 @@ return useless;
       //       console.log(resp);
       //     }
       //   });
-
-      $('#routes').click(function(){
-        $.ajax({
-          url: '/routes',
-          method: 'GET',
-          dataType: 'json',
-              success: function(resp){
-                console.log(resp);
-              },
-              error: function(resp){
-                console.log(resp);
-              }
-      });
-    });
 
 
       //   // Returns JSON of activities
