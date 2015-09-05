@@ -146,7 +146,7 @@
 											<td><img src="{{activity.image_url}}" style="height:60px;"></td>
 											<td><div class="text-primary header">{{activity.name}}</div><div></div></td>
 											<td><div class="text-muted">{{activity.location.address[0]}}</div><p>{{activity.snippet_text}}</p></td>
-											<td><div class="text-success header" ng-if="hotel.Price">${{activity.Price.TotalRate.Value}}</div><a href="{{activity.url}}" class="text-success" style="text-align:center;" ng-if="!hotel.Price">More<br/>Info</a></td>
+											<td><div class="text-success header" ng-if="hotel.Price">${{activity.Price.TotalRate.Value}}</div><a href="{{activity.url}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotel.Price">More<br/>Info</a></td>
 										</tr>
 									</tbody>
 								</table>

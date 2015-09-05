@@ -13,11 +13,11 @@ var scripts = {
         }
       };
 
-$scope.getNumber = function(num) {
-var useless = [];
-for(var i = 0; i < Math.ceil(Number(num)); i++) useless.push(i);
-return useless;
-}
+      $scope.getNumber = function(num) {
+      var useless = [];
+      for(var i = 0; i < Math.ceil(Number(num)); i++) useless.push(i);
+      return useless;
+      }
       $scope.divideDays = function(price){
         return Number(price) / moment(new Date($scope.data.date.end)).diff(moment(new Date($scope.data.date.start)), 'days');
       };
@@ -73,6 +73,17 @@ return useless;
           $scope.$apply();
         });
       };
+      $scope.loadDistanceMatrix = function(){
+
+      }
+      // Returns the estimated length of time, in minutes, needed for the given activity
+      $scope.calculateCost = function(act){
+
+      }
+      // Returns the "cost" for including an activity based on how long it takes to get there and how long it takes to participate in it
+      $scope.calculateCost = function(act1, act2){
+        return distance(act1, act2) + calculateCost(act2);
+      }
 
       $scope.groupActivities = function(){
         var startDate = moment(new Date ($scope.data.date.start));
@@ -109,15 +120,37 @@ return useless;
           // Increment currentDate by 1 day
           currentDate.add(1, 'days');
 
-          var nodes = [];
+          // GROUP ACTIVITIES INTO DAYS
+
+          // set up constants
+          var MAX_LIMIT = 14; // starttime - endtime
+          // initialize vars
+          var currentAct = 0, totalCost = calculateCost(currentAct),
+              includedActivities = [currentAct], cost = [0];
+
           for (i in selectedActivities){
-            // Create cost array
-            cost = [];
+            // Update cost array
             for (j in selectedActivities) {
-
+              if (cost[j] == undefined || calculateCost(currentAct, j) < cost[j])
+                cost[j] = calculateCost(currentAct, j);
             }
+            // Choose minimum activity
+            var minAct = 0;
+            for (j in selectedActivities){
+              if (includedActivities.indexOf(j) == -1 && cost[j] < cost[minAct]){
+                minAct = j;
+              }
+            }
+            // Set minimum activity to current activity
+            includedActivities.push(minAct);
+            currentAct = minAct;
+            // Check if maximum limit reached
+            if(totalCost >= MAX_LIMIT) {
+              // Finished grouping a set of activities into one day!
 
-            // Choose minimum
+
+
+            } // end if
           } // end for loop
         }
 
