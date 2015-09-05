@@ -6,6 +6,8 @@ class PagesController < ApplicationController
 	def choose
 		gon.originCoord = Geocoder.coordinates(params[:origin])
 		gon.destCoord = Geocoder.coordinates(params[:destination])
+
+		gon.airports = JSON.parse(File.read("#{Rails.root}/public/data/airports.json"))
 		gon.origin = params[:origin]
 		gon.destination = params[:destination]
 		gon.startdate = params[:startdate]
