@@ -1,5 +1,5 @@
 
-	<body id="home">
+	<body id="home" ng-app="homePage">
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc3jbHCRxEaq_SDfbkwpWIjOMNjWVjnk4&libraries=places"></script>
 		<script type="text/javascript">autoload();</script>
 		<div id="nav">
@@ -13,9 +13,14 @@
 	<div id="heading">
 		Travllr
 	</div>
-
+	<div ng-controller="mainController">
+		<div class="contents" ng-show="page==0">
+			<%= text_field_tag :origin, nil, class: 'location-input', 'ng-value': 'data.location.start' %>
+			<%= text_field_tag :origin, nil, class: 'location-input', 'ng-value': 'data.location.end' %>
+		</div>
+	</div>
 	<%= form_tag("/choose", method: "get") do %>
-	<%= text_field_tag(:origin, nil, class: 'location-input') %>
+	<%= text_field_tag :origin, nil, class: 'location-input', 'ng-value': "test" %>
 	<%= text_field_tag(:destination, nil, class: 'location-input') %>
 	<%= text_field_tag(:startdate) %>
 	<%= text_field_tag(:enddate) %>
