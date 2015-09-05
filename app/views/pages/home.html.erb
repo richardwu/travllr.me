@@ -38,9 +38,13 @@
 					<h3>End Date</h3>
 					<div id="end-calendar"></div>
 				</div>
-					<div class="hidden-md col-md-2"></div>
+				<div class="hidden-md col-md-2"></div>
 			</div>
+			<br/><br/>
+			<button ng-click="page=2" ng-disabled="!(data.date.start!=''&&data.date.end!='')">Next</button>
+
 		</div>
 	</div>
+</div>
 
 </body>
