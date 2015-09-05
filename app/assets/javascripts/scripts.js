@@ -28,9 +28,19 @@ var scripts = {
       $scope.getCarrier = function(code){
         return $scope.flightData.trips.data.carrierNames[code].name;
       }
+      $scope.toggleActivity = function(idx){
+        if($scope.selectedActivites.indexOf(idx) != -1){
+          $scope.selectedActivites.splice($scope.selectedActivites.indexOf(idx), 1);
+        }else{
+          $scope.selectedActivites.push(idx);
+        }
+      }
+      $scope.activitySelected = function(idx){
+        return $scope.selectedActivites.indexOf(idx) != -1;
+      }
       $scope.selectedFlight = -1;
-      $scope.flightData = {}, $scope.flights = [];
-      $scope.hotels = [];
+      $scope.flightData = {}, $scope.flights = [], $scope.selectedHotel = -1;
+      $scope.hotels = [], $scope.selectedActivites = [];
       $scope.page = 0;
       $scope.loadFlights = function(){
         $scope.page = 2;
@@ -65,6 +75,24 @@ var scripts = {
           $scope.$apply();
         });
       };
+
+
+      $scope.loadActivities = function(){
+        $scope.page = 4;
+        $scope.loaded = false;
+        $.get('activities', {
+          origin: $scope.data.location.start,
+          destination: $scope.data.location.end,
+          startDate: $scope.data.date.start,
+          endDate: $scope.data.date.end
+        }, function(data){
+          $scope.activities = data.businesses;
+          $scope.loaded = true;
+          $scope.$apply();
+        });
+      };
+
+
       window.scope = $scope;
       $('.location-input').each(function(){
         var input = $(this).get(0);
@@ -138,6 +166,20 @@ var scripts = {
       //     }
       //   });
 
+      $('#testroutes').click(function(){
+        $.ajax({
+          url: '/routes',
+          method: 'GET',
+          dataType: 'json',
+              success: function(resp){
+                console.log(resp);
+              },
+              error: function(resp){
+                console.log(resp);
+              }
+      });
+    });
+
 
       //   // Returns JSON of activities
       //   $.ajax({
@@ -155,17 +197,8 @@ var scripts = {
 
       // });
 
-
-      // Function to generate itin
-      $('#generate-itin').on('click', function(){
-        var hotel;
-        var flight;
-        // Sorted
-        var activities;
-      });
-
     }]);
-}
+  }
 };
 
 
