@@ -124,7 +124,9 @@ body {
   color: #fff;
   border-bottom-color: #fff;
 }
-
+.order-table{
+	max-width:800px;
+}
 @media (min-width: 768px) {
   .masthead-brand {
     float: left;
