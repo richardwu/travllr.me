@@ -73,47 +73,6 @@ var scripts = {
           }
         });
 
-      //   var flightData = {
-      //   "request": {
-      //     "passengers": {
-      //       "adultCount": 1
-      //     },
-      //     "slice": [
-      //       {
-      //         "origin": 'YYZ',
-      //         "destination": 'BOS',
-      //         "date": window.scope.data.date.start
-      //       },
-      //       {
-      //         "origin": 'BOS',
-      //         "destination": 'YYZ',
-      //         "date": window.scope.data.date.end
-      //       }
-      //     ],
-      //     "solutions": 10
-      //   }
-      // };
-
-      // console.log(JSON.stringify(flightData));
-
-      // $.ajax({
-      //   url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c',
-      //   method: 'POST',
-      //   data: JSON.stringify(flightData),
-      //   contentType: 'application/json',
-      //   dataType: 'json',
-      //   success: function(resp){
-
-      //     // Flights are stored in JS object resp
-      //     console.log(resp);
-      //   },
-
-      //   error: function(resp){
-      //     console.log('error loading flights');
-      //   }
-      // });
-
-
         // Returns JSON of flights
         $.ajax({
           url: '/flights',
@@ -151,59 +110,20 @@ var scripts = {
 
       // ****************************** HOTELS ******************************
      
-      // Hotels are stored in JS object `gon.hotels`
+      // Hotels are retrieved when final next button is clicked (see 'home')
 
 
 
 
       // ***************************** FLIGHTS ********************************
 
+      // Flights are retrieved when final next button is clicked (see 'home')
 
-      // Can't refactor into controller because of stringify json...
-
-      var flightData = {
-        "request": {
-          "passengers": {
-            "adultCount": 1
-          },
-          "slice": [
-            {
-              "origin": gon.originCode,
-              "destination": gon.destinationCode,
-              "date": gon.startdate
-            },
-            {
-              "origin": gon.destinationCode,
-              "destination": gon.originCode,
-              "date": gon.enddate
-            }
-          ],
-          "solutions": 10
-        }
-      };
-
-
-      $.ajax({
-        url: 'https://www.googleapis.com/qpxExpress/v1/trips/search?key=AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c',
-        method: 'POST',
-        data: JSON.stringify(flightData),
-        contentType: 'application/json',
-        dataType: 'json',
-        success: function(resp){
-
-          // Flights are stored in JS object resp
-          console.log(resp);
-        },
-
-        error: function(resp){
-          console.log('error loading flights');
-        }
-      });
 
 
       //***************************** POINTS OF INTEREST ***************************
 
-      // API not working.... messaged Expedia
+      // API not working.... messaged Expedia!!!!
 
       $.ajax({
         url: 'http://terminal2.expedia.com/x/activities/search?location='+destinationCity+'&startDate='+gon.startdate+'&endDate='+gon.enddate+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
