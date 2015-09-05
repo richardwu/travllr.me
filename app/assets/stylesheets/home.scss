@@ -24,7 +24,7 @@ body {
 	opacity: .95;
 }
 
-#home, #about, #profile, #contact {
+#nav .links{
 	float: left;
 	width: 22.5%;
 	padding: 1.25%;
@@ -42,7 +42,7 @@ a:visited {
 	text-decoration: none;
 }
 
-#home:hover, #about:hover, #profile:hover, #contact:hover {
+#nav .links:hover {
 	color: black;
 }
 
@@ -67,22 +67,37 @@ a:visited {
 }
 
 input {
-	background-color: white;
+	font-size:14px;
+	background:white;
+	border-radius:3px;
+	padding:10px;
+	box-sizing:border-box;
+	width:100%;
+	display:block;
+	color:#222;
+	margin-bottom:10px;
+	border-style:none;
+	box-shadow:0px 0px 20px rgba(0,0,0,0.5);
 }
-
-#destination, #origin, #submit_button {
-	font-size: large;
-	text-align: center;
-	width: 20%;
-	height: 30%;
-	padding: 0%;
-	margin: auto 0;
-	color: black;
-	background-color: white;
-	opacity: 1;
+button{
+	font-size:14px;
+	background:#FF8000;
+	border-radius:3px;
+	padding:10px 20px;
+	box-sizing:border-box;
+	display:inline-block;
+	color:#FFF;
+	margin:0 auto 20px auto;
+	border-style:none;
+	opacity:1;
+	transition:all 200ms;
+	box-shadow:0px 0px 10px rgba(0,0,0,0.5);
+	&[disabled]{
+		opacity:0.5;
+		cursor:auto;
+	}
 }
-
-#submit_button {
+#submit-button {
 	background-color: orange;
 	border-radius:.5em;
 	width: 10%;

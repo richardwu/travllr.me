@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html ng-app="choosePage">
-	<head>
-		<title>Choose Page</title>
-	</head>
-	<body ng-controller="mainController">
+
+	<body ng-app="choosePage" id="choose">
+		<script type="text/javascript">autoload();</script>
 		<br><br>
 		<div id="nav">
 			<div id="navbutton">Flight</div>
@@ -11,12 +8,15 @@
 			<div id="navbutton">Attractions</div>
 		</div>
 		<br><br>
-		<div id="container">
+		<div id="container" ng-controller="mainController">
 			<div id="flight-result">
 				dyvtvt
 			</div>
-			<div id="hotel-result">
-				dyvtvt
+			<div ng-repeat="hotel in hotels">
+				<h1>{{hotel.Name}}</h1>
+				<img src="{{hotel.ThumbnailUrl}}"></img>
+				<p>{{hotel.Description}}</p>
+				<p>{{hotel.StarRating}}</p>
 			</div>
 			<div id="attraction-result">
 				dyvtvt
@@ -28,4 +28,3 @@
 		</div>
 
 	</body>
-</html>

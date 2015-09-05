@@ -1,0 +1,52 @@
+input {
+	float: left;
+	margin-left: 4%;
+}
+
+<<<<<<< Updated upstream
+#option, #image, #rating, #price, #namestar, #rent {
+=======
+#option, #image, #rating, #price, #namestar {
+>>>>>>> Stashed changes
+	float: left;
+	text-align: center;
+}
+
+<<<<<<< Updated upstream
+
+=======
+#rate {
+	float: left;
+	margin: 0%;
+}
+>>>>>>> Stashed changes
+
+#optiondiv {
+	float: left;
+	background-color: aqua;
+	margin: auto 5%;
+	height: 20%;
+	width: 40%;
+}
+
+#image, #namestar, #price {
+	margin: auto 7%;
+}
+
+#image {
+	margin-left: 1%;
+	width: 25%;
+}
+
+#namestar {
+	text-align: center;
+}
+
+#star {
+	margin-bottom: 2%;
+}
+
+#price {
+	margin-right: 1%;
+	width: 20%;
+}
