@@ -3,12 +3,23 @@ input {
 	margin-left: 4%;
 }
 
+<<<<<<< Updated upstream
 #option, #image, #rating, #price, #namestar, #rent {
+=======
+#option, #image, #rating, #price, #namestar {
+>>>>>>> Stashed changes
 	float: left;
 	text-align: center;
 }
 
+<<<<<<< Updated upstream
 
+=======
+#rate {
+	float: left;
+	margin: 0%;
+}
+>>>>>>> Stashed changes
 
 #optiondiv {
 	float: left;
