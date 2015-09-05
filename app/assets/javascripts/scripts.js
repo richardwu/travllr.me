@@ -46,8 +46,19 @@ var scripts = {
   'choose': function() {
     var chooseApp = angular.module('choosePage',[]);
     chooseApp.controller('mainController', ['$scope', function($scope) {
-      // HOTELS
-      var latitude = gon.destination[0], longitude = gon.destination[1];
+        
+        console.log(gon.originCode);
+        console.log(gon.destinationCode);
+        
+      gon.startdate = "2015-09-20";
+      gon.enddate = "2015-09-25";
+
+
+
+
+
+      // ****************************** HOTELS ******************************
+      var latitude = gon.destinationCoord[0], longitude = gon.destinationCoord[1];
       $.ajax({
         url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates='+gon.startdate+','+gon.enddate+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
         method: 'GET',
@@ -59,10 +70,18 @@ var scripts = {
           $scope.$apply();
         },
         error: function(resp){
+          console.log('error loading hotels');
+
         }
       });
-      gon.origin = "Toronto, ON, Canada";
-      gon.destination = "Boston, MA, United States";
+
+
+
+
+
+
+
+      // ***************************** FLIGHTS ********************************
 
       var originArr = gon.origin.split(', ');
       var originCity = originArr[0];
@@ -72,43 +91,7 @@ var scripts = {
       var destinationCity = destinationArr[0];
       var destinationCountry = destinationArr[destinationArr.length - 1];
 
-      var originFound = false, destinationFound = false;
 
-      var originCode, destinationCode;
-
-
-      // Exceptions list
-      if (originCity == 'Boston' && originCountry == 'United States'){
-        originCode = 'BOS';
-        originFound = true;
-      }
-      if (destinationCity == 'Boston' && destinationCountry == 'United States'){
-        destinationCode = 'BOS';
-        destinationFound = true;
-      }
-
-
-      // Note: Some cities with only 2 airports (e.g. Boston) dont have a code for 'All Airports',
-      // hence they sometimes return the less busy airport
-
-      for (i in gon.airports){
-        if (originFound == false && gon.airports[i].city == originCity && gon.airports[i].country == originCountry){
-          originCode = gon.airports[i].iata;
-          if (gon.airports[i].name == "All Airports")
-          originFound = true;
-        }
-        // TODO: Consider using elseif if origin/destination cannot be the same
-        if (destinationFound == false && gon.airports[i].city == destinationCity && gon.airports[i].country == destinationCountry){
-          destinationCode = gon.airports[i].iata;
-          if (gon.airports[i].name == "All Airports")
-          destinationFound = true;
-        }
-
-        if (originFound && destinationFound)
-        break;
-      }
-
-      console.log(originCode + ' ' + destinationCode);
 
       var flightData = {
         "request": {
@@ -146,38 +129,32 @@ var scripts = {
         }
       });
 
-      // // FLIGHTS
-      // // API-KEY: AIzaSyA-kkfsczhpvjAP4IcjVQQ-LwSm8GQ8neo
-      // $.ajax({
-      //   url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates=2015-09-19,2015-09-22&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
-      //   method: 'GET',
-      //   dataType: 'json',
-      //   success: function(resp){
-      //     var domFragment = $(document.createDocumentFragment());
-      //     console.log(resp.HotelInfoList.HotelInfo);
-      //     $scope.hotels = resp.HotelInfoList.HotelInfo;
-      //     $scope.$apply();
-      //   },
-      //   error: function(resp){
 
-      //   }
-      // });
 
-      // // POINTS OF INTEREST
-      // $.ajax({
-      //   url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates=2015-09-19,2015-09-22&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
-      //   method: 'GET',
-      //   dataType: 'json',
-      //   success: function(resp){
-      //     var domFragment = $(document.createDocumentFragment());
-      //     console.log(resp.HotelInfoList.HotelInfo);
-      //     $scope.hotels = resp.HotelInfoList.HotelInfo;
-      //     $scope.$apply();
-      //   },
-      //   error: function(resp){
 
-      //   }
-      // });
+
+      
+
+      //***************************** POINTS OF INTEREST ***************************
+
+
+      $.ajax({
+        url: 'http://terminal2.expedia.com/x/activities/search?location='+destinationCity+'&startDate='+gon.startdate+'&endDate='+gon.enddate+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
+        method: 'GET',
+        dataType: 'json',
+        success: function(resp){
+          console.log(resp);
+        },
+        error: function(resp){
+          console.log('error loading activities');
+        }
+      });
+
+
+
+
+
+
     }]);
   }
 };
