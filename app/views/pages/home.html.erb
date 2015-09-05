@@ -155,7 +155,6 @@
 					</div>
 				</div>
 				<div class="contents" ng-show="page==5">
-					<h1>Your <em>personalized</em> itinerary</h1>
 					<div class="panel main-panel" ng-hide="loaded">
 						<div class="panel-body">
 							<div>
@@ -175,10 +174,43 @@
 					</div>
 					<div ng-show="loaded">
 						<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+							<div class="panel" style="background-image:url('<%=asset_path "plane.jpg"%>');backgrond-size:cover;background-position:center center;">
+								<div class="panel-body" style="color:#FFF;">
+									<h1>Trip Itinerary</h1>
+									<p>New York, United States | September 16, 2015</p>
+								</div>
+							</div>
+							<div class="panel panel-danger">
+								<div class="panel-heading" role="tab" id="departure-heading">
+									<h4 class="panel-title">
+										<a role="button" data-toggle="collapse" href="#departure-panel" aria-expanded="true" aria-controls="departure-panel">
+											Departing Flight
+										</a>
+									</h4>
+								</div>
+								<div id="departure-panel" style="text-align:left;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="departure-panel">
+									<table class="table">
+									<tbody>
+										<tr>
+											<td><strong class="text-success ">CAD1452.86</strong><div class="text-muted">round trip</div></td>
+											<td>
+												<strong class="text-primary">Departing</strong>
+												<div><strong>Sep 14 @ 11:40 AM - Sep 14 @ 1:12 PM</strong>&nbsp;<span class="text-muted">YYZ - PHL</span><div class="text-muted ">US Airways, Inc. (US3756)</div></div><div><strong class="">Sep 14 @ 6:15 PM - Sep 15 @ 1:55 AM</strong>&nbsp;<span class="text-muted ">PHL - CDG</span><div class="text-muted ">US Airways, Inc. (US754)</div></div>
+											</td>
+											<td>
+												<strong class="text-primary">Returning</strong>
+												<div class="ng-scope"><strong class="">Sep 17 @ 7:20 AM - Sep 17 @ 3:50 PM</strong>&nbsp;<span class="text-muted ">CDG - PHL</span><div class="text-muted ">US Airways, Inc. (US755)</div></div><div><strong class="">Sep 17 @ 5:45 PM - Sep 17 @ 7:19 PM</strong>&nbsp;<span class="text-muted ">PHL - YYZ</span><div class="text-muted ">US Airways, Inc. (US3971)</div></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+								</div>
+							</div>
 							<div class="panel panel-info">
 								<div class="panel-heading" role="tab" id="headingOne">
 									<h4 class="panel-title">
-										<a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+										<a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
 											Collapsible Group Item #1
 										</a>
 									</h4>
@@ -194,6 +226,33 @@
 										<li class="list-group-item">Porta ac consectetur ac</li>
 										<li class="list-group-item">Vestibulum at eros</li>
 									</ul>
+								</div>
+							</div>
+							<div class="panel panel-danger">
+								<div class="panel-heading" role="tab" id="departure-heading">
+									<h4 class="panel-title">
+										<a role="button" data-toggle="collapse" href="#return-panel" aria-expanded="true" aria-controls="return-panel">
+											Returning Flight
+										</a>
+									</h4>
+								</div>
+								<div id="return-panel" style="text-align:left;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="return-panel">
+									<table class="table">
+									<tbody>
+										<tr>
+											<td><strong class="text-success ">CAD1452.86</strong><div class="text-muted">round trip</div></td>
+											<td>
+												<strong class="text-primary">Departing</strong>
+												<div><strong>Sep 14 @ 11:40 AM - Sep 14 @ 1:12 PM</strong>&nbsp;<span class="text-muted">YYZ - PHL</span><div class="text-muted ">US Airways, Inc. (US3756)</div></div><div><strong class="">Sep 14 @ 6:15 PM - Sep 15 @ 1:55 AM</strong>&nbsp;<span class="text-muted ">PHL - CDG</span><div class="text-muted ">US Airways, Inc. (US754)</div></div>
+											</td>
+											<td>
+												<strong class="text-primary">Returning</strong>
+												<div class="ng-scope"><strong class="">Sep 17 @ 7:20 AM - Sep 17 @ 3:50 PM</strong>&nbsp;<span class="text-muted ">CDG - PHL</span><div class="text-muted ">US Airways, Inc. (US755)</div></div><div><strong class="">Sep 17 @ 5:45 PM - Sep 17 @ 7:19 PM</strong>&nbsp;<span class="text-muted ">PHL - YYZ</span><div class="text-muted ">US Airways, Inc. (US3971)</div></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
 								</div>
 							</div>
 						</div>
