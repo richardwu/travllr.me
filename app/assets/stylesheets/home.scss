@@ -28,6 +28,10 @@ body {
 		display:inline-block;
 	}
 }
+.panel>.panel-collapse>.list-group .list-group-item{
+  border-bottom:1px solid #EEE;
+  padding:10px !important;
+}
 /*
  * Globals
  */
@@ -126,6 +130,9 @@ body {
 }
 .order-table{
 	max-width:800px;
+	td{
+		cursor:pointer;
+	}
 }
 @media (min-width: 768px) {
   .masthead-brand {

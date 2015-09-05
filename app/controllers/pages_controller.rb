@@ -3,7 +3,8 @@ class PagesController < ApplicationController
 	GOOGLE_BROWSER_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
 	GOOGLE_SERVER_API_KEY = 'AIzaSyB22uhA_dJ3p07nbFXcgOOO6YNQqJnCkYI'
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
-	GRAPHHOPPER_API_KEY = 'cc4609d7-eee0-42ae-b36d-1eb5cb726c2e'
+	# GRAPHHOPPER_API_KEY = 'cc4609d7-eee0-42ae-b36d-1eb5cb726c2e'
+	GRAPHHOPPER_API_KEY = 'cda77fd9-abc5-48e0-94be-b9e3b654cb09'
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
 	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
@@ -174,7 +175,7 @@ class PagesController < ApplicationController
 		end
 
 
-		job_id = HTTParty.post('https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e', {body: JSON.dump(data), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :verify => false })
+		job_id = HTTParty.post("https://graphhopper.com/api/1/vrp/optimize?key=#{GRAPHHOPPER_API_KEY}", {body: JSON.dump(data), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :verify => false })
 
 		job_id = job_id['job_id']
 
@@ -182,7 +183,7 @@ class PagesController < ApplicationController
 
 		# sleep(2)
 
-		res = HTTParty.get("https://graphhopper.com/api/1/vrp/solution/#{job_id}?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e", :verify => false)
+		res = HTTParty.get("https://graphhopper.com/api/1/vrp/solution/#{job_id}?key=#{GRAPHHOPPER_API_KEY}", :verify => false)
 
 		# `curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e" --data @../vrp.json`
 
