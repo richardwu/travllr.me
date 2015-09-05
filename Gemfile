@@ -31,6 +31,7 @@ gem 'angularjs-rails'
 
 gem 'jquery-ui-rails', '~> 5.0.5'
 
+gem 'geocoder'
 gem 'gon'
 gem 'rabl-rails'
 

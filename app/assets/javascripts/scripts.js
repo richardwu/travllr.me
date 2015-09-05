@@ -17,7 +17,20 @@ var scripts = {
     chooseApp.controller('mainController', ['$scope', function($scope) {
 
           // HOTELS
-          var latitude = $('#origin').val(), longitude = $('#destination').val(),
+          // Geocoding
+          // Apikey: AIzaSyA7MqyVfVftqD3ICLgFw1RJva350N38mcQ
+          /*
+          $.ajax({
+            url: 'https://maps.googleapis.com/maps/api/geocode/json?address='+gon.origin+'&key=AIzaSyA7MqyVfVftqD3ICLgFw1RJva350N38mcQ',
+            method: 'GET',
+            dataType: 'json',
+            success: function(resp){
+
+            }
+          });
+*/
+
+          var latitude = gon.origin, longitude = gon.,
           startDate = $('#start').val(), endDate = $('#end').val();
           $.ajax({
             url: 'http://terminal2.expedia.com/x/hotels?location='+latitude+','+longitude+'&radius=5km&dates='+startDate+','+endDate+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
