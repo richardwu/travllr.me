@@ -74,7 +74,7 @@ class PagesController < ApplicationController
 		render :json => res.body
 
 	end
-<<<<<<< Updated upstream
+
 
 	def activities
 
@@ -94,43 +94,40 @@ class PagesController < ApplicationController
 
 		render :json => results
 	end
-=======
->>>>>>> Stashed changes
-
-	def choose
-
-		params[:origin] = "Toronto, ON, Canada"
-		params[:destination] = "Boston, MA, United States"
-		params[:startDate] = "2015-09-20"
-		params[:endDate] = "2015-09-25"
 
 
-		origin = params[:origin].split(', ').join(',')
-		destination = params[:destination].split(', ').join(',')
+	# def choose
 
-		gon.originCode = findCode(origin)
-		gon.destinationCode = findCode(destination)
-
-		gon.originCoord = Geocoder.coordinates(params[:origin])
-		gon.destinationCoord = Geocoder.coordinates(params[:destination])
-
-		gon.origin = params[:origin]
-		gon.destination = params[:destination]
-		gon.startDate = params[:startDate]
-		gon.endDate = params[:endDate]
+	# 	params[:origin] = "Toronto, ON, Canada"
+	# 	params[:destination] = "Boston, MA, United States"
+	# 	params[:startDate] = "2015-09-20"
+	# 	params[:endDate] = "2015-09-25"
 
 
-		# Retrieve hotels
+	# 	origin = params[:origin].split(', ').join(',')
+	# 	destination = params[:destination].split(', ').join(',')
 
-		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+gon.destinationCoord[0].to_s+','+gon.destinationCoord[1].to_s+'&radius=5km&dates='+gon.startDate+','+gon.endDate+'&apikey='+EXPEDIA_API_KEY)
-		req = Net::HTTP::Get.new(url.to_s)
-		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
-		gon.hotels = JSON.parse(res.body)
+	# 	gon.originCode = findCode(origin)
+	# 	gon.destinationCode = findCode(destination)
 
-	end
+	# 	gon.originCoord = Geocoder.coordinates(params[:origin])
+	# 	gon.destinationCoord = Geocoder.coordinates(params[:destination])
 
-<<<<<<< Updated upstream
-=======
+	# 	gon.origin = params[:origin]
+	# 	gon.destination = params[:destination]
+	# 	gon.startDate = params[:startDate]
+	# 	gon.endDate = params[:endDate]
+
+
+	# 	# Retrieve hotels
+
+	# 	url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+gon.destinationCoord[0].to_s+','+gon.destinationCoord[1].to_s+'&radius=5km&dates='+gon.startDate+','+gon.endDate+'&apikey='+EXPEDIA_API_KEY)
+	# 	req = Net::HTTP::Get.new(url.to_s)
+	# 	res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
+	# 	gon.hotels = JSON.parse(res.body)
+
+	# end
+
 
 	def routes
 		input = [{lat: 10, long: 20}, {lat: 20, long: 10}]
@@ -155,7 +152,6 @@ class PagesController < ApplicationController
 
 	end
 
->>>>>>> Stashed changes
 	private
 	def findCode(place)
 		place = place.split(', ').join(',')

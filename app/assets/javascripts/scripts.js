@@ -141,56 +141,19 @@ var scripts = {
       // });
 
 
-    }]);
-  },
-  'choose': function() {
-    var chooseApp = angular.module('choosePage',[]);
-    chooseApp.controller('mainController', ['$scope', function($scope) {
-
-      window.scope = $scope;
-
-      var originArr = gon.origin.split(', ');
-      var originCity = originArr[0];
-      var originCountry = originArr[originArr.length - 1];
-
-      var destinationArr = gon.destination.split(', ');
-      var destinationCity = destinationArr[0];
-      var destinationCountry = destinationArr[destinationArr.length - 1];
-
-
-
-      // ****************************** HOTELS ******************************
-
-      // Hotels are retrieved when final next button is clicked (see 'home')
-
-
-
-
-      // ***************************** FLIGHTS ********************************
-
-      // Flights are retrieved when final next button is clicked (see 'home')
-
-
-
-      //***************************** POINTS OF INTEREST ***************************
-
-      // API not working.... messaged Expedia!!!!
-
-      $.ajax({
-        url: 'http://terminal2.expedia.com/x/activities/search?location='+destinationCity+'&startDate='+gon.startdate+'&endDate='+gon.enddate+'&apikey=nusNvdQtknZzmD0fHu42OTmv6IrMCAC7',
-        method: 'GET',
-        dataType: 'json',
-        success: function(resp){
-          console.log(resp);
-        },
-        error: function(resp){
-          console.log('error loading activities');
-        }
+      // Function to generate itin
+      $('#generate-itin').on('click', function(){
+        var hotel;
+        var flight;
+        // Sorted
+        var activities;
       });
 
     }]);
-  }
+}
 };
+
+
 var loaded = false;
 function autoload() {
   if (!loaded) {
