@@ -5,6 +5,11 @@ $(function(){
 		dataType: 'json',
 		success: function(resp){
 			console.log(resp);
+
+			for (i in resp.HotelInfoList.HotelInfo){
+				console.log(resp.HotelInfoList.HotelInfo[i].Description);
+				$('#hello').append('<div>'+resp.HotelInfoList.HotelInfo[i].Description+'</div>')
+			}
 		},
 
 		error: function(resp){
