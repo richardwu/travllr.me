@@ -92,6 +92,34 @@ var scripts = {
         });
       };
 
+      $scope.loadItinerary = function(){
+        $scope.page = 5;
+        $scope.loaded = false;
+
+        var pois = [];
+        for (i in $scope.selectedActivities){
+          pois.push({
+            lat: $scope.activities[$scope.selectedActivities[i]].location.coordinate.latitude, 
+            lon: $scope.activities[$scope.selectedActivities[i]].location.coordinate.longitude, 
+            id: $scope.activities[$scope.selectedActivities[i]].id
+          });
+        }
+
+        var hotel = {
+          lat: $scope.hotels[$scope.selectedHotel].Location.GeoLocation.Latitude,
+          lon: $scope.hotels[$scope.selectedHotel].Location.GeoLocation.Longitude
+        };
+
+        $.get('routes', {
+          hotel: hotel,
+          pois: pois 
+        }, function(data){
+          // Returns array of POI id's in order
+          console.log(data);
+        });
+
+      };
+
 
       window.scope = $scope;
       $('.location-input').each(function(){
