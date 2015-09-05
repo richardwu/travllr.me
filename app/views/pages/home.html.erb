@@ -2,47 +2,98 @@
 <body id="home" ng-app="homePage">
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc3jbHCRxEaq_SDfbkwpWIjOMNjWVjnk4&libraries=places"></script>
 	<script type="text/javascript">autoload();</script>
-	<div id="nav">
-		<a class="links" href="#">Home</a>
-		<a class="links" href="#aboutpage">About</a>
-		<a class="links" href="#profilepage">Profile</a>
-		<a class="links" href="#contactpage">Contact</a>
-	</div>
+	<nav class="navbar navbar-default ">
+		<div class="container">
 
-	<br><br><br><br><br>
-	<div id="heading">
-		Travllr
-	</div><br/><br/>
-	<div ng-controller="mainController" class="container">
-		<div class="contents" ng-show="page==0">
-			<div class="row">
-				<div class="hidden-md col-md-3"></div>
-				<div class="col-sm-6 col-md-3">
-					<%= text_field_tag :origin, nil, class: 'location-input', 'ng-model': 'data.location.start', 'placeholder': 'Home city'%>
-				</div>
-				<div class="col-sm-6 col-md-3">
-					<%= text_field_tag :destination, nil, class: 'location-input', 'ng-model': 'data.location.end', 'placeholder': 'Destination city' %>
-				</div>
-				<div class="hidden-md col-md-3"></div>
-			</div><br/><br/>
-			<button ng-click="page=1" ng-disabled="!(data.location.start!=''&&data.location.end!='')">Next</button>
-		</div>
-		<div class="contents" ng-show="page==1">
-			<div class="row">
-				<div class="hidden-md col-md-2"></div>
-				<div class="col-md-6 col-md-4">
-					<h3>Start Date</h3>
-					<div id="start-calendar"></div>
-				</div>
-				<div class="col-md-6 col-md-4">
-					<h3>End Date</h3>
-					<div id="end-calendar"></div>
-				</div>
-				<div class="hidden-md col-md-2"></div>
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand active" href="#"><%= image_tag("logo.png", :alt => "Travllr", style: 'height:40px;margin:-10px 0 0 -10px') %></a>
 			</div>
-			<br/><br/>
-			<button id="submit-button" ng-click="page=2" ng-disabled="!(data.date.start!=''&&data.date.end!='')">Next</button>
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav">
+					<!--<li class="active"><a href="./">Home</a></li>-->
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!--	<div id="nav">
+	<a class="links" href="#">Home</a>
+	<a class="links" href="#aboutpage">About</a>
+	<a class="links" href="#profilepage">Profile</a>
+	<a class="links" href="#contactpage">Contact</a>
+</div>-->
+<div ng-controller="mainController" class="container">
+	<div class="contents" ng-show="page==0">
+		<div class="row">
+			<div class="hidden-md col-md-3"></div>
+			<div class="col-sm-6 col-md-3">
+				<%= text_field_tag :origin, nil, class: 'location-input form-control', 'ng-model': 'data.location.start', 'placeholder': 'Home city'%>
+			</div>
+			<div class="col-sm-6 col-md-3">
+				<%= text_field_tag :destination, nil, class: 'location-input form-control', 'ng-model': 'data.location.end', 'placeholder': 'Destination city' %>
+			</div>
+			<div class="hidden-md col-md-3"></div>
+		</div><br/><br/>
+		<button ng-click="page=1;" class="btn btn-default" ng-disabled="!(data.location.start!=''&&data.location.end!='')">Next</button>
+	</div>
+	<div class="contents" ng-show="page==1">
+		<div class="row">
+			<div class="hidden-md col-md-2"></div>
+			<div class="col-md-6 col-md-4">
+				<h3>Start Date</h3>
+				<div id="start-calendar"></div>
+			</div>
+			<div class="col-md-6 col-md-4">
+				<h3>End Date</h3>
+				<div id="end-calendar"></div>
+			</div>
+			<div class="hidden-md col-md-2"></div>
+		</div>
+		<br/><br/>
+		<button id="submit-button" class="btn btn-default" ng-click="loadFlights()" ng-disabled="!(data.date.start!=''&&data.date.end!='')">Next</button>
 
+	</div>
+	<div class="contents" ng-show="page==2">
+		<h1>Select your flight</h1>
+		<div ng-hide="loaded">
+			<div class="sk-cube-grid">
+				<div class="sk-cube sk-cube1"></div>
+				<div class="sk-cube sk-cube2"></div>
+				<div class="sk-cube sk-cube3"></div>
+				<div class="sk-cube sk-cube4"></div>
+				<div class="sk-cube sk-cube5"></div>
+				<div class="sk-cube sk-cube6"></div>
+				<div class="sk-cube sk-cube7"></div>
+				<div class="sk-cube sk-cube8"></div>
+				<div class="sk-cube sk-cube9"></div>
+			</div><h2 style="display:inline-block;vertical-align:middle;margin:0px;" class="text-muted">Loading...</h2>
+		</div>
+		<div ng-show="loaded">
+			<table class="table table-striped" id="flight-table">
+				<tbody>
+					<tr ng-repeat="flight in flights" ng-class="{success:$index==$parent.selectedFlight}" ng-click="$parent.selectedFlight=$index">
+						<td><strong class="text-success">{{flight.saleTotal}}</strong><div class="text-muted">round trip</div></td>
+						<td>
+							<strong class="text-primary">Departing</strong>
+							<div ng-repeat="segment in flight.slice[0].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
+						</td>
+						<td>
+							<strong class="text-primary">Returning</strong>
+							<div ng-repeat="segment in flight.slice[1].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div id="footer">
+		<div class="container">
+			<span class="text-success">Total: {{totalPrice()}}</span>
 		</div>
 	</div>
 </div>
