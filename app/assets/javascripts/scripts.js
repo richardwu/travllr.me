@@ -185,7 +185,6 @@ return useless;
 
       };
 
-
       window.scope = $scope;
       $('.location-input').each(function(){
         var input = $(this).get(0);
