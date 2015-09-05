@@ -27,17 +27,18 @@
 							<button ng-click="page=1;" class="btn btn-primary" ng-disabled="!(data.location.start!=''&&data.location.end!='')">Next</button>
 						</p>
 					</div>
-          <div class="mastfoot">
-            <div class="inner">
-              <p>Made with love by Richard, Fired, Aahan, Kevin</p>
-            </div>
-          </div>
+					<div class="mastfoot">
+						<div class="inner">
+							<p>Made with love by Richard, Fired, Aahan, Kevin</p>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div id="form-container" ng-class="{active: page > 0}">
 			<div class="container">
 				<div class="contents" ng-show="page==1">
+					<h1>Select your getaway date</h1>
 					<div class="panel main-panel">
 						<div class="panel-body">
 							<div class="row" style="text-align:center;">
@@ -56,95 +57,103 @@
 				</div>
 				<div class="contents" ng-show="page==2">
 					<h1>Select your flight</h1>
-						<div class="panel main-panel">
-							<div class="panel-body">
-								<div ng-hide="loaded">
-									<div class="sk-cube-grid">
-										<div class="sk-cube sk-cube1"></div>
-										<div class="sk-cube sk-cube2"></div>
-										<div class="sk-cube sk-cube3"></div>
-										<div class="sk-cube sk-cube4"></div>
-										<div class="sk-cube sk-cube5"></div>
-										<div class="sk-cube sk-cube6"></div>
-										<div class="sk-cube sk-cube7"></div>
-										<div class="sk-cube sk-cube8"></div>
-										<div class="sk-cube sk-cube9"></div>
-									</div><h2 style="display:inline-block;vertical-align:middle;margin:0px;" class="text-muted">Loading...</h2>
-								</div>
-								<div ng-show="loaded">
-									<table class="table table-striped order-table">
-										<tbody>
-											<tr ng-repeat="flight in flights" ng-class="{success:$index==$parent.selectedFlight}" ng-click="$parent.selectedFlight=$index">
-												<td><strong class="text-success">{{flight.saleTotal}}</strong><div class="text-muted">round trip</div></td>
-												<td>
-													<strong class="text-primary">Departing</strong>
-													<div ng-repeat="segment in flight.slice[0].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
-												</td>
-												<td>
-													<strong class="text-primary">Returning</strong>
-													<div ng-repeat="segment in flight.slice[1].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
+					<div class="panel main-panel">
+						<div class="panel-body">
+							<div ng-hide="loaded">
+								<div class="sk-cube-grid">
+									<div class="sk-cube sk-cube1"></div>
+									<div class="sk-cube sk-cube2"></div>
+									<div class="sk-cube sk-cube3"></div>
+									<div class="sk-cube sk-cube4"></div>
+									<div class="sk-cube sk-cube5"></div>
+									<div class="sk-cube sk-cube6"></div>
+									<div class="sk-cube sk-cube7"></div>
+									<div class="sk-cube sk-cube8"></div>
+									<div class="sk-cube sk-cube9"></div>
+								</div><h2 style="display:inline-block;vertical-align:middle;margin:0px;" class="text-muted">Loading...</h2>
+							</div>
+							<div ng-show="loaded">
+								<table class="table table-striped order-table">
+									<tbody>
+										<tr ng-repeat="flight in flights" ng-class="{success:$index==$parent.selectedFlight}" ng-click="$parent.selectedFlight=$index">
+											<td><strong class="text-success">{{flight.saleTotal}}</strong><div class="text-muted">round trip</div></td>
+											<td>
+												<strong class="text-primary">Departing</strong>
+												<div ng-repeat="segment in flight.slice[0].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
+											</td>
+											<td>
+												<strong class="text-primary">Returning</strong>
+												<div ng-repeat="segment in flight.slice[1].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
+											</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
 						</div>
+					</div>
 				</div>
 				<div class="contents" ng-show="page==3">
 					<h1>Select your hotel</h1>
-					<div ng-hide="loaded">
-						<div class="sk-cube-grid">
-							<div class="sk-cube sk-cube1"></div>
-							<div class="sk-cube sk-cube2"></div>
-							<div class="sk-cube sk-cube3"></div>
-							<div class="sk-cube sk-cube4"></div>
-							<div class="sk-cube sk-cube5"></div>
-							<div class="sk-cube sk-cube6"></div>
-							<div class="sk-cube sk-cube7"></div>
-							<div class="sk-cube sk-cube8"></div>
-							<div class="sk-cube sk-cube9"></div>
-						</div><h2 style="display:inline-block;vertical-align:middle;margin:0px;" class="text-muted">Loading...</h2>
-					</div>
-					<div ng-show="loaded">
-						<table class="table table-striped order-table">
-							<tbody>
-								<tr ng-repeat="hotel in hotels" ng-class="{success:$index==$parent.selectedHotel}" ng-click="$parent.selectedHotel=$index">
-									<td><img src="{{hotel.ThumbnailUrl}}" style="height:60px;"></td>
-									<td><div class="text-primary header">{{hotel.Name}}</div><div></div></td>
-									<td><div class="text-muted">{{hotel.Location.StreetAddress}}</div><p>{{hotel.Description}}</p></td>
-									<td><div class="text-success header" ng-if="hotel.Price">${{hotel.Price.TotalRate.Value}}</div><a href="{{hotel.DetailsUrl}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotel.Price">See<br/>Price</a></td>
-								</tr>
-							</tbody>
-						</table>
+					<div class="panel main-panel">
+						<div class="panel-body">
+							<div ng-hide="loaded">
+								<div class="sk-cube-grid">
+									<div class="sk-cube sk-cube1"></div>
+									<div class="sk-cube sk-cube2"></div>
+									<div class="sk-cube sk-cube3"></div>
+									<div class="sk-cube sk-cube4"></div>
+									<div class="sk-cube sk-cube5"></div>
+									<div class="sk-cube sk-cube6"></div>
+									<div class="sk-cube sk-cube7"></div>
+									<div class="sk-cube sk-cube8"></div>
+									<div class="sk-cube sk-cube9"></div>
+								</div><h2 style="display:inline-block;vertical-align:middle;margin:0px;" class="text-muted">Loading...</h2>
+							</div>
+							<div ng-show="loaded">
+								<table class="table table-striped order-table">
+									<tbody>
+										<tr ng-repeat="hotel in hotels" ng-class="{success:$index==$parent.selectedHotel}" ng-click="$parent.selectedHotel=$index">
+											<td><img src="{{hotel.ThumbnailUrl}}" style="height:60px;"></td>
+											<td><div class="text-primary header">{{hotel.Name}}</div><div></div></td>
+											<td><div class="text-muted">{{hotel.Location.StreetAddress}}</div><p>{{hotel.Description}}</p></td>
+											<td><div class="text-success header" ng-if="hotel.Price">${{hotel.Price.TotalRate.Value}}</div><a href="{{hotel.DetailsUrl}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotel.Price">See<br/>Price</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div class="contents" ng-show="page==4">
 					<h1>Select your activities</h1>
-					<div ng-hide="loaded">
-						<div class="sk-cube-grid">
-							<div class="sk-cube sk-cube1"></div>
-							<div class="sk-cube sk-cube2"></div>
-							<div class="sk-cube sk-cube3"></div>
-							<div class="sk-cube sk-cube4"></div>
-							<div class="sk-cube sk-cube5"></div>
-							<div class="sk-cube sk-cube6"></div>
-							<div class="sk-cube sk-cube7"></div>
-							<div class="sk-cube sk-cube8"></div>
-							<div class="sk-cube sk-cube9"></div>
-						</div><h2 style="display:inline-block;vertical-align:middle;margin:0px;" class="text-muted">Loading...</h2>
-					</div>
-					<div ng-show="loaded">
-						<table class="table table-striped order-table">
-							<tbody>
-								<tr ng-repeat="activity in activities" ng-class="{success:$parent.activitySelected($index)}" ng-click="$parent.toggleActivity($index)">
-									<td><img src="{{activity.image_url}}" style="height:60px;"></td>
-									<td><div class="text-primary header">{{activity.name}}</div><div></div></td>
-									<td><div class="text-muted">{{activity.location.address[0]}}</div><p>{{activity.snippet_text}}</p></td>
-									<td><div class="text-success header" ng-if="hotel.Price">${{activity.Price.TotalRate.Value}}</div><a href="{{activity.url}}" class="text-success" style="text-align:center;" ng-if="!hotel.Price">More<br/>Info</a></td>
-								</tr>
-							</tbody>
-						</table>
+					<div class="panel main-panel">
+						<div class="panel-body">
+							<div ng-hide="loaded">
+								<div class="sk-cube-grid">
+									<div class="sk-cube sk-cube1"></div>
+									<div class="sk-cube sk-cube2"></div>
+									<div class="sk-cube sk-cube3"></div>
+									<div class="sk-cube sk-cube4"></div>
+									<div class="sk-cube sk-cube5"></div>
+									<div class="sk-cube sk-cube6"></div>
+									<div class="sk-cube sk-cube7"></div>
+									<div class="sk-cube sk-cube8"></div>
+									<div class="sk-cube sk-cube9"></div>
+								</div><h2 style="display:inline-block;vertical-align:middle;margin:0px;" class="text-muted">Loading...</h2>
+							</div>
+							<div ng-show="loaded">
+								<table class="table table-striped order-table">
+									<tbody>
+										<tr ng-repeat="activity in activities" ng-class="{success:$parent.activitySelected($index)}" ng-click="$parent.toggleActivity($index)">
+											<td><img src="{{activity.image_url}}" style="height:60px;"></td>
+											<td><div class="text-primary header">{{activity.name}}</div><div></div></td>
+											<td><div class="text-muted">{{activity.location.address[0]}}</div><p>{{activity.snippet_text}}</p></td>
+											<td><div class="text-success header" ng-if="hotel.Price">${{activity.Price.TotalRate.Value}}</div><a href="{{activity.url}}" class="text-success" style="text-align:center;" ng-if="!hotel.Price">More<br/>Info</a></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 					</div>
 				</div>
 				<div style="height:100px;"></div>
