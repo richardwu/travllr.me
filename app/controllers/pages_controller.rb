@@ -130,19 +130,72 @@ class PagesController < ApplicationController
 
 
 	def routes
-		input = [{lat: 10, long: 20}, {lat: 20, long: 10}]
-		request = "route?"
+		hotel = [{lat: 15, long: 25}]
+		points = [{lat: 10, long: 20}, {lat: 20, long: 10}]
 
-		input.each do |pair|
-			lat = pair[:lat].to_s
-			long = pair[:long].to_s
-			request = request + "point=" + lat + "," + long + "&"
-		end
+		data = {
+		    "vehicles" => [{
+		      "vehicle_id" => "vehicle1",
+		      "start_address" => {
+		          "location_id" => "v1_gera",
+		          "lon"=> hotel[:lat],
+		          "lat"=> hotel[:long]
+		      },
+		      "end_address" => {
+		        "location_id" => "v1_muenchen",
+						"lon"=> hotel[:lat],
+						"lat"=> hotel[:long]
+		      },
+		      "type_id" => "vehicle_type_1",
+		      "return_to_depot" => true
+		    }],
+		    "vehicle_types" => [{
+		      "type_id" => "vehicle_type_1",
+		      "profile" => "car"
+		    }],
+		    "services" => [
+		      {
+		        "id"=> "deliver_beer_in_dortmund",
+		        "name"=> "deliver_beer_in_dortmund",
+		        "address"=> {
+		          "location_id"=> "loc_b6",
+		          "lon"=> 7.500916,
+		          "lat"=> 51.508742
+		        }
+		      },
+		      {
+		        "id"=> "deliver_water_in_karlsruhe",
+		        "name"=> "deliver_water_in_karlsruhe",
+		        "address"=> {
+		          "location_id"=> "loc_b7",
+		          "lon" => 8.3858333,
+		          "lat" => 49.0047222
+		        }
+		      },
+		      {
+		        "id"=> "deliver_fish_in_bremen",
+		        "name"=> "deliver_fish_in_bremen",
+		        "address"=> {
+		          "location_id"=> "loc_b8",
+		          "lon"=> 8.822021,
+		          "lat"=> 53.041213
+		        }
+		      },
+		      {
+		        "id"=> "deliver_somethingelse_in_hof",
+		        "name"=> "deliver_somethingelse_in_hof",
+		        "address"=> {
+		          "location_id"=> "loc_b9",
+		          "lon"=> 11.8927,
+		          "lat"=> 50.310392
+		        }
+		      }
+		  ]
+		}
 
-		request = request + "vehicle=foot&locale=en&instructions=true&debug=true&optimize=true&points_encoded=false"
 
 
-		job_id = HTTParty.post('https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e', {body: File.read("#{Rails.root}/vrp.json"), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :verify => false })
+		job_id = HTTParty.post('https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e', {body: JSON.dump(data), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :verify => false })
 
 		job_id = job_id['job_id']
 
