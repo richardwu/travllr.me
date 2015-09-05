@@ -131,12 +131,12 @@ class PagesController < ApplicationController
 
 
 	def routes
-		# hotel = params[:hotel]
-		# points = params[:pois]
+		hotel = params[:hotel]
+		points = params[:pois]
 
-		hotel = {'lat'=> 50.877044, 'lon'=> 12.076721}
+		# hotel = {'lat'=> 50.877044, 'lon'=> 12.076721}
 
-		points = [{'lat'=> 51.508742, 'lon'=> 7.500916, 'id'=> 'asdbfdbndvb'}, {'lat'=> 49.0047222, 'lon'=> 8.3858333, 'id'=> 'sfdfds'}]
+		# points = [{'lat'=> 51.508742, 'lon'=> 7.500916, 'id'=> 'asdbfdbndvb'}, {'lat'=> 49.0047222, 'lon'=> 8.3858333, 'id'=> 'sfdfds'}]
 
 		data = {
 			"vehicles" => [{
@@ -163,12 +163,12 @@ class PagesController < ApplicationController
 
 		points.each do |point|
 			data["services"].push({
-					"id"=> point['id'].to_s,
+					"id"=> point[1]['id'].to_s,
 					"name"=> "point_of_interest",
 					"address"=> {
 						"location_id"=> "loc",
-						"lat"=> point["lat"],
-						"lon"=> point["lon"]
+						"lat"=> point[1]["lat"],
+						"lon"=> point[1]["lon"]
 					}
 				})
 		end
