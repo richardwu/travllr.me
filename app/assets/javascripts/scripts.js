@@ -87,6 +87,21 @@ var scripts = {
           }
         });
 
+
+        // Returns JSON of activities
+        $.ajax({
+          url: '/activities',
+          method: 'GET',
+          data: inputData,
+          dataType: 'json',
+          success: function(resp){
+            console.log(resp);
+          },
+          error: function(resp){
+            console.log(resp);
+          }
+        });
+
       });
 
 

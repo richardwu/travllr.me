@@ -3,6 +3,11 @@ class PagesController < ApplicationController
 	QPX_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
 
+	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
+	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
+	YELP_TOKEN = 'YDYvgF7njoGo5fTFNF_fvignlO9K7uCI'
+	YELP_TOKEN_SECRET = 'Pe7lQAGy5KLPkpcr3oFGDrZPBZE'
+
 	def home
 	end
 
@@ -68,6 +73,25 @@ class PagesController < ApplicationController
 		render :json => res.body
 
 	end 
+
+	def activities
+
+		destination = params[:destination].split(', ').join(',')
+		client = Yelp::Client.new({ consumer_key: YELP_CONSUMER_KEY,
+                            consumer_secret: YELP_CONSUMER_SECRET,
+                            token: YELP_TOKEN,
+                            token_secret: YELP_TOKEN_SECRET
+                          })
+
+		params = {
+			term: 'landmarks',
+			limit: 20
+		}
+
+		results = client.search(destination, params)
+
+		render :json => results
+	end
 
 	def choose
 
