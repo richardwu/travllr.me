@@ -57,7 +57,7 @@ class PagesController < ApplicationController
 					}
 				],
 				"solutions": 10,
-				"saleCountry": "United States"
+				"saleCountry": "US"
 			}
 		}
 
@@ -73,7 +73,7 @@ class PagesController < ApplicationController
 
 		render :json => res.body
 
-	end 
+	end
 
 	def activities
 
@@ -126,7 +126,7 @@ class PagesController < ApplicationController
 
 	end
 
-	private 
+	private
 	def findCode(place)
 		place = place.split(', ').join(',')
 
