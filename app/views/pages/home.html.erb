@@ -9,29 +9,18 @@
 			<a id="contact" href="#contactpage">Contact</a>
 		</div>
 
-		<br><br><br><br><br>
-		<div id="heading">
-			TravelR
-		</div>
-
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-		<div id="search">
-			<input type="text" class="location-input" id="origin" placeholder="Origin">
-			<input type="text" class="location-input" id="destination" placeholder="Destination">
-			<%= link_to 'Go!',
-		</div>
-
-
-		<div id="date">
-			<div class="column">
-				<strong>Start Date</strong>
-				<div id="start"></div>
-			</div><!--
-			--><div class="column">
-			<strong>End Date</strong>
-			<div id="end"></div>
-
-		</div>
+	<br><br><br><br><br>
+	<div id="heading">
+		TravelR
 	</div>
 
-	</body>
+	<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+	<%= form_tag("/choose", method: "get") do %>
+	<%= text_field_tag(:origin) %>
+	<%= text_field_tag(:destination) %>
+	<%= text_field_tag(:startdate) %>
+	<%= text_field_tag(:enddate) %>
+	<%= submit_tag("Go!") %>
+	<% end %>
+
+</body>

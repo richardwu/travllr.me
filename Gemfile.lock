@@ -55,6 +55,11 @@ GEM
     geocoder (1.2.9)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    gon (6.0.1)
+      actionpack (>= 3.0)
+      json
+      multi_json
+      request_store (>= 1.0)
     i18n (0.7.0)
     jbuilder (2.3.1)
       activesupport (>= 3.0.0, < 5)
@@ -76,8 +81,10 @@ GEM
     multi_json (1.11.2)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
-    nokogiri (1.6.6.2-x86-mingw32)
-      mini_portile (~> 0.6.0)
+    rabl-rails (0.4.1)
+      activesupport (>= 3.1)
+      railties (>= 3.1)
+      thread_safe (~> 0.3.1)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -107,6 +114,7 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     rdoc (4.2.0)
+    request_store (1.2.0)
     sass (3.4.18)
     sass-rails (5.0.4)
       railties (>= 4.0.0, < 5.0)
@@ -152,10 +160,15 @@ DEPENDENCIES
   angularjs-rails
   byebug
   coffee-rails (~> 4.1.0)
+<<<<<<< HEAD
   geocoder
+=======
+  gon
+>>>>>>> 444bdb72dc1a18d0279a6e3717d1fc3f00191b4b
   jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails (~> 5.0.5)
+  rabl-rails
   rails (= 4.2.4)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
