@@ -31,8 +31,15 @@ var scripts = {
         }
         return total;
       }
+      $scope.confirm = function(mes){
+        return window.confirm(mes);
+      }
       $scope.setPage = function(num){
         $scope.page = num;
+        if(num==0) {
+          $scope.data.location.start='';
+          $scope.data.location.end='';
+        }
       }
       $scope.convertDate = function(date){
         if (moment(date).hours() == 0 && moment(date).minutes() == 0 && moment(date).seconds() == 0)
@@ -102,7 +109,7 @@ var scripts = {
             var departingFlight = $scope.flights[$scope.selectedFlight].slice[0];
             var lastSegment = $(departingFlight.segment).last();
 
-            // Remove timezone to be able to parse hour 
+            // Remove timezone to be able to parse hour
             timeStr = lastSegment[0].leg[0].arrivalTime;
             timeStr = timeStr.substring(0, timeStr.length -6);
             // One hour leeway
@@ -113,7 +120,7 @@ var scripts = {
             var arrivingFlight = $($scope.flights[scope.selectedFlight].slice).last();
             var firstSegment = departingFlight.segment[0];
 
-            // Remove timezone to be able to parse hour 
+            // Remove timezone to be able to parse hour
             timeStr = firstSegment.leg[0].departureTime;
             timeStr = timeStr.substring(0, timeStr.length - 6);
 
