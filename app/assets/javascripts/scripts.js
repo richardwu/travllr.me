@@ -87,7 +87,7 @@ var scripts = {
 
         $scope.page = 2;
         $scope.loaded = false;
-        $.get('flights', {
+        $.get('/flights', {
           origin: $scope.data.location.start,
           destination: $scope.data.location.end,
           startDate: $scope.data.date.start,
@@ -193,7 +193,9 @@ var scripts = {
         });
       };
 
-
+      $scope.printItinerary = function(){
+        window.print();
+      };
       $scope.loadActivities = function(){
         $scope.page = 4;
         $scope.loaded = false;

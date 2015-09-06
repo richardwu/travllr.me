@@ -126,7 +126,7 @@
 				</div>
 				<div class="contents" ng-show="page==4">
 					<h1>Select your activities</h1>
-					<p class="text-muted">Please select a maximum of <strong>{{total}}</strong> activities.</br>Don't fret, we'll plan out your trip for you.</p>
+					<p class="text-muted">Please select a maximum of <strong>{{total}}</strong> activities.</br><em>Don't fret</em>, we'll plan out your trip for you.</p>
 					<div class="panel main-panel">
 						<div class="panel-body">
 							<div ng-hide="loaded">
@@ -227,7 +227,7 @@
 												</tbody>
 											</table>
 										</div><div class="col-md-6" style="padding-left:0px;">
-											<div class="google-maps" ng-if="checkInItinerary" id="itinerary-map-{{$index+1}}"></div>
+										<div class="google-maps" ng-if="checkInItinerary" id="itinerary-map-{{$index+1}}"></div>
 									</div>
 								</div>
 								<table class="table table-striped">
@@ -238,82 +238,84 @@
 											<td><div class="text-muted">{{hotels[selectedHotel].Location.StreetAddress}}</div><p>{{hotels[selectedHotel].Description}}</p></td>
 											<td><div class="text-success header" ng-if="hotels[selectedHotel].Price"><span style="font-size:1.5em">${{hotels[selectedHotel].Price.TotalRate.Value}}</span><br/>(${{divideDays(hotels[selectedHotel].Price.TotalRate.Value) | number:2}} per day)</div><a href="{{hotels[selectedHotel].DetailsUrl}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotels[selectedHotel].Price">See<br/>Price</a></td>
 											<td><strong class="text-primary">Check-in at {{checkInTime}}</strong></td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-
-
-							<div ng-repeat="itinerary in itineraries track by $index" ng-if="$index != 0" class="panel panel-info">
-								<div class="panel-heading" role="tab" id="headingOne">
-									<h4 class="panel-title">
-										<a role="button" data-toggle="collapse" href="#collapse{{$index+1}}" aria-expanded="true" aria-controls="collapse{{$index+1}}">
-											<strong ng-if="checkInItinerary">{{data.date_string[$index-1]}}: </strong>
-											<strong ng-if="!checkInItinerary">{{data.date_string[$index]}}: </strong>
-											Day {{$index}}
-										</a>
-									</h4>
-								</div>
-								<div id="collapse{{$index+1}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$index+1}}">
-									<div class="row">
-										<div class="col-sm-6" style="padding-right:0px;">
-											<table class="table table-striped order-table itinerary-table">
-												<tbody>
-													<tr ng-repeat="event in itinerary" class="itinerary-event" id="itinerary-{{$parent.$index+1}}-event-{{$index+1}}">
-														<td><img src="{{event.image_url}}"></td>
-														<td><div><strong>{{event.name}}</strong></div><div><a href="{{event.url}}" target="_blank">More Info</a></div><div ng-repeat="addressline in event.location.display_address" class="itinerary-event-address-line">{{addressline}}</div></td>
-														<td>{{event.time}}</td>
-													</tr>
-												</tbody>
-											</table>
-										</div><div class="col-md-6" style="padding-left:0px;">
-											<div class="google-maps" id="itinerary-map-{{$index+1}}"></div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="panel panel-danger">
-							<div class="panel-heading" role="tab" id="departure-heading">
-								<h4 class="panel-title">
-									<a role="button" data-toggle="collapse" href="#return-panel" aria-expanded="true" aria-controls="return-panel">
-										Returning Flight
-									</a>
-								</h4>
-							</div>
-							<div id="return-panel" style="text-align:left;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="return-panel">
-								<table class="table">
-									<tbody>
-										<tr>
-											<td><strong class="text-success">{{flight.saleTotal}}</strong><div class="text-muted">round trip</div></td>
-											<td>
-												<strong class="text-primary">Returning</strong>
-												<div ng-repeat="segment in flight.slice[1].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
-											</td>
 										</tr>
 									</tbody>
 								</table>
-
 							</div>
+						</div>
+
+
+						<div ng-repeat="itinerary in itineraries track by $index" ng-if="$index != 0" class="panel panel-info">
+							<div class="panel-heading" role="tab" id="headingOne">
+								<h4 class="panel-title">
+									<a role="button" data-toggle="collapse" href="#collapse{{$index+1}}" aria-expanded="true" aria-controls="collapse{{$index+1}}">
+										<strong ng-if="checkInItinerary">{{data.date_string[$index-1]}}: </strong>
+										<strong ng-if="!checkInItinerary">{{data.date_string[$index]}}: </strong>
+										Day {{$index}}
+									</a>
+								</h4>
+							</div>
+							<div id="collapse{{$index+1}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$index+1}}">
+								<div class="row">
+									<div class="col-sm-6" style="padding-right:0px;">
+										<table class="table table-striped order-table itinerary-table">
+											<tbody>
+												<tr ng-repeat="event in itinerary" class="itinerary-event" id="itinerary-{{$parent.$index+1}}-event-{{$index+1}}">
+													<td><img src="{{event.image_url}}"></td>
+													<td><div><strong>{{event.name}}</strong></div><div><a href="{{event.url}}" target="_blank">More Info</a></div><div ng-repeat="addressline in event.location.display_address" class="itinerary-event-address-line">{{addressline}}</div></td>
+													<td>{{event.time}}</td>
+												</tr>
+											</tbody>
+										</table>
+									</div><div class="col-md-6" style="padding-left:0px;">
+									<div class="google-maps" id="itinerary-map-{{$index+1}}"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="panel panel-danger">
+						<div class="panel-heading" role="tab" id="departure-heading">
+							<h4 class="panel-title">
+								<a role="button" data-toggle="collapse" href="#return-panel" aria-expanded="true" aria-controls="return-panel">
+									Returning Flight
+								</a>
+							</h4>
+						</div>
+						<div id="return-panel" style="text-align:left;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="return-panel">
+							<table class="table">
+								<tbody>
+									<tr>
+										<td><strong class="text-success">{{flight.saleTotal}}</strong><div class="text-muted">round trip</div></td>
+										<td>
+											<strong class="text-primary">Returning</strong>
+											<div ng-repeat="segment in flight.slice[1].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
 						</div>
 					</div>
 				</div>
 			</div>
-			<div style="height:100px;"></div>
 		</div>
+		<div style="height:100px;"></div>
 	</div>
-	<div id="footer" ng-if="page>0">
-		<div class="container">
+</div>
+<div id="footer" ng-if="page>0">
+	<div class="container">
+		<span>Total: ${{totalPrice() | number:2}} </span>
+		<button ng-show="page==1" ng-click="updateDate();loadFlights()" ng-disabled="!(data.date.start!=''&&data.date.end!='')" class="btn btn-white pull-right">Next</button>
+		<button ng-show="page==2" ng-click="loadHotels()" ng-disabled="selectedFlight==-1" class="btn btn-white pull-right">Next</button>
+		<button ng-show="page==3" ng-click="loadActivities()" ng-disabled="selectedHotel==-1" class="btn btn-white pull-right">Next</button>
+		<button ng-show="page==4" ng-click="loadItinerary()" ng-disabled="selectedActivities.length<1" class="btn btn-white pull-right">Next</button>
+		<button ng-show="page==5" ng-click="printItinerary()" class="btn btn-white pull-right">Print</button>
+		&nbsp;&nbsp;&nbsp;<button ng-click="setPage(page-1)" class="btn btn-black pull-right" style="position:relative;left:-15px;">Back</button>
+		&nbsp;&nbsp;&nbsp;<button ng-click="confirm('Are you sure?')?setPage(0):false" class="btn btn-danger pull-right" style="position:relative;left:-30px;">Reset</button>
 
-			<span>Total: ${{totalPrice() | number:2}} </span>
-			<button ng-show="page==1" ng-click="updateDate();loadFlights()" ng-disabled="!(data.date.start!=''&&data.date.end!='')" class="btn btn-white pull-right">Next</button>
-			<button ng-show="page==2" ng-click="loadHotels()" ng-disabled="selectedFlight==-1" class="btn btn-white pull-right">Next</button>
-			<button ng-show="page==3" ng-click="loadActivities()" ng-disabled="selectedHotel==-1" class="btn btn-white pull-right">Next</button>
-			<button ng-show="page==4" ng-click="loadItinerary()" ng-disabled="selectedActivities.length<1" class="btn btn-white pull-right">Next</button>
-			&nbsp;&nbsp;&nbsp;<button ng-click="setPage(page-1)" class="btn btn-black pull-right" style="position:relative;left:-15px;">Back</button>
-			&nbsp;&nbsp;&nbsp;<button ng-click="confirm('Are you sure?')?setPage(0):false" class="btn btn-danger pull-right" style="position:relative;left:-30px;">Reset</button>
-		</div>
 	</div>
+</div>
+</div>
 </div>
 </div>
 

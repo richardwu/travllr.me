@@ -5,10 +5,10 @@ class PagesController < ApplicationController
 	# Needs to be updated when limit reached for QPX (50)
 	GOOGLE_BROWSER_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
 	GOOGLE_SERVER_API_KEY = 'AIzaSyB22uhA_dJ3p07nbFXcgOOO6YNQqJnCkYI'
-	EXPEDIA_API_KEY = '55bfee91-d4ab-45bf-9be8-a77f4e5bb570'
+	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
 
 	# Needs to be updated when limit reached (500)
-	GRAPHHOPPER_API_KEY = 'e8932177-3cb9-42bb-bbe4-c2d4f058a09a'
+	GRAPHHOPPER_API_KEY = '55bfee91-d4ab-45bf-9be8-a77f4e5bb570'
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
 	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
@@ -208,6 +208,8 @@ class PagesController < ApplicationController
 		url = URI.parse('http://terminal2.expedia.com/x/suggestions/regions?query='+place+'&apikey='+EXPEDIA_API_KEY)
 		req = Net::HTTP::Get.new(url.to_s)
 		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
+
+		Rails.logger.debug res
 
 		placeJson = JSON.parse(res.body)
 
