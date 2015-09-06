@@ -199,81 +199,130 @@ var scripts = {
           pois.push({
             lat: $scope.activities[$scope.selectedActivities[i]].location.coordinate.latitude,
             lon: $scope.activities[$scope.selectedActivities[i]].location.coordinate.longitude,
-            index: i
+            id: parseInt(i)
           });
         }
 
         var hotel = {
-          lat: $scope.hotels[$scope.selectedHotel].Location.GeoLocation.Latitude,
-          lon: $scope.hotels[$scope.selectedHotel].Location.GeoLocation.Longitude
+          lat: parseFloat($scope.hotels[$scope.selectedHotel].Location.GeoLocation.Latitude),
+          lon: parseFloat($scope.hotels[$scope.selectedHotel].Location.GeoLocation.Longitude)
         };
 
         var limits = $scope.getLimits();
         var tempLimits = limits;
         tempLimits.shift();
 
-        // Get Clusters
-        for (i in pois){
-          pois[i].id = parseInt(i);
-        }
+        $scope.itineraries = [];
+
+        // Known bug: prim algorithm skips first index
+        // Shift in hotel coords as first
+        pois.splice(0,0, hotel);
+        pois[0].id = -1;
 
         $.post('/clusters',{
           pois: JSON.stringify(pois),
           limits: tempLimits
-        }, function(data){
-          console.log(data);
-        });
-
-        $.post('routes', {
-          hotel: hotel,
-          pois: pois
-        }, function(data){
-          // Returns array of POI index's in order
-          console.log(data);
-
-          var orderedActivities = [];
-
-          for(i in data){
-            orderedActivities.push($scope.activities[parseInt(data[i])]);
-          }
-          $scope.itineraries = [];
-          $scope.itineraries[0] = orderedActivities;
-          $scope.itineraries[1] = orderedActivities;
-          $scope.itineraries[2] = orderedActivities;
-          $scope.flight = $scope.flights[$scope.selectedFlight];
-          $scope.loaded = true;
-          $scope.$apply();
-
+        }, function(clusters){
+          console.log(clusters);
 
           var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+
+          for (i in clusters){
+            var clusteredPois = clusters[i];
+
+            // Init the init element
+            $scope.itineraries[i] = [];
+
+            $.ajax({
+              url: 'routes',
+              method: 'POST',
+              data: {
+                hotel: hotel,
+                pois: clusteredPois,
+                i: i
+              },
+              dataType: 'json',
+              success: function(data){
+                // Returns array of POI index's in order
+                var i = data.i;
+                var ids = data.ids;
+
+                for(j in ids){
+                  $scope.itineraries[i].push($scope.activities[parseInt(ids[j])]);
+                }
+
+                var hotelMaps = {lat: parseFloat(hotel.lat), lng: parseFloat(hotel.lon)};
+
+                var map = new google.maps.Map(document.getElementById('itinerary-map-'+(parseInt(i)+1)), {
+                  zoom: 12,
+                  center: hotelMaps,
+                  scrollwheel: false
+                });
+
+                for (j in $scope.itineraries[i]){
+                  var pos = {lat: parseFloat($scope.itineraries[i][j].location.coordinate.latitude), lng: parseFloat($scope.itineraries[i][j].location.coordinate.longitude) };
+                  var marker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                    title: $scope.itineraries[i][j].name,
+                    label: labels[j]
+                  });
+                }
+
+                var marker = new google.maps.Marker({
+                  position: hotelMaps,
+                  map: map,
+                  title: 'HOTEL: ' + $scope.hotels[$scope.selectedHotel].Name
+                });
+
+                if (!$scope.loaded)
+                  $scope.loaded = true;
+
+                $scope.$apply();
+
+              },
+
+              error: function(data){
+                console.log('routes posting error');
+              }
+            });  // End of post to /routes (callback)
+
+            //
+          }
+
           // Initialising google maps for each day
 
-          var hotelMaps = {lat: parseFloat(hotel.lat), lng: parseFloat(hotel.lon)};
-          for (i in $scope.itineraries) {
-            var map = new google.maps.Map(document.getElementById('itinerary-map-'+(parseInt(i)+1)), {
-              zoom: 12,
-              center: hotelMaps,
-              scrollwheel: false
-            });
+          // var hotelMaps = {lat: parseFloat(hotel.lat), lng: parseFloat(hotel.lon)};
+          // for (i in $scope.itineraries) {
+          //   var map = new google.maps.Map(document.getElementById('itinerary-map-'+(parseInt(i)+1)), {
+          //     zoom: 12,
+          //     center: hotelMaps,
+          //     scrollwheel: false
+          //   });
 
-            for (j in $scope.itineraries[i]){
-              var pos = {lat: parseFloat($scope.itineraries[i][j].location.coordinate.latitude), lng: parseFloat($scope.itineraries[i][j].location.coordinate.longitude) };
-              console.log(pos);
-              var marker = new google.maps.Marker({
-                position: pos,
-                map: map,
-                title: $scope.itineraries[i][j].name,
-                label: labels[j]
-              });
-            }
+          //   for (j in $scope.itineraries[i]){
+          //     var pos = {lat: parseFloat($scope.itineraries[i][j].location.coordinate.latitude), lng: parseFloat($scope.itineraries[i][j].location.coordinate.longitude) };
+          //     console.log(pos);
+          //     var marker = new google.maps.Marker({
+          //       position: pos,
+          //       map: map,
+          //       title: $scope.itineraries[i][j].name,
+          //       label: labels[j]
+          //     });
+          //   }
 
-            var marker = new google.maps.Marker({
-              position: hotelMaps,
-              map: map,
-              title: $scope.hotels[$scope.selectedHotel].Name
-            });
-          }
-        });
+          //   var marker = new google.maps.Marker({
+          //     position: hotelMaps,
+          //     map: map,
+          //     title: $scope.hotels[$scope.selectedHotel].Name
+          //   });
+          // }
+
+          $scope.flight = $scope.flights[$scope.selectedFlight];
+          $scope.$apply();
+          //
+        }); // End of post to /clusters (callback)
         //
       };
 
@@ -317,12 +366,8 @@ var scripts = {
         }
       });
 
-      $('#test-clusters').click(function(){
-        $scope.loadItinerary();
-      });
-
     }]);
-  }
+}
 };
 
 
