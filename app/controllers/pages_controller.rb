@@ -13,7 +13,8 @@ class PagesController < ApplicationController
 
 	def home
 	end
-
+	def about
+	end
 
 	def hotels
 		# params[:origin] = "Toronto, ON, Canada"

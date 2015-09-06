@@ -386,7 +386,13 @@ $( "#end-calendar" ).datepicker({
       });
 
     }]);
+<<<<<<< Updated upstream
 }
+=======
+  },
+  'about': function () {;
+  }
+>>>>>>> Stashed changes
 };
 
 
