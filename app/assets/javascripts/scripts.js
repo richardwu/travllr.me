@@ -233,6 +233,7 @@ var scripts = {
 
           var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
+<<<<<<< Updated upstream
 
           for (i in clusters){
             var clusteredPois = clusters[i];
@@ -295,6 +296,32 @@ var scripts = {
             });  // End of post to /routes (callback)
 
             //
+=======
+          var hotelMaps = {lat: parseFloat(hotel.lat), lng: parseFloat(hotel.lon)};
+          for (i in $scope.itineraries) {
+            var map = new google.maps.Map(document.getElementById('itinerary-map-'+(parseInt(i)+1)), {
+              zoom: 12,
+              center: hotelMaps,
+              scrollwheel: false
+            });
+
+            for (j in $scope.itineraries[i]){
+              var pos = {lat: parseFloat($scope.itineraries[i][j].location.coordinate.latitude), lng: parseFloat($scope.itineraries[i][j].location.coordinate.longitude) };
+              console.log(pos);
+              var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                title: $scope.itineraries[i][j].name,
+                label: labels[j]
+              });
+            }
+
+            var marker = new google.maps.Marker({
+              position: hotelMaps,
+              map: map,
+              title: $scope.hotels[$scope.selectedHotel].Name
+            });
+>>>>>>> Stashed changes
           }
 
           // Initialising google maps for each day
