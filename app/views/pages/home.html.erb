@@ -145,7 +145,7 @@
 							<div ng-show="loaded">
 								<table class="table table-striped order-table">
 									<tbody>
-										<tr ng-repeat="activity in activities" ng-class="{success:$parent.activitySelected($index)}" ng-click="$parent.toggleActivity($index)">
+										<tr ng-repeat="activity in activities" ng-class="{success:$parent.activitySelected($index)}" ng-click="$parent.toggleActivity($index)" ng-hide="shouldHide($index)">
 											<td><img src="{{activity.image_url}}" style="height:60px;"></td>
 											<td><div class="text-primary header">{{activity.name}}</div><div><img src="{{activity.rating_img_url}}"></div></td>
 											<td><div class="text-muted">{{activity.location.address[0]}}</div><p>{{activity.snippet_text}}</p></td>
