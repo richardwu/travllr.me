@@ -10,8 +10,11 @@ var scripts = {
         date: {
           start: '2015-09-15',
           end: '2015-09-25'
-        }
+        },
+        date_string: []
       };
+      /*
+      }*/
 
 
       $scope.getNumber = function(num) {
@@ -75,6 +78,13 @@ var scripts = {
       $scope.hotels = [], $scope.selectedActivities = [];
       $scope.page = 0;
       $scope.loadFlights = function(){
+        // create date_string
+        currentMoment = moment($scope.data["date"]["start"]);
+        while (!currentMoment.isAfter(moment($scope.data["date"]["end"]))) {
+          $scope.data["date_string"].push(currentMoment.format("ddd, MMM Do"));
+          currentMoment.add(1, 'day');
+        }
+
         $scope.page = 2;
         $scope.loaded = false;
         $.get('flights.json', {

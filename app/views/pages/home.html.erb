@@ -210,7 +210,7 @@
 								<div class="panel-heading" role="tab" id="checkin-heading">
 									<h4 class="panel-title">
 										<a role="button" data-toggle="collapse" href="#checkin-panel" aria-expanded="true" aria-controls="checkin-panel">
-											Arrival at {{data.location.end}}
+											<strong>{{data.date_string[0]}}: </strong>Arrival at {{data.location.end}}
 										</a>
 									</h4>
 								</div>
@@ -249,6 +249,8 @@
 								<div class="panel-heading" role="tab" id="headingOne">
 									<h4 class="panel-title">
 										<a role="button" data-toggle="collapse" href="#collapse{{$index+1}}" aria-expanded="true" aria-controls="collapse{{$index+1}}">
+											<strong ng-if="checkInItinerary">{{data.date_string[{{$index-1}}]}}: </strong>
+											<strong ng-if="!checkInItinerary">{{data.date_string[{{$index}}]}}: </strong>
 											Day {{$index}}
 										</a>
 									</h4>
