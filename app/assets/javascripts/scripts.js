@@ -130,7 +130,7 @@ var scripts = {
             startTime = moment(timeStr).hours() + 1;
 
             if(startTime + ACTIVITY_DURATION < 16) {
-              limit[0] = 1; // TRUE
+              limit[0] = startTime; // TRUE
               limit[countr] = parseInt((16 - startTime)/ACTIVITY_DURATION);
               startTime = 16;
               countr++;
@@ -250,11 +250,23 @@ var scripts = {
               dataType: 'json',
               success: function(data){
                 // Returns array of POI index's in order
+                var ACTIVITY_DURATION = 2;
                 var i = data.i;
                 var ids = data.ids;
+                var times = data.times, startTime;
+                if (i == 0) { // first day
+                  startTime = limits[0];
+                }
+                else {
+                  startTime = 8; // 8 am
+                }
 
                 for(j in ids){
-                  $scope.itineraries[i].push($scope.activities[parseInt(ids[j])]);
+                  var activity = $scope.activities[parseInt(ids[j])];
+                  var graphhoppertime = moment({second: times[j]});
+                  var time = moment({hour: graphhoppertime.hours() + ACTIVITY_DURATION*j + startTime, minute: graphhoppertime.minutes(), second: graphhoppertime.seconds()});
+                  $scope.itineraries[i].push(activity);
+                  $scope.itineraries[i][j]["time"]= time.format("hh:mm");
                 }
 
                 var hotelMaps = {lat: parseFloat(hotel.lat), lng: parseFloat(hotel.lon)};

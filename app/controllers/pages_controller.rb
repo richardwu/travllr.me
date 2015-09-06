@@ -174,8 +174,10 @@ class PagesController < ApplicationController
 
 		# Store the order of point ids in `order`
 		order = []
+		times = []
 		res["solution"]["routes"][0]["activities"].each do |poi|
 			order.push(poi["id"])
+			times.push(poi["end_time"])
 		end
 
 
@@ -185,7 +187,7 @@ class PagesController < ApplicationController
 		# Remove last element
 		order.pop
 
-		render :json => {ids: order, i: params[:i]}
+		render :json => {ids: order, i: params[:i], times: times}
 
 	end
 

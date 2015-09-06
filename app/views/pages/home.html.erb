@@ -222,7 +222,7 @@
 											<tr ng-repeat="event in itinerary" class="itinerary-event" id="itinerary-{{$parent.$index+1}}-event-{{$index+1}}">
 												<td><img src="{{event.image_url}}"></td>
 												<td><div><strong>{{event.name}}</strong></div><div><a href="{{event.url}}" target="_blank">More Info</a></div><div ng-repeat="addressline in event.location.display_address" class="itinerary-event-address-line">{{addressline}}</div></td>
-												<td>69:69PM</td>
+												<td>{{event.time}}</td>
 											</tr>
 										</tbody>
 									</table>
