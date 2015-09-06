@@ -113,8 +113,7 @@ module PrimModuleIds
     # Prim's algorithm
 
 
-    @i = 0
-    while @nodes.length > 1 do
+    for i in 0 .. @limit.length-1
       adjacency_matrix = create_adjacency_matrix
       first_edge = select_first_edge(adjacency_matrix)
       @nodes_spanned_so_far, @edges = [first_edge[:start], first_edge[:end]], [first_edge]
@@ -127,9 +126,9 @@ module PrimModuleIds
         @nodes_spanned_so_far << cheapest_edge[:start]
       end
       @total = 0
-      @groups[@i] = []
-      dfs(0, @i, 0)
-      @i+=1
+      @groups[i] = []
+      dfs(0, i, 0)
+      i+=1
       @visited.clear
       @nodes.delete_if { |x| x['lat'] == "shoot" }
     end

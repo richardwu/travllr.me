@@ -7,4 +7,9 @@ Hosted on Microsoft Azure.
 APIs used:
 - Expedia API (hackathon.expedia.com)
 - QPX Express Airfare API 
-- Wego Flights API
+- Google Maps API
+- Google Geocoding API
+- Google Place Suggestions API
+- Yelp API
+- Graphhopper
+-
