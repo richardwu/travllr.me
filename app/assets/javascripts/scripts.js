@@ -222,6 +222,17 @@ var scripts = {
           lon: $scope.hotels[$scope.selectedHotel].Location.GeoLocation.Longitude
         };
 
+        // Get Clusters
+        for (i in pois){
+          pois[i].id = parseInt(i);
+        }
+
+        $.post('/clusters',{
+          pois: JSON.stringify(pois)
+        }, function(data){
+          console.log(data);
+        });
+
         $.post('routes', {
           hotel: hotel,
           pois: pois
@@ -316,17 +327,7 @@ var scripts = {
       });
 
       $('#test-clusters').click(function(){
-        var pois = [{lat:48.8491898, lon:2.3364501}, {lat:48.8719444, lon:2.3316667}, {lat:48.8546374434143, lon:2.34745829678957}, {lat:48.8556709, lon:2.3459201}, {lat:48.858799, lon:2.33778}, {lat:48.8583121340336, lon:2.29448028497734}, {lat:48.8738256014877, lon:2.29502221103758}, {lat:48.886720769013, lon:2.3430021056794}, {lat:48.8597984, lon:2.3408899}, {lat:48.8570755667268, lon:2.34135228261721}, {lat:48.865886, lon:2.321895}, {lat:48.8570190952852, lon:2.34736043081057}, {lat:48.863949, lon:2.313589}, {lat:48.8568, lon:2.35106}, {lat:48.833912, lon:2.332454}, {lat:48.8656111005854, lon:2.34700798988342}, {lat:48.884629078698, lon:2.33875765070958}, {lat:48.855748, lon:2.312578}, {lat:48.845594, lon:2.373304}, {lat:48.841136656188, lon:2.39657923579216}];
-
-        for (i in pois){
-          pois[i].id = parseInt(i);
-        }
-
-        $.post('/clusters',{
-          pois: JSON.stringify(pois)
-        }, function(data){
-          console.log(data);
-        });
+        $scope.loadItinerary();
       });
 
     }]);
