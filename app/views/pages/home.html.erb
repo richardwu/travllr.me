@@ -2,6 +2,7 @@
 <body id="home" ng-app="homePage">
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBc3jbHCRxEaq_SDfbkwpWIjOMNjWVjnk4&libraries=places"></script>
 	<script type="text/javascript">autoload();</script>
+
 	<div ng-controller="mainController" style="height:100%;position:relative;">
 		<div class="site-wrapper">
 			<div class="site-wrapper-inner">
@@ -18,6 +19,7 @@
 						</div>
 					</div>
 					<div class="inner cover">
+						<h1  class="cover-heading" style="font-size:60px;"><img src="<%= asset_path 'logo.png' %>" width="75px" style=" margin-right:10px;">Travllr<div style="color:orange; display:inline-block;">.me</div></h1>
 						<p class="lead">A world awaits you.</p>
 						<p class="lead" style="text-align:center;">
 							<%= text_field_tag :origin, nil, class: 'location-input form-control', 'ng-model': 'data.location.start', 'placeholder': 'Home city'%>
@@ -219,7 +221,7 @@
 										<tbody>
 											<tr ng-repeat="event in itinerary" class="itinerary-event" id="itinerary-{{$parent.$index+1}}-event-{{$index+1}}">
 												<td><img src="{{event.image_url}}"></td>
-												<td><div><strong>{{event.name}}</strong></div><div><a href="{{event.url}}">More Info</a></div><div ng-repeat="addressline in event.location.display_address" class="itinerary-event-address-line">{{addressline}}</div></td>
+												<td><div><strong>{{event.name}}</strong></div><div><a href="{{event.url}}" target="_blank">More Info</a></div><div ng-repeat="addressline in event.location.display_address" class="itinerary-event-address-line">{{addressline}}</div></td>
 												<td>69:69PM</td>
 											</tr>
 										</tbody>
