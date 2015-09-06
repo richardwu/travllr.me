@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get 'flights', to: 'pages#flights'
   get 'activities', to: 'pages#activities'
   post 'routes', to: 'pages#routes'
+  post 'clusters', to: 'pages#clusters'
 
   get 'about', to: 'pages#about'
 

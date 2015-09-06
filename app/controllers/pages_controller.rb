@@ -1,5 +1,7 @@
 class PagesController < ApplicationController
 
+	include PrimModuleIds
+
 	GOOGLE_BROWSER_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
 	GOOGLE_SERVER_API_KEY = 'AIzaSyB22uhA_dJ3p07nbFXcgOOO6YNQqJnCkYI'
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
@@ -186,6 +188,13 @@ class PagesController < ApplicationController
 		render :json => order
 
 	end
+
+
+
+	def clusters
+		render :json => prim(params[:pois])
+	end
+
 
 	private
 	def findCode(place)
