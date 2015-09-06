@@ -13,6 +13,7 @@ var scripts = {
         }
       };
 
+
       $scope.getNumber = function(num) {
         var useless = [];
         for(var i = 0; i < Math.ceil(Number(num)); i++) useless.push(i);
@@ -57,6 +58,12 @@ var scripts = {
           $scope.selectedActivities.push(idx);
         }
       }
+
+      $scope.updateLocationFields = function(){
+        $scope.data.location.start = $('#origin').val();
+        $scope.data.location.end = $('#destination').val();
+      }
+
       $scope.activitySelected = function(idx){
         return $scope.selectedActivities.indexOf(idx) != -1;
       }
@@ -206,7 +213,7 @@ var scripts = {
           pois.push({
             lat: $scope.activities[$scope.selectedActivities[i]].location.coordinate.latitude,
             lon: $scope.activities[$scope.selectedActivities[i]].location.coordinate.longitude,
-            id: $scope.activities[$scope.selectedActivities[i]].id
+            index: i
           });
         }
 
@@ -219,16 +226,18 @@ var scripts = {
           hotel: hotel,
           pois: pois
         }, function(data){
-          // Returns array of POI id's in order
+          // Returns array of POI index's in order
           console.log(data);
 
           var orderedActivities = [];
 
           for(i in data){
-            orderedActivities.push($scope.activities[data[i]]);
+            orderedActivities.push($scope.activities[parseInt(data[i])]);
           }
-
-          $scope.orderedActivities = orderedActivities;
+          $scope.itineraries = [];
+          $scope.itineraries[0] = orderedActivities;
+          $scope.itineraries[1] = orderedActivities;
+          $scope.itineraries[2] = orderedActivities;
           $scope.flight = $scope.flights[$scope.selectedFlight];
           $scope.loaded = true;
           $scope.$apply();

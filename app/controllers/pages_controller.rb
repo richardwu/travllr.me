@@ -132,7 +132,7 @@ class PagesController < ApplicationController
 
 		points.each do |point|
 			data["services"].push({
-					"id"=> point[1]['id'].to_s,
+					"id"=> point[1]['index'].to_s,
 					"name"=> "point_of_interest",
 					"address"=> {
 						"location_id"=> "loc",

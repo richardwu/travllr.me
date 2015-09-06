@@ -23,7 +23,7 @@
 						<p class="lead" style="text-align:center;">
 							<%= text_field_tag :origin, nil, class: 'location-input form-control', 'ng-model': 'data.location.start', 'placeholder': 'Home city'%>
 							<%= text_field_tag :destination, nil, class: 'location-input form-control', 'ng-model': 'data.location.end', 'placeholder': 'Destination city' %>
-							<button ng-click="page=1;" class="btn btn-primary" ng-disabled="(!(data.location.start!=''&&data.location.end!=''))||(data.location.start==data.location.end)">Next</button>
+							<button ng-click="page=1;updateLocationFields()" class="btn btn-primary" ng-disabled="(!(data.location.start!=''&&data.location.end!=''))||(data.location.start==data.location.end)">Next</button>
 						</p>
 					</div>
 					<div class="mastfoot">
@@ -191,38 +191,40 @@
 								</div>
 								<div id="departure-panel" style="text-align:left;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="departure-panel">
 									<table class="table">
-									<tbody>
-										<tr>
-											<td><strong class="text-success">{{flight.saleTotal}}</strong><div class="text-muted">round trip</div></td>
-											<td>
-												<strong class="text-primary">Departing</strong>
-												<div ng-repeat="segment in flight.slice[0].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+										<tbody>
+											<tr>
+												<td><strong class="text-success">{{flight.saleTotal}}</strong><div class="text-muted">round trip</div></td>
+												<td>
+													<strong class="text-primary">Departing</strong>
+													<div ng-repeat="segment in flight.slice[0].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 
 								</div>
 							</div>
-							<div class="panel panel-info">
+
+
+
+							<div ng-repeat="itinerary in itineraries track by $index" class="panel panel-info">
 								<div class="panel-heading" role="tab" id="headingOne">
 									<h4 class="panel-title">
-										<a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-											Day one
+										<a role="button" data-toggle="collapse" href="#collapse{{$index+1}}" aria-expanded="true" aria-controls="collapse{{$index+1}}">
+											Day {{$index+1}}
 										</a>
 									</h4>
 								</div>
-								<div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-									<div class="panel-body">
-										Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-									</div>
-									<ul class="list-group">
-										<li class="list-group-item">{{}}</li>
-										<li class="list-group-item">Dapibus ac facilisis in</li>
-										<li class="list-group-item">Morbi leo risus</li>
-										<li class="list-group-item">Porta ac consectetur ac</li>
-										<li class="list-group-item">Vestibulum at eros</li>
-									</ul>
+								<div id="collapse{{$index+1}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$index+1}}">
+									<table class="table table-striped order-table itinerary-table">
+										<tbody>
+											<tr ng-repeat="event in itinerary" class="itinerary-event" id="itinerary-{{$parent.$index}}-event-{{$index}}">
+												<td><img src="{{event.image_url}}"></td>
+												<td><div><strong>{{event.name}}</strong></div><div><a href="{{event.url}}">More Info</a></div><div ng-repeat="addressline in event.location.display_address" class="itinerary-event-address-line">{{addressline}}</div></td>
+												<td>69:69PM</td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
 							<div class="panel panel-danger">
@@ -235,16 +237,16 @@
 								</div>
 								<div id="return-panel" style="text-align:left;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="return-panel">
 									<table class="table">
-									<tbody>
-										<tr>
-											<td><strong class="text-success">{{flight.saleTotal}}</strong><div class="text-muted">round trip</div></td>
-											<td>
-												<strong class="text-primary">Returning</strong>
-												<div ng-repeat="segment in flight.slice[1].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
+										<tbody>
+											<tr>
+												<td><strong class="text-success">{{flight.saleTotal}}</strong><div class="text-muted">round trip</div></td>
+												<td>
+													<strong class="text-primary">Returning</strong>
+													<div ng-repeat="segment in flight.slice[1].segment"><strong>{{convertDate(segment.leg[0].departureTime)}} - {{convertDate(segment.leg[0].arrivalTime)}}</strong>&nbsp;<span class="text-muted">{{segment.leg[0].origin}} - {{segment.leg[0].destination}}</span><div class="text-muted">{{getCarrier(segment.flight.carrier)}} ({{segment.flight.carrier}}{{segment.flight.number}})</div></div>
+												</td>
+											</tr>
+										</tbody>
+									</table>
 
 								</div>
 							</div>
