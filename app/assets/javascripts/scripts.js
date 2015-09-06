@@ -87,7 +87,7 @@ var scripts = {
 
         $scope.page = 2;
         $scope.loaded = false;
-        $.get('flights.json', {
+        $.get('flights', {
           origin: $scope.data.location.start,
           destination: $scope.data.location.end,
           startDate: $scope.data.date.start,
