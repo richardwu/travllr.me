@@ -184,6 +184,10 @@ var scripts = {
       $scope.loadActivities = function(){
         $scope.page = 4;
         $scope.loaded = false;
+        var limits = $scope.getLimits();
+        var tempLimits = limits;
+        tempLimits.shift();
+        $scope.total = tempLimits.reduce(function(pv, cv) { return pv + cv; }, 0);
         $.get('activities', {
           origin: $scope.data.location.start,
           destination: $scope.data.location.end,
@@ -212,12 +216,11 @@ var scripts = {
         var hotel = {
           lat: parseFloat($scope.hotels[$scope.selectedHotel].Location.GeoLocation.Latitude),
           lon: parseFloat($scope.hotels[$scope.selectedHotel].Location.GeoLocation.Longitude)
-        };
+        }; 
 
         var limits = $scope.getLimits();
         var tempLimits = limits;
         tempLimits.shift();
-
         $scope.itineraries = [];
 
         // Known bug: prim algorithm skips first index
