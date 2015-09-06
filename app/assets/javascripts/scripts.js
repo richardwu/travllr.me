@@ -270,6 +270,9 @@ var scripts = {
                   else
                     $scope.checkInTime = $scope.checkInTime.toString() + ":00 AM";
                 }
+                else if (i == 1 && xlimits[0] != -1){
+                  startTime = 17; // 5 pm
+                }
                 else {
                   startTime = 8; // 8 am
                 }
@@ -422,5 +425,5 @@ $(function () {
   $.material.init();
 });
 $( document ).ajaxError(function() {
-  alert("Something happened.");
+  alert("Something happened. (API Limit probably exceeded)");
 });
