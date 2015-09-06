@@ -9,6 +9,7 @@ class PagesController < ApplicationController
 
 	# Needs to be updated when limit reached (500)
 	GRAPHHOPPER_API_KEY = '55bfee91-d4ab-45bf-9be8-a77f4e5bb570'
+	#b94ab4e9-2f39-492b-ac66-ecc25f502027
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
 	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
