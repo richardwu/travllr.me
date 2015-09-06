@@ -253,6 +253,14 @@ var scripts = {
         };
         var autocomplete = new google.maps.places.Autocomplete(input, options);
       });
+
+      $scope.updateDate = function(){
+        $scope.data.date = {
+          start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
+          end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
+        };
+      };
+      
       function updateDate(){
         $scope.data.date = {
           start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
