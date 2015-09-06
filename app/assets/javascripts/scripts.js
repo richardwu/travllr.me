@@ -233,7 +233,6 @@ var scripts = {
 
           var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
-
           for (i in clusters){
             var clusteredPois = clusters[i];
 
