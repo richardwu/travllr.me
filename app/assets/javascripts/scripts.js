@@ -241,49 +241,79 @@ var scripts = {
           $scope.flight = $scope.flights[$scope.selectedFlight];
           $scope.loaded = true;
           $scope.$apply();
+
+
+          var labels = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          // Initialising google maps for each day
+
+          var hotelMaps = {lat: parseFloat(hotel.lat), lng: parseFloat(hotel.lon)};
+          for (i in $scope.itineraries) {
+            var map = new google.maps.Map(document.getElementById('itinerary-map-'+(parseInt(i)+1)), {
+              zoom: 12,
+              center: hotelMaps,
+              scrollwheel: false
+            });
+
+            for (j in $scope.itineraries[i]){
+              var pos = {lat: parseFloat($scope.itineraries[i][j].location.coordinate.latitude), lng: parseFloat($scope.itineraries[i][j].location.coordinate.longitude) };
+              console.log(pos);
+              var marker = new google.maps.Marker({
+                position: pos,
+                map: map, 
+                title: $scope.itineraries[i][j].name,
+                label: labels[j]
+              });
+            }
+
+            var marker = new google.maps.Marker({
+              position: hotelMaps,
+              map: map, 
+              title: $scope.hotels[$scope.selectedHotel].Name
+            });
+          }
         });
 
-      };
+};
 
-      window.scope = $scope;
-      $('.location-input').each(function(){
-        var input = $(this).get(0);
-        var options = {
-          types: ['(cities)']
-        };
-        var autocomplete = new google.maps.places.Autocomplete(input, options);
-      });
+window.scope = $scope;
+$('.location-input').each(function(){
+  var input = $(this).get(0);
+  var options = {
+    types: ['(cities)']
+  };
+  var autocomplete = new google.maps.places.Autocomplete(input, options);
+});
 
-      $scope.updateDate = function(){
-        $scope.data.date = {
-          start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
-          end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
-        };
-      };
-      
-      function updateDate(){
-        $scope.data.date = {
-          start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
-          end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
-        };
-        $scope.$apply();
-      }
-      $( "#start-calendar" ).datepicker({
-        minDate: "+1d",
-        onSelect: function( selectedDate ) {
-          $( "#end-calendar" ).datepicker( "option", "minDate", moment(new Date(selectedDate)).add(1, "days").toDate() );
+$scope.updateDate = function(){
+  $scope.data.date = {
+    start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
+    end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
+  };
+};
 
-          $( "#end-calendar" ).datepicker( "option", "maxDate", moment(new Date(selectedDate)).add(27, "days").toDate() );
-          updateDate();
-        }
-      });
-      $( "#end-calendar" ).datepicker({
-        minDate: "+2d",
-        maxDate: "+28d",
-        onSelect: function( selectedDate ) {
-          updateDate();
-        }
-      });
+function updateDate(){
+  $scope.data.date = {
+    start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
+    end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
+  };
+  $scope.$apply();
+}
+$( "#start-calendar" ).datepicker({
+  minDate: "+1d",
+  onSelect: function( selectedDate ) {
+    $( "#end-calendar" ).datepicker( "option", "minDate", moment(new Date(selectedDate)).add(1, "days").toDate() );
+
+    $( "#end-calendar" ).datepicker( "option", "maxDate", moment(new Date(selectedDate)).add(27, "days").toDate() );
+    updateDate();
+  }
+});
+$( "#end-calendar" ).datepicker({
+  minDate: "+2d",
+  maxDate: "+28d",
+  onSelect: function( selectedDate ) {
+    updateDate();
+  }
+});
 
       // Submit data to /choose
 
