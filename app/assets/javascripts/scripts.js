@@ -142,7 +142,7 @@ var scripts = {
             // START TIME IS AN INTEGER REPRESENT THE # OF HOURS
 
             // One hour leeway for getting off plane
-            startTime = moment(timeStr).hours() + 1;
+            startTime = Math.max(7, moment(timeStr).hours() + 1);
 
             if(startTime + ACTIVITY_DURATION < 16) {
               limit[0] = startTime; // TRUE
@@ -280,7 +280,7 @@ var scripts = {
                 var times = data.times, startTime;
                 if (i == 0 && xlimits[0] != -1) { // first day
                   console.log("Cluster before check-in!");
-                  startTime = xlimits[0];
+                  startTime = Math.max(7, xlimits[0]);
                   $scope.checkInTime = Math.max(startTime, 16);
                   if ($scope.checkInTime >= 12)
                     $scope.checkInTime = ($scope.checkInTime % 12).toString() + ":00 PM";
@@ -299,8 +299,18 @@ var scripts = {
                 console.log("----");
                 for(j in ids){
                   var activity = $scope.activities[parseInt(ids[j])];
-                  var graphhoppertime = moment({second: times[parseInt(j+1)]});
+                  console.log(times);
+                  console.log(times[parseInt(j+1)]);
+                  var graphhoppertime = moment({second: times[parseInt(j)+1]});
+                  console.log(graphhoppertime);
+                  console.log(graphhoppertime.hours() + ' ' + graphhoppertime.minutes() + ' ' + graphhoppertime.seconds());
+                  console.log(graphhoppertime.hours() + ACTIVITY_DURATION*j + startTime + ' ' + graphhoppertime.minutes() + ' ' + graphhoppertime.seconds());
+
                   var time = moment({hour: graphhoppertime.hours() + ACTIVITY_DURATION*j + startTime, minute: graphhoppertime.minutes(), second: graphhoppertime.seconds()});
+                  console.log("*");
+                  console.log(graphhoppertime.format("hh:mm:ss"));
+                  console.log(time.format("hh:mm:ss"));
+                  console.log("*");
                   $scope.itineraries[i].push(activity);
                   $scope.itineraries[i][j]["time"]= time.format("hh:mm A");
                 }
