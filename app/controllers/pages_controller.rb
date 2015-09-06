@@ -2,9 +2,12 @@ class PagesController < ApplicationController
 
 	include PrimModuleIds
 
+	# Needs to be updated when limit reached for QPX (50)
 	GOOGLE_BROWSER_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
 	GOOGLE_SERVER_API_KEY = 'AIzaSyB22uhA_dJ3p07nbFXcgOOO6YNQqJnCkYI'
-	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
+	EXPEDIA_API_KEY = '55bfee91-d4ab-45bf-9be8-a77f4e5bb570'
+
+	# Needs to be updated when limit reached (500)
 	GRAPHHOPPER_API_KEY = 'e8932177-3cb9-42bb-bbe4-c2d4f058a09a'
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
