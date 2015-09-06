@@ -105,19 +105,20 @@ var scripts = {
       $scope.getLimits = function(){
         var startDate = moment($scope.data.date.start);
         var endDate = moment($scope.data.date.end);
-        var limit = [], count = 1;
+        var limit = [], countr = 1;
 
         var ACTIVITY_DURATION = 2;
 
-        var currentDate = startDate;
+        var currentDate = moment(startDate);
         while (!currentDate.isAfter(endDate)){
           // This can be modified to allow user input
           var startTime = 8;
           var endTime = 22;
           // Special case for first date (start time == arriving flight's arrival time)
           if (currentDate.isSame(startDate)){
-            var departingFlight = $scope.flights[$scope.selectedFlight].slice[0];
-            var lastSegment = $(departingFlight.segment).last();
+            console.log("Start date!")
+            var arrivingFlight = $scope.flights[$scope.selectedFlight].slice[0];
+            var lastSegment = $(arrivingFlight.segment).last();
 
             // Remove timezone to be able to parse hour
             timeStr = lastSegment[0].leg[0].arrivalTime;
@@ -125,13 +126,14 @@ var scripts = {
 
             // START TIME IS AN INTEGER REPRESENT THE # OF HOURS
 
-            startTime = moment(timeStr).hours();
+            // One hour leeway for getting off plane
+            startTime = moment(timeStr).hours() + 1;
 
             if(startTime + ACTIVITY_DURATION < 16) {
               limit[0] = 1; // TRUE
-              limit[count] = parseInt((16 - startTime)/ACTIVITY_DURATION);
+              limit[countr] = parseInt((16 - startTime)/ACTIVITY_DURATION);
               startTime = 16;
-              count++;
+              countr++;
             }
             else {
               limit[0] = 0; // FALSE
@@ -139,21 +141,25 @@ var scripts = {
           }
           // Special case for last date (end time == departing flight's departure time)
           else if (currentDate.isSame(endDate)){
-            var arrivingFlight = $($scope.flights[scope.selectedFlight].slice).last();
-            var firstSegment = departingFlight.segment[0];
+            var departingFlight = $($scope.flights[$scope.selectedFlight].slice).last();
+            var firstSegment = departingFlight[0].segment[0];
 
             // Remove timezone to be able to parse hour
             timeStr = firstSegment.leg[0].departureTime;
             timeStr = timeStr.substring(0, timeStr.length - 6);
 
-            endTime = moment(timeStr).hours();
+            // One hour leeway for getting on flight
+            endTime = moment(timeStr).hours() - 1;
+            console.log("End date!");
+          }else{
+            console.log("Normal!");
           }
 
-          limit[count] = parseInt((endTime - startTime)/2);
+          limit[countr] = parseInt((endTime - startTime)/ACTIVITY_DURATION);
 
           // Increment currentDate by 1 day
           currentDate.add(1, 'days');
-          count++;
+          countr++;
 
         } // end while
         return limit;
