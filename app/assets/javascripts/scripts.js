@@ -137,6 +137,8 @@ var scripts = {
             timeStr = lastSegment[0].leg[0].arrivalTime;
             timeStr = timeStr.substring(0, timeStr.length -6);
 
+            $scope.localArrivalTime = moment(timeStr).format('hh:mm A');
+
             // START TIME IS AN INTEGER REPRESENT THE # OF HOURS
 
             // One hour leeway for getting off plane
@@ -160,6 +162,9 @@ var scripts = {
             // Remove timezone to be able to parse hour
             timeStr = firstSegment.leg[0].departureTime;
             timeStr = timeStr.substring(0, timeStr.length - 6);
+
+            $scope.localDepartureTime = moment(timeStr).format('hh:mm A');
+
 
             // One hour leeway for getting on flight
             endTime = moment(timeStr).hours() - 1;
