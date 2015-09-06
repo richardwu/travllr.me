@@ -14,9 +14,9 @@ var scripts = {
       };
 
       $scope.getNumber = function(num) {
-      var useless = [];
-      for(var i = 0; i < Math.ceil(Number(num)); i++) useless.push(i);
-      return useless;
+        var useless = [];
+        for(var i = 0; i < Math.ceil(Number(num)); i++) useless.push(i);
+          return useless;
       }
       $scope.divideDays = function(price){
         return Number(price) / moment(new Date($scope.data.date.end)).diff(moment(new Date($scope.data.date.start)), 'days');
@@ -24,10 +24,10 @@ var scripts = {
       $scope.totalPrice = function(){
         var total = 0;
         if($scope.selectedFlight != -1){
-            total += Number($scope.flights[$scope.selectedFlight].saleTotal.substring(3))
+          total += Number($scope.flights[$scope.selectedFlight].saleTotal.substring(3))
         }
         if($scope.selectedHotel != -1){
-            total += Number($scope.hotels[$scope.selectedHotel].Price.TotalRate.Value);
+          total += Number($scope.hotels[$scope.selectedHotel].Price.TotalRate.Value);
         }
         return total;
       }
@@ -35,7 +35,10 @@ var scripts = {
         $scope.page = num;
       }
       $scope.convertDate = function(date){
-        return moment(date).format("MMM D @ h:mm A")
+        if (moment(date).hours() == 0 && moment(date).minutes() == 0 && moment(date).seconds() == 0)
+          return moment(date).format('MMM D')
+        else 
+          return moment(date).format("MMM D @ h:mm A")
       }
       $scope.getCarrier = function(code){
         return $scope.flightData.trips.data.carrierNames[code].name;
@@ -126,7 +129,7 @@ var scripts = {
           var MAX_LIMIT = 14; // starttime - endtime
           // initialize vars
           var currentAct = 0, totalCost = calculateCost(currentAct),
-              includedActivities = [currentAct], cost = [0];
+          includedActivities = [currentAct], cost = [0];
 
           for (i in selectedActivities){
             // Update cost array
@@ -219,6 +222,7 @@ var scripts = {
           }
 
           $scope.orderedActivities = orderedActivities;
+          $scope.flight = $scope.flights[$scope.selectedFlight];
           $scope.loaded = true;
           $scope.$apply();
         });
@@ -245,8 +249,8 @@ var scripts = {
         onSelect: function( selectedDate ) {
           $( "#end-calendar" ).datepicker( "option", "minDate", moment(new Date(selectedDate)).add(1, "days").toDate() );
 
-            $( "#end-calendar" ).datepicker( "option", "maxDate", moment(new Date(selectedDate)).add(27, "days").toDate() );
-            updateDate();
+          $( "#end-calendar" ).datepicker( "option", "maxDate", moment(new Date(selectedDate)).add(27, "days").toDate() );
+          updateDate();
         }
       });
       $( "#end-calendar" ).datepicker({
@@ -328,7 +332,7 @@ var scripts = {
       });
 
     }]);
-  }
+}
 };
 
 
