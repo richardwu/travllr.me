@@ -6,7 +6,7 @@ class PagesController < ApplicationController
 	GOOGLE_SERVER_API_KEY = 'AIzaSyB22uhA_dJ3p07nbFXcgOOO6YNQqJnCkYI'
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
 	# GRAPHHOPPER_API_KEY = 'cc4609d7-eee0-42ae-b36d-1eb5cb726c2e'
-	GRAPHHOPPER_API_KEY = '5b46c734-0ec6-4da6-8c29-ada6a0270f63'
+	GRAPHHOPPER_API_KEY = '288711fe-e2d2-47b5-9890-3388ff321805'
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
 	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
@@ -27,7 +27,7 @@ class PagesController < ApplicationController
 		# originCoord = Geocoder.coordinates(params[:origin])
 		destinationCoord = Geocoder.coordinates(params[:destination])
 
-		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+destinationCoord[0].to_s+','+destinationCoord[1].to_s+'&radius=10km&dates='+params[:startDate]+','+params[:endDate]+'&maxhotels=10&sort=price&order=asc&apikey='+EXPEDIA_API_KEY)
+		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+destinationCoord[0].to_s+','+destinationCoord[1].to_s+'&radius=5km&dates='+params[:startDate]+','+params[:endDate]+'&maxhotels=10&sort=price&order=asc&apikey='+EXPEDIA_API_KEY)
 		req = Net::HTTP::Get.new(url.to_s)
 		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
 		hotels = JSON.parse(res.body)
@@ -106,6 +106,7 @@ class PagesController < ApplicationController
 		hotel = params[:hotel]
 		points = params[:pois]
 
+
 		# hotel = {'lat'=> 50.877044, 'lon'=> 12.076721}
 
 		# points = [{'lat'=> 51.508742, 'lon'=> 7.500916, 'id'=> 'asdbfdbndvb'}, {'lat'=> 49.0047222, 'lon'=> 8.3858333, 'id'=> 'sfdfds'}]
@@ -135,7 +136,7 @@ class PagesController < ApplicationController
 
 		points.each do |point|
 			data["services"].push({
-					"id"=> point[1]['index'].to_s,
+					"id"=> point[1]['id'].to_s,
 					"name"=> "point_of_interest",
 					"address"=> {
 						"location_id"=> "loc",
@@ -185,7 +186,7 @@ class PagesController < ApplicationController
 		# Remove last element
 		order.pop
 
-		render :json => order
+		render :json => {ids: order, i: params[:i]}
 
 	end
 
