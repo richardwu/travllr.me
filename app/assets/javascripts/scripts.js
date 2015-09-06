@@ -4,12 +4,12 @@ var scripts = {
     homeApp.controller('mainController', ['$scope', function ($scope) {
       $scope.data = {
         location: {
-          start: 'Toronto, Canada',
-          end: 'Paris, France'
+          start: '',
+          end: ''
         },
         date: {
-          start: '2015-09-15',
-          end: '2015-09-25'
+          start: '',
+          end: ''
         },
         date_string: []
       };
