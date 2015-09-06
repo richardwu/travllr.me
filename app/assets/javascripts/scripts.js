@@ -272,127 +272,51 @@ var scripts = {
             });
           }
         });
+        //
+      };
 
-};
+      window.scope = $scope;
+      $('.location-input').each(function(){
+        var input = $(this).get(0);
+        var options = {
+          types: ['(cities)']
+        };
+        var autocomplete = new google.maps.places.Autocomplete(input, options);
+      });
 
-window.scope = $scope;
-$('.location-input').each(function(){
-  var input = $(this).get(0);
-  var options = {
-    types: ['(cities)']
-  };
-  var autocomplete = new google.maps.places.Autocomplete(input, options);
-});
+      $scope.updateDate = function(){
+        $scope.data.date = {
+          start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
+          end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
+        };
+      };
 
-$scope.updateDate = function(){
-  $scope.data.date = {
-    start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
-    end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
-  };
-};
+      function updateDate(){
+        $scope.data.date = {
+          start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
+          end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
+        };
+        $scope.$apply();
+      }
+      $( "#start-calendar" ).datepicker({
+        minDate: "+1d",
+        onSelect: function( selectedDate ) {
+          $( "#end-calendar" ).datepicker( "option", "minDate", moment(new Date(selectedDate)).add(1, "days").toDate() );
 
-function updateDate(){
-  $scope.data.date = {
-    start: moment($('#start-calendar').datepicker('getDate')).format("YYYY-MM-DD"),
-    end: moment($('#end-calendar').datepicker('getDate')).format("YYYY-MM-DD")
-  };
-  $scope.$apply();
-}
-$( "#start-calendar" ).datepicker({
-  minDate: "+1d",
-  onSelect: function( selectedDate ) {
-    $( "#end-calendar" ).datepicker( "option", "minDate", moment(new Date(selectedDate)).add(1, "days").toDate() );
-
-    $( "#end-calendar" ).datepicker( "option", "maxDate", moment(new Date(selectedDate)).add(27, "days").toDate() );
-    updateDate();
-  }
-});
-$( "#end-calendar" ).datepicker({
-  minDate: "+2d",
-  maxDate: "+28d",
-  onSelect: function( selectedDate ) {
-    updateDate();
-  }
-});
-
-      // Submit data to /choose
-
-      // $('#submit-button').on('click', function(){
-
-      //   // window.scope.data.location doesnt work because ng-model doesnt register
-      //   // the autocomplete!!!!!
-      //   // - richard
-
-      //   var inputData = {
-      //     origin: $('#origin').val(),
-      //     destination: $('#destination').val(),
-      //     startDate: window.scope.data.date.start,
-      //     endDate: window.scope.data.date.end
-      //   };
-
-      //   // Returns JSON of hotels
-
-      //   $.ajax({
-      //     url: '/hotels',
-      //     method: 'GET',
-      //     data: inputData,
-      //     dataType: 'json',
-      //     success: function(resp){
-      //       console.log(resp);
-      //     },
-      //     error: function(resp){
-      //       console.log(resp);
-      //     }
-      //   });
-
-      //   // Returns JSON of flights
-      //   $.ajax({
-      //     url: '/flights',
-      //     method: 'GET',
-      //     data: inputData,
-      //     dataType: 'json',
-      //     success: function(resp){
-      //       console.log(resp);
-      //     },
-      //     error: function(resp){
-      //       console.log(resp);
-      //     }
-      //   });
-
-
-      //   // Returns JSON of activities
-      //   $.ajax({
-      //     url: '/activities',
-      //     method: 'GET',
-      //     data: inputData,
-      //     dataType: 'json',
-      //     success: function(resp){
-      //       console.log(resp);
-      //     },
-      //     error: function(resp){
-      //       console.log(resp);
-      //     }
-      //   });
-
-      // });
-
-
-      // Function to generate itin
-      $('#generate-itin').on('click', function(){
-        var hotel;
-        var flight;
-        // Sorted
-        var activities;
+          $( "#end-calendar" ).datepicker( "option", "maxDate", moment(new Date(selectedDate)).add(27, "days").toDate() );
+          updateDate();
+        }
+      });
+      $( "#end-calendar" ).datepicker({
+        minDate: "+2d",
+        maxDate: "+28d",
+        onSelect: function( selectedDate ) {
+          updateDate();
+        }
       });
 
     }]);
-<<<<<<< Updated upstream
-}
-=======
-  },
-  'about': function () {;
   }
->>>>>>> Stashed changes
 };
 
 
