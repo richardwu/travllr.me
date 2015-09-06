@@ -5,7 +5,7 @@ class PagesController < ApplicationController
 	GOOGLE_BROWSER_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
 	GOOGLE_SERVER_API_KEY = 'AIzaSyB22uhA_dJ3p07nbFXcgOOO6YNQqJnCkYI'
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
-	GRAPHHOPPER_API_KEY = '297043dd-b6ad-41e6-92de-bb71d7c65ead'
+	GRAPHHOPPER_API_KEY = '59b5091a-561a-457d-abba-9bb34ab7604a'
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
 	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
@@ -185,7 +185,7 @@ class PagesController < ApplicationController
 		# Remove last element
 		order.pop
 
-		render :json => {ids: order, i: params[:i]}
+		render :json => {ids: order, i: params[:i], res: res}
 
 	end
 
