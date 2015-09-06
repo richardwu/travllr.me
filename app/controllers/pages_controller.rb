@@ -12,10 +12,9 @@ class PagesController < ApplicationController
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
 
 	# Needs to be updated when limit reached (500)
-	GRAPHHOPPER_API_KEY = '5699d5eb-031d-4590-8205-d16ceef57894'
+	GRAPHHOPPER_API_KEY = 'a6d463d1-aa2b-4727-a383-bf77c7b1d3db'
 
 	#EXTRA GRAPHHOPPER KEYS
-	# a6d463d1-aa2b-4727-a383-bf77c7b1d3db
 	#b94ab4e9-2f39-492b-ac66-ecc25f502027
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
