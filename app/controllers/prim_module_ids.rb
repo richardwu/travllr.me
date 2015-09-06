@@ -112,7 +112,6 @@ module PrimModuleIds
 
     # Prim's algorithm
 
-
     for i in 0 .. @limit.length-1
       adjacency_matrix = create_adjacency_matrix
       first_edge = select_first_edge(adjacency_matrix)
@@ -131,6 +130,9 @@ module PrimModuleIds
       i+=1
       @visited.clear
       @nodes.delete_if { |x| x['lat'] == "shoot" }
+      if @nodes.length <= 1
+        break
+      end
     end
     return @groups
   end
