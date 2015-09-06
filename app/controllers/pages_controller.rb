@@ -3,8 +3,12 @@ class PagesController < ApplicationController
 	include PrimModuleIds
 
 	# Needs to be updated when limit reached for QPX (50)
-	GOOGLE_BROWSER_API_KEY = 'AIzaSyCopWHWwD4ybUyhAumQ20bodU0AuaYM3_c'
-	GOOGLE_SERVER_API_KEY = 'AIzaSyB22uhA_dJ3p07nbFXcgOOO6YNQqJnCkYI'
+	GOOGLE_BROWSER_API_KEY = 'AIzaSyBXAsdvJO5mTIz7Lqbtu6LDRF3dxUpkRus'
+	GOOGLE_SERVER_API_KEY = 'AIzaSyAaxng6ukxITf75fXEsTV7XrOVDjB9Juic'
+	#SERVER | BROWSER
+	#AIzaSyAaxng6ukxITf75fXEsTV7XrOVDjB9Juic | AIzaSyBXAsdvJO5mTIz7Lqbtu6LDRF3dxUpkRus -- USED
+	#AIzaSyDM9-T8PAhZ7MTgxCws3L8StReSOd9hU-I | AIzaSyBjAnY64ABMibY1U7F2JeXkQebZg9Qh7HE
+	#AIzaSyC7DGhArHuzAe9GFKjErmanYGxo3U7r_U0 | AIzaSyCt0rkrY7EbBqsDglsmKb7V5LFlLpL39Ag
 	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
 
 	# Needs to be updated when limit reached (500)
@@ -12,7 +16,7 @@ class PagesController < ApplicationController
 
 	#EXTRA GRAPHHOPPER KEYS
 	# a6d463d1-aa2b-4727-a383-bf77c7b1d3db
-
+	#b94ab4e9-2f39-492b-ac66-ecc25f502027
 
 	YELP_CONSUMER_KEY = 'cuWb6xBDPQLPeJ9KO-o68w'
 	YELP_CONSUMER_SECRET = 'FFg02nebpgPFChpKW_b4k_3EYXo'
