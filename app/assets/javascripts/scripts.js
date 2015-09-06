@@ -193,7 +193,9 @@ var scripts = {
         });
       };
 
-
+      $scope.printItinerary = function(){
+        window.print();
+      };
       $scope.loadActivities = function(){
         $scope.page = 4;
         $scope.loaded = false;
