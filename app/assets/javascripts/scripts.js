@@ -189,7 +189,6 @@ var scripts = {
         $scope.loaded = false;
         var limits = $scope.getLimits();
         var tempLimits = limits;
-        tempLimits.shift();
         $scope.total = tempLimits.reduce(function(pv, cv) { return pv + cv; }, 0);
         $.get('activities', {
           origin: $scope.data.location.start,
@@ -222,9 +221,11 @@ var scripts = {
         };
 
         var xlimits = $scope.getLimits();
-        var tempLimits = xlimits;
+        var tempLimits = $.extend([], xlimits);
         tempLimits.shift();
         $scope.itineraries = [];
+        $scope.checkInItinerary = [];
+        $scope.checkInTime = null;
 
         // Known bug: prim algorithm skips first index
         // Shift in hotel coords as first
@@ -261,22 +262,39 @@ var scripts = {
                 var ids = data.ids;
                 var times = data.times, startTime;
                 if (i == 0 && xlimits[0] != -1) { // first day
-                  console.logger.debug("Cluster before check-in!");
+                  console.log("Cluster before check-in!");
                   startTime = xlimits[0];
+                  $scope.checkInTime = Math.max(startTime, 16);
+                  if ($scope.checkInTime >= 12)
+                    $scope.checkInTime = ($scope.checkInTime % 12).toString() + ":00 PM";
+                  else
+                    $scope.checkInTime = $scope.checkInTime.toString() + ":00 AM";
                 }
                 else {
                   startTime = 8; // 8 am
                 }
-                console.logger.debug(startTime);
+                console.log("----");
+                console.log(startTime);
+                console.log(xlimits[0]);
+                console.log(xlimits);
 
+                console.log("----");
                 for(j in ids){
                   var activity = $scope.activities[parseInt(ids[j])];
                   var graphhoppertime = moment({second: times[j]});
                   var time = moment({hour: graphhoppertime.hours() + ACTIVITY_DURATION*j + startTime, minute: graphhoppertime.minutes(), second: graphhoppertime.seconds()});
                   $scope.itineraries[i].push(activity);
-                  $scope.itineraries[i][j]["time"]= time.format("hh:mm");
+                  $scope.itineraries[i][j]["time"]= time.format("hh:mm A");
                 }
 
+                if (i == 0 && xlimits[0] != -1) { // first day
+                  console.log("Another first day if statement");
+                  $scope.checkInItinerary = $scope.itineraries[0];
+
+                }
+
+                  $scope.loaded = true;
+                                $scope.$apply();
                 var hotelMaps = {lat: parseFloat(hotel.lat), lng: parseFloat(hotel.lon)};
 
                 var map = new google.maps.Map(document.getElementById('itinerary-map-'+(parseInt(i)+1)), {
@@ -301,11 +319,7 @@ var scripts = {
                   title: 'HOTEL: ' + $scope.hotels[$scope.selectedHotel].Name
                 });
 
-                if (!$scope.loaded)
-                  $scope.loaded = true;
-
-                $scope.$apply();
-
+                  $scope.$apply();
               },
 
               error: function(data){

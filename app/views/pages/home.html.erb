@@ -203,13 +203,49 @@
 											</tr>
 										</tbody>
 									</table>
+								</div>
+							</div>
 
+							<div class="panel panel-success">
+								<div class="panel-heading" role="tab" id="checkin-heading">
+									<h4 class="panel-title">
+										<a role="button" data-toggle="collapse" href="#checkin-panel" aria-expanded="true" aria-controls="checkin-panel">
+											Arrival at {{data.location.end}}
+										</a>
+									</h4>
+								</div>
+								<div id="checkin-panel" style="text-align:left;" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="checkin-panel">
+									<div class="row">
+										<div class="col-sm-6" style="padding-right:0px;">
+											<table class="table table-striped itinerary-table">
+												<tbody>
+													<tr ng-repeat="event in checkInItinerary" class="itinerary-event">
+														<td><img src="{{event.image_url}}"></td>
+														<td><div><strong>{{event.name}}</strong></div><div><a href="{{event.url}}" target="_blank">More Info</a></div><div ng-repeat="addressline in event.location.display_address" class="itinerary-event-address-line">{{addressline}}</div></td>
+														<td>{{event.time}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div><div class="col-md-6" style="padding-left:0px;">
+											<div class="google-maps" ng-if="checkInItinerary" id="itinerary-map-{{$index+1}}"></div>
+									</div>
+								</div>
+								<table class="table table-striped">
+									<tbody>
+										<tr>
+											<td><img src="{{hotels[selectedHotel].ThumbnailUrl}}" style="height:60px;"></td>
+											<td><div class="text-primary header">{{hotels[selectedHotel].Name}}</div><div style="100px;"><span class="mdi-action-grade" style="font-size:14px;" ng-repeat="rating in getNumber(hotels[selectedHotel].GuestRating)"></span></div></td>
+											<td><div class="text-muted">{{hotels[selectedHotel].Location.StreetAddress}}</div><p>{{hotels[selectedHotel].Description}}</p></td>
+											<td><div class="text-success header" ng-if="hotels[selectedHotel].Price"><span style="font-size:1.5em">${{hotels[selectedHotel].Price.TotalRate.Value}}</span><br/>(${{divideDays(hotels[selectedHotel].Price.TotalRate.Value) | number:2}} per day)</div><a href="{{hotels[selectedHotel].DetailsUrl}}" target="_blank" class="text-success" style="text-align:center;" ng-if="!hotels[selectedHotel].Price">See<br/>Price</a></td>
+											<td><strong class="text-primary">Check-in at {{checkInTime}}</strong></td>
+											</tr>
+										</tbody>
+									</table>
 								</div>
 							</div>
 
 
-
-							<div ng-repeat="itinerary in itineraries track by $index" class="panel panel-info">
+							<div ng-repeat="itinerary in itineraries track by $index" ng-if="$index != 0" class="panel panel-info">
 								<div class="panel-heading" role="tab" id="headingOne">
 									<h4 class="panel-title">
 										<a role="button" data-toggle="collapse" href="#collapse{{$index+1}}" aria-expanded="true" aria-controls="collapse{{$index+1}}">
@@ -219,7 +255,7 @@
 								</div>
 								<div id="collapse{{$index+1}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$index+1}}">
 									<div class="row">
-										<div class="col-sm-6">
+										<div class="col-sm-6" style="padding-right:0px;">
 											<table class="table table-striped order-table itinerary-table">
 												<tbody>
 													<tr ng-repeat="event in itinerary" class="itinerary-event" id="itinerary-{{$parent.$index+1}}-event-{{$index+1}}">
@@ -229,7 +265,7 @@
 													</tr>
 												</tbody>
 											</table>
-										</div><div class="col-md-6">
+										</div><div class="col-md-6" style="padding-left:0px;">
 											<div class="google-maps" id="itinerary-map-{{$index+1}}"></div>
 									</div>
 								</div>
