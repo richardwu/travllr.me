@@ -136,7 +136,7 @@ var scripts = {
               countr++;
             }
             else {
-              limit[0] = 0; // FALSE
+              limit[0] = -1; // FALSE
             }
           }
           // Special case for last date (end time == departing flight's departure time)
@@ -216,10 +216,10 @@ var scripts = {
         var hotel = {
           lat: parseFloat($scope.hotels[$scope.selectedHotel].Location.GeoLocation.Latitude),
           lon: parseFloat($scope.hotels[$scope.selectedHotel].Location.GeoLocation.Longitude)
-        }; 
+        };
 
-        var limits = $scope.getLimits();
-        var tempLimits = limits;
+        var xlimits = $scope.getLimits();
+        var tempLimits = xlimits;
         tempLimits.shift();
         $scope.itineraries = [];
 
@@ -257,12 +257,14 @@ var scripts = {
                 var i = data.i;
                 var ids = data.ids;
                 var times = data.times, startTime;
-                if (i == 0) { // first day
-                  startTime = limits[0];
+                if (i == 0 && xlimits[0] != -1) { // first day
+                  console.logger.debug("Cluster before check-in!");
+                  startTime = xlimits[0];
                 }
                 else {
                   startTime = 8; // 8 am
                 }
+                console.logger.debug(startTime);
 
                 for(j in ids){
                   var activity = $scope.activities[parseInt(ids[j])];
