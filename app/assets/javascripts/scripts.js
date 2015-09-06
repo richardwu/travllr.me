@@ -277,14 +277,12 @@ var scripts = {
                   startTime = 8; // 8 am
                 }
                 console.log("----");
-                console.log(startTime);
-                console.log(xlimits[0]);
-                console.log(xlimits);
-
+                console.log(times);
+                console.log(ids);
                 console.log("----");
                 for(j in ids){
                   var activity = $scope.activities[parseInt(ids[j])];
-                  var graphhoppertime = moment({second: times[j]});
+                  var graphhoppertime = moment({second: times[parseInt(j+1)]});
                   var time = moment({hour: graphhoppertime.hours() + ACTIVITY_DURATION*j + startTime, minute: graphhoppertime.minutes(), second: graphhoppertime.seconds()});
                   $scope.itineraries[i].push(activity);
                   $scope.itineraries[i][j]["time"]= time.format("hh:mm A");
