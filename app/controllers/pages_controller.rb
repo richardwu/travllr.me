@@ -146,7 +146,7 @@ class PagesController < ApplicationController
 		end
 
 
-		job_id = HTTParty.post("https://graphhopper.com/api/1/vrp/optimize?key=#{GRAPHHOPPER_API_KEY}", {body: JSON.dump(data), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :verify => false })
+		job_id = HTTParty.post("http://graphhopper.com/api/1/vrp/optimize?key=#{GRAPHHOPPER_API_KEY}", {body: JSON.dump(data), :headers => { 'Content-Type' => 'application/json', 'Accept' => 'application/json'}, :verify => false })
 
 		job_id = job_id['job_id']
 
@@ -154,7 +154,7 @@ class PagesController < ApplicationController
 
 		# sleep(2)
 
-		res = HTTParty.get("https://graphhopper.com/api/1/vrp/solution/#{job_id}?key=#{GRAPHHOPPER_API_KEY}", :verify => false)
+		res = HTTParty.get("http://graphhopper.com/api/1/vrp/solution/#{job_id}?key=#{GRAPHHOPPER_API_KEY}", :verify => false)
 
 		# `curl -X POST -H "Content-Type: application/json" "https://graphhopper.com/api/1/vrp/optimize?key=cc4609d7-eee0-42ae-b36d-1eb5cb726c2e" --data @../vrp.json`
 
@@ -192,7 +192,7 @@ class PagesController < ApplicationController
 
 
 	def clusters
-		render :json => prim(params[:pois])
+		render :json => prim(params[:pois], params[:limits])
 	end
 
 

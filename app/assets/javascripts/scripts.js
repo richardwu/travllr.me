@@ -102,9 +102,12 @@ var scripts = {
         return distance(act1, act2) + calculateCost(act2);
       }
 
-      $scope.groupActivities = function(){
-        var startDate = moment(new Date ($scope.data.date.start));
-        var endDate = moment(new Date ($scope.data.date.end));
+      $scope.getLimits = function(){
+        var startDate = moment($scope.data.date.start);
+        var endDate = moment($scope.data.date.end);
+        var limit = [], count = 1;
+
+        var ACTIVITY_DURATION = 2;
 
         var currentDate = startDate;
         while (!currentDate.isAfter(endDate)){
@@ -112,18 +115,30 @@ var scripts = {
           var startTime = 8;
           var endTime = 22;
           // Special case for first date (start time == arriving flight's arrival time)
-          if (currentDate == startDate){
+          if (currentDate.isSame(startDate)){
             var departingFlight = $scope.flights[$scope.selectedFlight].slice[0];
             var lastSegment = $(departingFlight.segment).last();
 
             // Remove timezone to be able to parse hour
             timeStr = lastSegment[0].leg[0].arrivalTime;
             timeStr = timeStr.substring(0, timeStr.length -6);
-            // One hour leeway
-            startTime = moment(timeStr).hours() + 1;
+
+            // START TIME IS AN INTEGER REPRESENT THE # OF HOURS
+
+            startTime = moment(timeStr).hours();
+
+            if(startTime + ACTIVITY_DURATION < 16) {
+              limit[0] = 1; // TRUE
+              limit[count] = parseInt((16 - startTime)/ACTIVITY_DURATION);
+              startTime = 16;
+              count++;
+            }
+            else {
+              limit[0] = 0; // FALSE
+            }
           }
           // Special case for last date (end time == departing flight's departure time)
-          else if (currentDate == endDate){
+          else if (currentDate.isSame(endDate)){
             var arrivingFlight = $($scope.flights[scope.selectedFlight].slice).last();
             var firstSegment = departingFlight.segment[0];
 
@@ -134,43 +149,14 @@ var scripts = {
             endTime = moment(timeStr).hours();
           }
 
+          limit[count] = parseInt((endTime - startTime)/2);
+
           // Increment currentDate by 1 day
           currentDate.add(1, 'days');
+          count++;
 
-          // GROUP ACTIVITIES INTO DAYS
-
-          // set up constants
-          var MAX_LIMIT = 14; // starttime - endtime
-          // initialize vars
-          var currentAct = 0, totalCost = calculateCost(currentAct),
-          includedActivities = [currentAct], cost = [0];
-
-          for (i in selectedActivities){
-            // Update cost array
-            for (j in selectedActivities) {
-              if (cost[j] == undefined || calculateCost(currentAct, j) < cost[j])
-                cost[j] = calculateCost(currentAct, j);
-            }
-            // Choose minimum activity
-            var minAct = 0;
-            for (j in selectedActivities){
-              if (includedActivities.indexOf(j) == -1 && cost[j] < cost[minAct]){
-                minAct = j;
-              }
-            }
-            // Set minimum activity to current activity
-            includedActivities.push(minAct);
-            currentAct = minAct;
-            // Check if maximum limit reached
-            if(totalCost >= MAX_LIMIT) {
-              // Finished grouping a set of activities into one day!
-
-
-
-            } // end if
-          } // end for loop
-        }
-
+        } // end while
+        return limit;
       };
 
       $scope.loadHotels = function(){
@@ -222,13 +208,18 @@ var scripts = {
           lon: $scope.hotels[$scope.selectedHotel].Location.GeoLocation.Longitude
         };
 
+        var limits = $scope.getLimits();
+        var tempLimits = limits;
+        tempLimits.shift();
+
         // Get Clusters
         for (i in pois){
           pois[i].id = parseInt(i);
         }
 
         $.post('/clusters',{
-          pois: JSON.stringify(pois)
+          pois: JSON.stringify(pois),
+          limits: tempLimits
         }, function(data){
           console.log(data);
         });
@@ -345,4 +336,7 @@ function autoload() {
 $(function () {
   autoload();
   $.material.init();
+});
+$( document ).ajaxError(function() {
+  alert("Something happened.");
 });

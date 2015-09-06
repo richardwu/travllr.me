@@ -1,7 +1,6 @@
 module PrimModuleIds
   require 'json'
-
-  def prim(nodesInput)
+  def prim(nodesInput, limit)
     # Prim's Minimum Spanning Tree Algorithm - Naive version
     # @nodes = [{:lat=>48.8491898, :lon=>2.3364501}, {:lat=>48.8719444, :lon=>2.3316667}, {:lat=>48.8546374434143, :lon=>2.34745829678957}, {:lat=>48.8556709, :lon=>2.3459201}, {:lat=>48.858799, :lon=>2.33778}, {:lat=>48.8583121340336, :lon=>2.29448028497734}, {:lat=>48.8738256014877, :lon=>2.29502221103758}, {:lat=>48.886720769013, :lon=>2.3430021056794}, {:lat=>48.8597984, :lon=>2.3408899}, {:lat=>48.8570755667268, :lon=>2.34135228261721}, {:lat=>48.865886, :lon=>2.321895}, {:lat=>48.8570190952852, :lon=>2.34736043081057}, {:lat=>48.863949, :lon=>2.313589}, {:lat=>48.8568, :lon=>2.35106}, {:lat=>48.833912, :lon=>2.332454}, {:lat=>48.8656111005854, :lon=>2.34700798988342}, {:lat=>48.884629078698, :lon=>2.33875765070958}, {:lat=>48.855748, :lon=>2.312578}, {:lat=>48.845594, :lon=>2.373304}, {:lat=>48.841136656188, :lon=>2.39657923579216}]
 
@@ -12,7 +11,10 @@ module PrimModuleIds
 
     @visited = []
     @total = 0
-    @threshold = 160
+    @limit = limit
+    for i in 0 .. @limit.length-1
+      @limit[i] = @limit[i].to_i
+    end
     @groups = []
     @adjMatrix = [].tap { |m| (@nodes.length+1).times { m << Array.new(@nodes.length+1) } }
 
@@ -67,8 +69,8 @@ module PrimModuleIds
       #puts parent.to_s + " -> " + loc.to_s
       for i in 0 .. @nodes.length
         if @adjMatrix[loc][i] != 0 && i != parent && i != loc && i != 0 && !@visited.include?(i)
-          if @total < @threshold
-            @total += @adjMatrix[loc][i]
+          if @total < @limit[group]
+            @total += 1
             if(!@nodes[i].nil?)
               @groups[group].push({:lat => @nodes[i]['lat'], :lon => @nodes[i]['lon'], :id => @nodes[i]['id']})
               @nodes[i]['lat'] = "shoot";
@@ -77,7 +79,7 @@ module PrimModuleIds
           end
         end
       end
-      if @total >= @threshold && loc != 0
+      if @total >= @limit[group] && loc != 0
         for i in 0 .. @nodes.length
           if @adjMatrix[loc][i] != 0 && i != parent && i != loc && i != 0 && !@visited.include?(i)
             #puts i.to_s + ":" + loc.to_s + " -> " + parent.to_s
