@@ -67,6 +67,9 @@ var scripts = {
       $scope.activitySelected = function(idx){
         return $scope.selectedActivities.indexOf(idx) != -1;
       }
+      $scope.shouldHide = function(idx){
+        return $scope.selectedActivities.length >= $scope.total && !$scope.activitySelected(idx);
+      };
       $scope.selectedFlight = -1;
       $scope.flightData = {}, $scope.flights = [], $scope.selectedHotel = -1;
       $scope.hotels = [], $scope.selectedActivities = [];
