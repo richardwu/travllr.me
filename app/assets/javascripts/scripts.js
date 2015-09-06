@@ -440,5 +440,5 @@ $(function () {
   $.material.init();
 });
 $( document ).ajaxError(function() {
-  alert("Something happened. (API Limit probably exceeded)");
+  console.log("Something happened. (API Limit probably exceeded)");
 });
