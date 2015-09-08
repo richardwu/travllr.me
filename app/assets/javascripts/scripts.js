@@ -450,5 +450,5 @@ $(function () {
   $.material.init();
 });
 $( document ).ajaxError(function() {
-  console.log("Something happened. (API Limit probably exceeded)");
+  alert("Opps. Something went wrong. Refer to travllr.me/about for more information.");
 });

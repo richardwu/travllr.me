@@ -1,5 +1,5 @@
 <body id="about">
-  <div style="height:100%;position:relative;">
+	<div style="height:100%;position:relative;">
 		<div class="site-wrapper">
 			<div class="site-wrapper-inner">
 				<div class="cover-container">
@@ -15,18 +15,48 @@
 						</div>
 					</div>
 					<div class="inner cover">
+						<br>
+						<br>
+						<br>
+
 						<h1 class="cover-heading" style="font-size:60px;"><img src="<%= asset_path 'logo.png' %>" width="75px" style=" margin-right:10px;">About <div style="color:orange; display:inline-block;">Us</div></h1>
+						
+						<h3>What is this?</h3>
 						<p class="lead" style="text-align:center;"><br>
-              Travllr is a trip planning website. Started as a project for PennApps XII, travllr.me is a fresh new website with an amazing concept built in Philadelphia. Travllr not only gives you suggestions about things most that make a trip, like plane tickets, hotels, sightseeing, attractions, etc; It can also make a fully-automated trip itinerary for you, according to your budget, as long as you want, and as happening as you choose. Travllr is a link, a special link which makes you come closer to realizing your dream vacation without any hassle of planning. Travllr.me wouldn't have been possible without 4 people (or let's just say hackers). These developers hailing from different parts of the world, came together and created what is now known as Travllr. It doesn't matter who got the idea, who designed the webpage, and who wrote the code. The only thing that matters is, IT'S MADE WITH LOVE!
+
+							Started as a project for PennApps XII, not only dos Travllr compile a convenient list of flights, hotels and the top attractions in the area, but our app also prepopulates a full itinerary with timestamps.
+
+							Travllr.me brings a new twist to vacation planning. 
 						</p>
+						<br>
+
+						<h3>How it works</h3>
+							<br>
+							<ol>
+								<li><p class="lead">We retrieve real flights, hotels and attractions from Google, Expedia and Yelp through their APIs.</p></li>
+								<li><p class="lead">We then construct a <a href="https://en.wikipedia.org/wiki/Minimum_spanning_tree">minimum spanning tree (MST)</a> using <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Prim's algorithm</a>to model the attractions based on their geo-coordinates.</p></li>
+								<li><p class="lead">Using the MST, a modified implementation of <a href="https://en.wikipedia.org/wiki/Depth-first_search">depth-first search (DFS)</a> is applied to the MST to approximate clusters of attractions.</p></li>
+								<li><p class="lead">These clusters are then assigned to each vacation day. In essence, this algorithm minimizes the mean travel distance between attractions.</p></li><p class="lead">Each activity is assigned a duration of 2 hours plus travel time between nodes. Using this data, a personalized itinerary is generated.</p></li>
+							</ol>
+
+						<br>
+
+					<h3>Some issues</h3>
+					<br>
+					<p class="lead">Because of the nature of this hack, some APIs have set daily query limits. Therefore, if you get an error message, it may be because our API keys have run out of queries for the period, or the API simply does not support the location you entered (e.g. North Korea).</p>
 					</div>
+
+						<br>
+						<br>
+						<br>
+
 					<div class="mastfoot">
 						<div class="inner">
-							<p>Made with <span class="text-danger mdi-action-favorite"></span> by Richard, Fired, Aahan, Kevin</p>
+							<p>Made with <span class="text-danger mdi-action-favorite"></span> by Richard, Frieda, Aahan, Kevin</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-</body>
+	</body>
