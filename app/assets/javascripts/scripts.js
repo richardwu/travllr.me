@@ -450,5 +450,5 @@ $(function () {
   $.material.init();
 });
 $( document ).ajaxError(function() {
-  alert("Opps. Something went wrong. Refer to travllr.me/about for more information.");
+  alert("Oops. Something went wrong. Refer to travllr.me/about for more information.");
 });
