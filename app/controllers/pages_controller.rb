@@ -9,7 +9,7 @@ class PagesController < ApplicationController
 	#AIzaSyAaxng6ukxITf75fXEsTV7XrOVDjB9Juic | AIzaSyBXAsdvJO5mTIz7Lqbtu6LDRF3dxUpkRus -- USED
 	#AIzaSyDM9-T8PAhZ7MTgxCws3L8StReSOd9hU-I | AIzaSyBjAnY64ABMibY1U7F2JeXkQebZg9Qh7HE
 	#AIzaSyC7DGhArHuzAe9GFKjErmanYGxo3U7r_U0 | AIzaSyCt0rkrY7EbBqsDglsmKb7V5LFlLpL39Ag
-	EXPEDIA_API_KEY = 'nusNvdQtknZzmD0fHu42OTmv6IrMCAC7'
+	EXPEDIA_API_KEY = 'KcwL6SgkZBp68JcsAmqOGZhqBUzVwZHz'
 
 	# Needs to be updated when limit reached (500)
 	GRAPHHOPPER_API_KEY = 'a6d463d1-aa2b-4727-a383-bf77c7b1d3db'
@@ -39,6 +39,9 @@ class PagesController < ApplicationController
 		url = URI.parse('http://terminal2.expedia.com/x/hotels?location='+destinationCoord[0].to_s+','+destinationCoord[1].to_s+'&radius=5km&dates='+params[:startDate]+','+params[:endDate]+'&maxhotels=10&sort=price&order=asc&apikey='+EXPEDIA_API_KEY)
 		req = Net::HTTP::Get.new(url.to_s)
 		res = Net::HTTP.start(url.host, url.port) {|http| http.request(req) }
+		Rails.logger.debug url
+
+		Rails.logger.debug res
 		hotels = JSON.parse(res.body)
 
 		render :json => hotels
